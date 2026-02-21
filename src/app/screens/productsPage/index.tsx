@@ -8,14 +8,14 @@ export default function ProductsPage() {
   const products = useRouteMatch();
   return (
     <div className={"products-page"}>
-      <switch>
+      <Switch>
         <Route path={`${products.path}/:productId`}>
           <ChosenProduct />
         </Route>
         <Route path={`${products.path}`}>
           <Products />
         </Route>
-      </switch>
+      </Switch>
     </div>
   );
 }

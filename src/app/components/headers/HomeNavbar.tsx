@@ -6,20 +6,24 @@ import { useEffect, useState } from "react";
 export default function HomeNavbar() {
   const authMember = null;
 
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState<number>(0);
+
+  const [value, setValue] = useState<boolean>(true);
 
   useEffect(() => {
-    console.log("componentDidMount") //DATA FETCH
-  }, []); // 2 ta argumenti mavjud 1{CALLBACK function}, 2[ARRAY dependency]
+    console.log("componentDidMount"); //DATA FETCH
+    setCount(count + 1);
 
-
+    return () => {
+      console.log("Component will unmount");
+    };
+  }, [value]); // 2 ta argumenti mavjud 1{CALLBACK function}, 2[ARRAY dependency]
 
   /*HANDLERS*/
 
   const buttonHandler = () => {
-    setCount(count + 1);
+    setValue(!value);
   };
-
 
   return (
     <div className="home-navbar">
@@ -84,8 +88,11 @@ export default function HomeNavbar() {
             <Box className="service-txt">{count} hours service</Box>
             <Box className="signup">
               {!authMember ? (
-                <Button variant={"contained"} className={"signup-button"}
-                  onClick={buttonHandler}>
+                <Button
+                  variant={"contained"}
+                  className={"signup-button"}
+                  onClick={buttonHandler}
+                >
                   SIGN UP
                 </Button>
               ) : null}

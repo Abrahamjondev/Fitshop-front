@@ -11,7 +11,7 @@ export interface Product {
   productName: string;
   productPrice: number;
   productLeftCount: number;
-  ProductSize: ProductSize;
+  productSize: ProductSize;
   productVolume: number;
   productDesc?: string;
   productImages: string[];

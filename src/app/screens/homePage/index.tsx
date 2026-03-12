@@ -7,14 +7,32 @@ import PopularDishes from "./PopularDishes";
 import NewDishes from "./NewDishes";
 import "../../../css/home.css";
 
+import { useDispatch, useSelector } from "react-redux";
+import { Dispatch } from "@reduxjs/toolkit";
+import { createSelector } from "reselect";
+import { setPopularDishes } from "./slice";
+import { retrievePopularDishes } from "./selector";
+import { Product } from "../../../lib/types/product";
+
+/**.REDUX SLICE & SELECTOR **/
+const actionDispatch = (dispatch: Dispatch) => ({
+  setPopularDishes: (data: Product[]) => dispatch(setPopularDishes(data)),
+});
+
+const popularDishesRetriever = createSelector(
+  retrievePopularDishes,
+  (popularDishes) => ({ popularDishes }),
+);
 
 export default function HomePage() {
+  const { setPopularDishes } = actionDispatch(useDispatch());
+  const { popularDishes } = useSelector(popularDishesRetriever);
   //Selector: Store => Data [yani selector biz storega saqlagan datani oladis ]
   useEffect(() => {
-    //Backend server data request =>DATA 
-
+    //Backend server data request =>DATA
     //slice: Data => Store [yani backendan olingan malumot birinchi redux store ga joylanadi
     //  keyin undan olib kelip ishlatiladi ]
+    //@ts-ignore
   }, []);
 
   return (

@@ -23,7 +23,7 @@ const popularDishesRetriever = createSelector(
 );
 
 export default function PopularDishes() {
-  
+
   const { popularDishes } = useSelector(popularDishesRetriever);
   // console.log("populadishes:", popularDishes);
 

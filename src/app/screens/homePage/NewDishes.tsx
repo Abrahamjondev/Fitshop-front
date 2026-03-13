@@ -49,21 +49,21 @@ export default function NewDishes() {
                   {
                     /*Newdishesni arrow function orqali iterate qildik */
                   }
-                  const imagePath = `${serverApi}/${ele.productImages[0]}`;
+                  const imagePath = `${serverApi}/${product.productImages[0]}`;
                   const sizeVolume =
                     product.productCollection === ProductCollection.DISH
                       ? product.productVolume + "l"
-                      : (product.productSize = "size");
+                      : product.productSize + "size";
                   return (
                     <Card
-                      key={product.id}
+                      key={product._id}
                       variant="outlined"
                       className={"card"}
                     >
                       {" "}
                       {/*sec comp ichidagi cardlar joylashgan stack ichidagi card */}
                       <CardOverflow>
-                        <div className="product-sale">Normal size</div>{" "}
+                        <div className="product-sale">{sizeVolume}</div>{" "}
                         {/* Cardlar ichida joylashgan normal-size */}
                         {/*Aspect ratio carga kiritilayotgan rasmning tomonklar orasidagi nisbati yani 1:1 kvadrat holatda bolsin*/}
                         <AspectRatio ratio="1">
@@ -82,12 +82,12 @@ export default function NewDishes() {
                             <Typography className={"title"}>
                               {" "}
                               {/*Mahsulot nomi */}
-                              {ele.productName}
+                              {product.productName}
                             </Typography>
                             <Divider width="2" height="24" bg="#d9d9d9" />{" "}
                             {/*Ozimiz yaratib olgan devider componentimizni chaqirdik.u product name va narxi orasidagi divider bilan ajratib turibdi */}
                             <Typography className={"price"}>
-                              ${ele.productPrice}
+                              ${product.productPrice}
                             </Typography>{" "}
                             {/*Mahsulot narxi */}
                           </Stack>
@@ -95,7 +95,7 @@ export default function NewDishes() {
                             {" "}
                             {/* mahsulot haqidagi korishlar soni va koz iconini oz ichiga olgan stack */}
                             <Typography className={"views"}>
-                              {ele.productViews}
+                              {product.productViews}
                               <VisibilityIcon
                                 sx={{ fontSize: 20, marginLeft: "5px" }}
                               />

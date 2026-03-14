@@ -24,7 +24,8 @@ const actionDispatch = (dispatch: Dispatch) => ({
 });
 
 export default function HomePage() {
-  const { setPopularDishes, setNewDishes } = actionDispatch(useDispatch());
+  const { setPopularDishes, setNewDishes, setTopUsers } =
+    actionDispatch(useDispatch());
 
   console.log(process.env.REACT_APP_API_URL);
 
@@ -59,9 +60,10 @@ export default function HomePage() {
 
     const member = new MemberService();
 
-    member.getTopUsers().then((data) => setTopUsers(data))
+    member
+      .getTopUsers()
+      .then((data) => setTopUsers(data))
       .catch((err) => console.log(err));
-
   }, []);
 
   return (

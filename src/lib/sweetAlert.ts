@@ -14,7 +14,7 @@ export const sweetErrorHandling = async (err: any) => {
 
 export const sweetTopSuccessAlert = async (
   msg: string,
-  duration: number = 2000
+  duration: number = 2000,
 ) => {
   await Swal.fire({
     position: "top-end",
@@ -27,7 +27,7 @@ export const sweetTopSuccessAlert = async (
 
 export const sweetTopSmallSuccessAlert = async (
   msg: string,
-  duration: number = 2000
+  duration: number = 2000,
 ) => {
   const Toast = Swal.mixin({
     toast: true,
@@ -46,7 +46,7 @@ export const sweetTopSmallSuccessAlert = async (
 export const sweetFailureProvider = (
   msg: string,
   show_button: boolean = false,
-  forward_url: string = ""
+  forward_url: string = "",
 ) => {
   Swal.fire({
     icon: "error",

@@ -2,14 +2,16 @@ import { useState } from "react";
 import { CartItem } from "../../lib/types/search";
 
 const useBasket = () => {
-  const cartJson: string | null = localStorage.getItem("cartdata");
+  // localStorage key nomini bir xil qiling!
+  const cartJson: string | null = localStorage.getItem("cartData");
   const currentCart = cartJson ? JSON.parse(cartJson) : [];
-  const [cartItems, setCartItems] = useState<CartItem[]>([currentCart]);
+
+  // Array ichida array emas, to'g'ridan-to'g'ri array!
+  const [cartItems, setCartItems] = useState<CartItem[]>(currentCart);
 
   const onAdd = (input: CartItem) => {
-    const exist: any = cartItems.find(
-      (item: CartItem) => item._id === input._id,
-    );
+    const exist = cartItems.find((item: CartItem) => item._id === input._id);
+
     if (exist) {
       const cartUpdate = cartItems.map((item: CartItem) =>
         item._id === input._id
@@ -19,16 +21,17 @@ const useBasket = () => {
       setCartItems(cartUpdate);
       localStorage.setItem("cartData", JSON.stringify(cartUpdate));
     } else {
-      const cartUpdate = [...cartItems, { ...input }];
+      const cartUpdate = [...cartItems, { ...input, quantity: 1 }]; // quantity qo'shing!
       setCartItems(cartUpdate);
       localStorage.setItem("cartData", JSON.stringify(cartUpdate));
     }
   };
 
   const onRemove = (input: CartItem) => {
-    const exist: any = cartItems.find(
-      (item: CartItem) => item._id === input._id,
-    );
+    const exist = cartItems.find((item: CartItem) => item._id === input._id);
+
+    if (!exist) return; // Agar topilmasa - chiqib ket
+
     if (exist.quantity === 1) {
       const cartUpdate = cartItems.filter(
         (item: CartItem) => item._id !== input._id,

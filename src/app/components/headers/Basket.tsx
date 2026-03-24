@@ -4,11 +4,14 @@ import IconButton from "@mui/material/IconButton";
 import Badge from "@mui/material/Badge";
 import Menu from "@mui/material/Menu";
 import CancelIcon from "@mui/icons-material/Cancel";
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import DeleteIcon from "@mui/icons-material/Delete";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { useHistory } from "react-router-dom";
 import { CartItem } from "../../../lib/types/search";
-import { serverApi } from "../../../lib/config";
+import { Messages, serverApi } from "../../../lib/config";
+import { sweetErrorHandling } from "../../../lib/sweetAlert";
+import { useGlobals } from "../../hooks/useGlobals";
+import OrderService from "../../services/OrderService";
 
 interface BasketProps {
   cartItems: CartItem[];
@@ -20,12 +23,13 @@ interface BasketProps {
 
 export default function Basket(props: BasketProps) {
   const { cartItems, onAdd, onRemove, onDelete, onDeleteAll } = props;
-  const authMember = null;
+  const { authMember, setOrderBuilder } = useGlobals();
   const history = useHistory();
   const itemsPrice: number = cartItems.reduce(
     (a: number, c: CartItem) => a + c.quantity * c.price,
     0,
   );
+
   const shippingCost: number = itemsPrice < 100 ? 5 : 0;
   const totalPrice = (itemsPrice + shippingCost).toFixed(1);
 
@@ -36,8 +40,28 @@ export default function Basket(props: BasketProps) {
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(e.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const proceedOrderHandler = async () => {
+    try {
+      handleClose();
+      if (!authMember) throw new Error(Messages.error2);
+
+      const order = new OrderService();
+      await order.createOrder(cartItems);
+
+      onDeleteAll();
+
+      // REFRESH VIA CONTEXT
+      setOrderBuilder(new Date());
+      history.push("/orders");
+    } catch (err) {
+      console.log(err);
+      sweetErrorHandling(err).then();
+    }
   };
 
   return (
@@ -59,7 +83,6 @@ export default function Basket(props: BasketProps) {
         id="account-menu"
         open={open}
         onClose={handleClose}
-        // onClick={handleClose}
         PaperProps={{
           elevation: 0,
           sx: {
@@ -95,9 +118,8 @@ export default function Basket(props: BasketProps) {
               <div>Cart is empty!</div>
             ) : (
               <Stack flexDirection={"row"}>
-                {" "}
-                <div>Cart products</div>
-                <DeleteForeverIcon
+                <div>Cart Products:</div>
+                <DeleteIcon
                   sx={{ ml: "5px", cursor: "pointer" }}
                   color={"primary"}
                   onClick={() => onDeleteAll()}
@@ -112,7 +134,10 @@ export default function Basket(props: BasketProps) {
                 const imagePath = `${serverApi}/${item.image}`;
                 return (
                   <Box className={"basket-info-box"} key={item._id}>
-                    <div className={"cancel-btn"}>
+                    <div
+                      onClick={() => onDelete(item)}
+                      className={"cancel-btn"}
+                    >
                       <CancelIcon
                         color={"primary"}
                         onClick={() => onDelete(item)}
@@ -121,7 +146,7 @@ export default function Basket(props: BasketProps) {
                     <img src={imagePath} className={"product-img"} />
                     <span className={"product-name"}>{item.name}</span>
                     <p className={"product-price"}>
-                      ${item.price} x {item.quantity}
+                      {item.price} x {item.quantity}
                     </p>
                     <Box sx={{ minWidth: 120 }}>
                       <div className="col-2">
@@ -144,9 +169,13 @@ export default function Basket(props: BasketProps) {
           {cartItems.length !== 0 ? (
             <Box className={"basket-order"}>
               <span className={"price"}>
-                Total: ${totalPrice} ({itemsPrice} +{shippingCost})
+                Total: ${totalPrice} ({itemsPrice} + {shippingCost})
               </span>
-              <Button startIcon={<ShoppingCartIcon />} variant={"contained"}>
+              <Button
+                onClick={proceedOrderHandler}
+                startIcon={<ShoppingCartIcon />}
+                variant={"contained"}
+              >
                 Order
               </Button>
             </Box>

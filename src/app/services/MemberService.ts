@@ -30,10 +30,10 @@ class MemberService {
 
   public async getRestaurant(): Promise<Member> {
     try {
-      const url = this.path + "/member/restaurant";
+      const url = this.path + "/member/shop";
       const result = await axios.get(url);
 
-      console.log("getTopUsers:", result);
+      console.log("getShop:", result);
 
       const restaurant: Member = result.data;
       return restaurant;
@@ -109,7 +109,7 @@ class MemberService {
 
       console.log("updateMember:", result);
 
-      const member: Member = result.data;
+      const member: Member = result.data.member || result.data.data || result.data;
       localStorage.setItem("memberData", JSON.stringify(member));
       return member;
     } catch (err) {

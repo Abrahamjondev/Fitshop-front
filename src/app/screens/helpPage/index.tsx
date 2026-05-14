@@ -6,6 +6,9 @@ import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import RuleIcon from "@mui/icons-material/Rule";
+import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
+import SupportAgentIcon from "@mui/icons-material/SupportAgent";
 import Button from "@mui/material/Button";
 import TabContext from "@mui/lab/TabContext";
 import TabPanel from "@mui/lab/TabPanel";
@@ -24,6 +27,14 @@ export default function HelpPage() {
   return (
     <div className={"help-page"}>
       <Container className={"help-container"}>
+        <Box className="help-hero">
+          <span>FitShop support</span>
+          <h1>Help Center</h1>
+          <p>
+            Find order rules, delivery answers, and a direct line to the FitShop
+            team.
+          </p>
+        </Box>
         <TabContext value={value}>
           <Box className={"help-menu"}>
             <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -33,9 +44,24 @@ export default function HelpPage() {
                 aria-label="lab API tabs example"
                 className={"table_list"}
               >
-                <Tab label="TERMS" value={"1"} />
-                <Tab label="FAQ" value={"2"} />
-                <Tab label="CONTACT" value={"3"} />
+                <Tab
+                  icon={<RuleIcon />}
+                  iconPosition="start"
+                  label="Terms"
+                  value={"1"}
+                />
+                <Tab
+                  icon={<HelpOutlineIcon />}
+                  iconPosition="start"
+                  label="FAQ"
+                  value={"2"}
+                />
+                <Tab
+                  icon={<SupportAgentIcon />}
+                  iconPosition="start"
+                  label="Contact"
+                  value={"3"}
+                />
               </Tabs>
             </Box>
           </Box>
@@ -45,7 +71,12 @@ export default function HelpPage() {
                 <Stack className={"rules-box"}>
                   <Box className={"rules-frame"}>
                     {terms.map((value, number) => {
-                      return <p key={number}>{value}</p>;
+                      return (
+                        <Box className="rule-item" key={number}>
+                          <span>{String(number + 1).padStart(2, "0")}</span>
+                          <p>{value}</p>
+                        </Box>
+                      );
                     })}
                   </Box>
                 </Stack>
@@ -74,8 +105,11 @@ export default function HelpPage() {
                 <Stack className={"admin-letter-box"}>
                   <Stack className={"admin-letter-container"}>
                     <Box className={"admin-letter-frame"}>
-                      <span>Contact us!</span>
-                      <p>Fill out below form to send a message!</p>
+                      <span>Contact FitShop</span>
+                      <p>
+                        Tell us what happened and our support team will review
+                        your message.
+                      </p>
                     </Box>
                     <form
                       action={"#"}

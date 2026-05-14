@@ -2,8 +2,8 @@ import { Box } from "@mui/material";
 import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 import Button from "@mui/material/Button";
 import { useGlobals } from "../../hooks/useGlobals";
-import { useState } from "react";
-import { MemberUpdateInput } from "../../../lib/types/member";
+import { useEffect, useState } from "react";
+import { Member, MemberUpdateInput } from "../../../lib/types/member";
 import { T } from "../../../lib/types/common";
 import {
   sweetErrorHandling,
@@ -12,12 +12,18 @@ import {
 import { Messages, serverApi } from "../../../lib/config";
 import MemberService from "../../services/MemberService";
 
+function getMemberImage(member?: Member | null) {
+  const image = member?.memberImage;
+  if (!image) return "/icons/default-user.svg";
+  if (image.startsWith("http")) return image;
+  if (image.startsWith("/")) return `${serverApi}${image}`;
+  return `${serverApi}/${image}`;
+}
+
 export function Settings() {
   const { authMember, setAuthMember } = useGlobals();
   const [memberImage, setMemberImage] = useState<string>(
-    authMember?.memberImage
-      ? `${serverApi}/${authMember.memberImage}`
-      : "/icons/default-user.svg",
+    getMemberImage(authMember),
   );
   const [memberUpdateInput, setMemberUpdateInput] = useState<MemberUpdateInput>(
     {
@@ -28,6 +34,17 @@ export function Settings() {
       memberImage: authMember?.memberImage,
     },
   );
+
+  useEffect(() => {
+    setMemberImage(getMemberImage(authMember));
+    setMemberUpdateInput({
+      memberNick: authMember?.memberNick,
+      memberPhone: authMember?.memberPhone,
+      memberAddress: authMember?.memberAddress,
+      memberDesc: authMember?.memberDesc,
+      memberImage: authMember?.memberImage,
+    });
+  }, [authMember]);
 
   /** HANDLERS **/
   const memberNickHandler = (e: T) => {
@@ -64,7 +81,16 @@ export function Settings() {
 
       const member = new MemberService();
       const result = await member.updateMember(memberUpdateInput);
-      setAuthMember(result);
+      const updatedMember = { ...authMember, ...result };
+      setAuthMember(updatedMember);
+      setMemberUpdateInput({
+        memberNick: updatedMember.memberNick,
+        memberPhone: updatedMember.memberPhone,
+        memberAddress: updatedMember.memberAddress,
+        memberDesc: updatedMember.memberDesc,
+        memberImage: updatedMember.memberImage,
+      });
+      setMemberImage(getMemberImage(updatedMember));
 
       await sweetTopSmallSuccessAlert("Modifiy succesfully!", 700);
     } catch (err) {
@@ -75,6 +101,7 @@ export function Settings() {
 
   const handleImageViewer = (e: T) => {
     const file = e.target.files[0];
+    if (!file) return;
     console.log("file:", file);
     const fileType = file.type,
       validateImageTypes = ["image/jpg", "image/jpeg", "image/png"];
@@ -95,12 +122,12 @@ export function Settings() {
       <Box className={"member-media-frame"}>
         <img src={memberImage} className={"mb-image"} alt="" />
         <div className={"media-change-box"}>
-          <span>Upload image</span>
-          <p>JPG, JPEG, PNG formats only!</p>
+          <span>Profile image</span>
+          <p>Upload a clean JPG, JPEG, or PNG for your FitShop account</p>
           <div className={"up-del-box"}>
-            <Button component="label" onChange={handleImageViewer}>
+            <Button component="label">
               <CloudDownloadIcon />
-              <input type="file" hidden />
+              <input type="file" hidden onChange={handleImageViewer} />
             </Button>
           </div>
         </div>

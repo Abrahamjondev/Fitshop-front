@@ -4,12 +4,22 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
+import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
+import Inventory2Icon from "@mui/icons-material/Inventory2";
+import LocalShippingIcon from "@mui/icons-material/LocalShipping";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import CreditCardIcon from "@mui/icons-material/CreditCard";
 import PausedOrders from "./PausedOrders";
 import ProcessOrders from "./ProcessOrders";
 import FinishedOrders from "./FinishedOrders";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Dispatch } from "@reduxjs/toolkit";
 import { setPausedOrders, setProcessOrders, setFinishedOrders } from "./slice";
+import {
+  retrieveFinishedOrders,
+  retrievePausedOrders,
+  retrieveProcessOrders,
+} from "./selector";
 
 import "../../../css/order.css";
 
@@ -20,6 +30,12 @@ import { serverApi } from "../../../lib/config";
 import { MemberType } from "../../../lib/enums/member.enum";
 import { Order, OrderInquiry } from "../../../lib/types/orders";
 import { OrderStatus } from "../../../lib/enums/order.enum";
+import { createSelector } from "reselect";
+
+function getFitShopMemberLabel(memberType?: MemberType) {
+  if (memberType === MemberType.RESTAURANT) return "FitShop Partner";
+  return "FitShop Member";
+}
 
 /** REDUX SLICE & SELECTOR */
 const actionDispatch = (dispatch: Dispatch) => ({
@@ -28,13 +44,27 @@ const actionDispatch = (dispatch: Dispatch) => ({
   setFinishedOrders: (data: Order[]) => dispatch(setFinishedOrders(data)),
 });
 
+const ordersSummaryRetriever = createSelector(
+  retrievePausedOrders,
+  retrieveProcessOrders,
+  retrieveFinishedOrders,
+  (pausedOrders, processOrders, finishedOrders) => ({
+    pausedOrders,
+    processOrders,
+    finishedOrders,
+  }),
+);
+
 export default function OrdersPage() {
   const { setPausedOrders, setProcessOrders, setFinishedOrders } =
     actionDispatch(useDispatch());
   const { orderBuilder, authMember } = useGlobals();
+  const { pausedOrders, processOrders, finishedOrders } = useSelector(
+    ordersSummaryRetriever,
+  );
   const history = useHistory();
   const [value, setValue] = useState("1");
-  const [orderInquiry, setOrderInquiry] = useState<OrderInquiry>({
+  const [orderInquiry] = useState<OrderInquiry>({
     page: 1,
     limit: 5,
     orderStatus: OrderStatus.PAUSE,
@@ -70,6 +100,27 @@ export default function OrdersPage() {
     <div className="order-page">
       <Container className="order-container">
         <Stack className="order-left">
+          <Box className="order-page-head">
+            <span className="order-kicker">FitShop Orders</span>
+            <Box className="order-title-row">
+              <Box>
+                <h1>Order Command Center</h1>
+                <p>
+                  Track baskets, active deliveries, and completed FitShop
+                  purchases in one clean workflow.
+                </p>
+              </Box>
+              <Box className="order-total-chip">
+                <ReceiptLongIcon />
+                <span>
+                  {(pausedOrders?.length || 0) +
+                    (processOrders?.length || 0) +
+                    (finishedOrders?.length || 0)}
+                </span>
+                <small>Total</small>
+              </Box>
+            </Box>
+          </Box>
           <TabContext value={value}>
             <Box className="order-nav-frame">
               <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -79,9 +130,24 @@ export default function OrdersPage() {
                   aria-label="basic tabs example"
                   className="table_list"
                 >
-                  <Tab label="PAUSED ORDERS" value={"1"} />
-                  <Tab label="PROCESS ORDERS" value={"2"} />
-                  <Tab label="FINISHED ORDERS" value={"3"} />
+                  <Tab
+                    icon={<Inventory2Icon />}
+                    iconPosition="start"
+                    label={`Paused (${pausedOrders?.length || 0})`}
+                    value={"1"}
+                  />
+                  <Tab
+                    icon={<LocalShippingIcon />}
+                    iconPosition="start"
+                    label={`Processing (${processOrders?.length || 0})`}
+                    value={"2"}
+                  />
+                  <Tab
+                    icon={<CheckCircleIcon />}
+                    iconPosition="start"
+                    label={`Finished (${finishedOrders?.length || 0})`}
+                    value={"3"}
+                  />
                 </Tabs>
               </Box>
             </Box>
@@ -109,9 +175,9 @@ export default function OrdersPage() {
                 <div className="order-user-icon-box">
                   <img
                     src={
-                      authMember?.memberType === MemberType.RESTAURANT
-                        ? "/icons/restaurant.svg"
-                        : "/icons/user-badge.svg"
+                      authMember?.memberType === MemberType.USER
+                        ? "/icons/user-badge.svg"
+                        : "/icons/user.svg"
                     }
                     alt=""
                     className="order-user-prof-img"
@@ -119,7 +185,9 @@ export default function OrdersPage() {
                 </div>
               </div>
               <span className="order-user-name">{authMember?.memberNick}</span>
-              <span className="order-user-prof">{authMember?.memberType}</span>
+              <span className="order-user-prof">
+                {getFitShopMemberLabel(authMember?.memberType)}
+              </span>
             </Box>
             <Box className="liner" />
             <Box className="order-user-address">
@@ -135,6 +203,13 @@ export default function OrdersPage() {
           </Box>
 
           <Box className="card-input">
+            <Box className="payment-head">
+              <CreditCardIcon />
+              <Box>
+                <strong>Payment Method</strong>
+                <span>Saved checkout details</span>
+              </Box>
+            </Box>
             <Box className="card-num-input">
               <input
                 type="text"

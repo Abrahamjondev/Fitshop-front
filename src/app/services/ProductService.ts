@@ -13,12 +13,15 @@ class ProductService {
       let url = `${this.path}/product/all?order=${input.order}&page=${input.page}&limit=${input.limit}`;
       if (input.productCollection)
         url += `&productCollection=${input.productCollection}`;
+      if (input.productStatus) url += `&productStatus=${input.productStatus}`;
       if (input.search) url += `&search=${input.search}`;
 
       const result = await axios.get(url);
       console.log("getproducts;", result);
 
-      return result.data;
+      return Array.isArray(result.data)
+        ? result.data
+        : result.data.data || result.data.products || [];
     } catch (err) {
       console.log("Error, getProduct:", err);
       throw err;
@@ -27,11 +30,11 @@ class ProductService {
 
   public async getProduct(productId: string): Promise<Product> {
     try {
-      const url = ` ${this.path}/product/${productId}`;
+      const url = `${this.path}/product/${productId}`;
       const result = await axios.get(url, { withCredentials: true });
 
       console.log("getproduct", result);
-      return result.data;
+      return result.data.data || result.data.product || result.data;
     } catch (err) {
       console.log("Error, getProduct:", err);
       throw err;

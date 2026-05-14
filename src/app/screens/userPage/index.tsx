@@ -3,12 +3,28 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import TelegramIcon from "@mui/icons-material/Telegram";
 import YouTubeIcon from "@mui/icons-material/YouTube";
+import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { Settings } from "./Settings";
 import "../../../css/userPage.css";
 import { useHistory } from "react-router-dom";
 import { useGlobals } from "../../hooks/useGlobals";
 import { serverApi } from "../../../lib/config";
 import { MemberType } from "../../../lib/enums/member.enum";
+import { Member } from "../../../lib/types/member";
+
+function getMemberImage(member: Member | null) {
+  const image = member?.memberImage;
+  if (!image) return "/icons/default-user.svg";
+  if (image.startsWith("http")) return image;
+  if (image.startsWith("/")) return `${serverApi}${image}`;
+  return `${serverApi}/${image}`;
+}
+
+function getFitShopMemberLabel(memberType?: MemberType) {
+  if (memberType === MemberType.RESTAURANT) return "FitShop Partner";
+  return "FitShop Member";
+}
 
 export default function UserPage() {
   const history = useHistory();
@@ -21,7 +37,14 @@ export default function UserPage() {
         <Stack className={"my-page-frame"}>
           <Stack className={"my-page-left"}>
             <Box display={"flex"} flexDirection={"column"}>
-              <Box className={"menu-name"}>Modify Member Details</Box>
+              <Box className={"menu-name"}>
+                <span>FitShop Account</span>
+                <h1>Profile settings</h1>
+                <p>
+                  Keep your delivery details and training profile ready for the
+                  next order.
+                </p>
+              </Box>
               <Box className={"menu-content"}>
                 <Settings />
               </Box>
@@ -37,19 +60,18 @@ export default function UserPage() {
               >
                 <div className={"order-user-img"}>
                   <img
-                    src={
-                      authMember?.memberImage
-                        ? `${serverApi}/${authMember.memberImage}`
-                        : "/icons/default-user.svg"
-                    }
+                    src={getMemberImage(authMember)}
                     alt=""
                     className={"order-user-avatar"}
+                    onError={(event) => {
+                      event.currentTarget.src = "/icons/default-user.svg";
+                    }}
                   />
                   <div className={"order-user-icon-box"}>
                     <img
                       src={
-                        authMember?.memberType === MemberType.RESTAURANT
-                          ? "/icons/restaurant.svg"
+                        authMember?.memberType === MemberType.USER
+                          ? "/icons/user.svg"
                           : "/icons/user-badge.svg"
                       }
                       alt=""
@@ -60,9 +82,11 @@ export default function UserPage() {
                   {authMember?.memberNick}
                 </span>
                 <span className={"order-user-prof"}>
-                  {authMember?.memberType}
+                  <FitnessCenterIcon fontSize="small" />
+                  {getFitShopMemberLabel(authMember?.memberType)}
                 </span>
-                <span className={"order-user-prof"}>
+                <span className={"order-user-prof address-chip"}>
+                  <LocationOnIcon fontSize="small" />
                   {authMember?.memberAddress
                     ? authMember.memberAddress
                     : "no address"}

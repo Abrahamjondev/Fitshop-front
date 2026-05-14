@@ -1,19 +1,27 @@
 import { Member } from "./member";
 import { Order } from "./orders";
 import { Product } from "./product";
+import { ProductCategory } from "../enums/product.enum";
 
 /** REACT APP STATE **/
 export interface AppRootState {
-  homePage: HomePageState;
+  home: HomeState;
   productsPage: ProductsPageState;
   ordersPage: OrdersPageState;
 }
 
 /** HOME PAGE **/
-export interface HomePageState {
-  popularDishes: Product[];
-  newDishes: Product[];
-  topUsers: Member[];
+export interface HeroData {
+  title: string;
+  subtitle: string;
+  images: string[];
+  category: ProductCategory;
+}
+
+export interface HomeState {
+  products: Product[];
+  heroData: HeroData[];
+  loading: boolean;
 }
 /** PRODUCTS PAGE **/
 export interface ProductsPageState {

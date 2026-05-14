@@ -1,19 +1,22 @@
 import React, {
   ChangeEvent,
   useEffect,
-  useLayoutEffect,
+  useMemo,
   useState,
 } from "react";
 import { Box, Button, Container, Stack } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
+import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
+import StorefrontIcon from "@mui/icons-material/Storefront";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import Badge from "@mui/material/Badge";
 import Pagination from "@mui/material/Pagination";
 import PaginationItem from "@mui/material/PaginationItem";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import { render } from "@testing-library/react";
 import { useDispatch, useSelector } from "react-redux";
 import { Dispatch } from "@reduxjs/toolkit";
 import { Product, ProductInquiry } from "../../../lib/types/product";
@@ -21,7 +24,7 @@ import { createSelector } from "reselect";
 import { retrieveProducts } from "./selector";
 import { setProducts } from "./slice";
 import ProductService from "../../services/ProductService";
-import { ProductCollection } from "../../../lib/enums/product.enum";
+import { ProductCategory } from "../../../lib/enums/product.enum";
 import { serverApi } from "../../../lib/config";
 import { useHistory } from "react-router-dom";
 import { CartItem } from "../../../lib/types/search";
@@ -39,15 +42,143 @@ interface ProductsProps {
   onAdd: (item: CartItem) => void;
 }
 
+const productCollectionLabels: Record<ProductCategory, string> = {
+  [ProductCategory.NUTRITION]: "Nutrition",
+  [ProductCategory.APPAREL]: "Apparel",
+  [ProductCategory.SHOES]: "Shoes",
+  [ProductCategory.EQUIPMENT]: "Equipment",
+  [ProductCategory.RECOVERY]: "Recovery",
+  [ProductCategory.TECH]: "Tech",
+  [ProductCategory.COMBAT]: "Combat",
+  [ProductCategory.OUTDOOR]: "Outdoor",
+};
+
+const productCollectionOrder = [
+  ProductCategory.NUTRITION,
+  ProductCategory.APPAREL,
+  ProductCategory.SHOES,
+  ProductCategory.EQUIPMENT,
+  ProductCategory.RECOVERY,
+  ProductCategory.TECH,
+  ProductCategory.COMBAT,
+  ProductCategory.OUTDOOR,
+];
+
+const shopPlaces = [
+  {
+    title: "FitShop Central",
+    area: "Tashkent City",
+    address: "Performance gear, nutrition, and daily sport essentials",
+    hours: "Mon-Sun 09:00 - 22:00",
+    phone: "+998 90 123 45 67",
+  },
+  {
+    title: "FitShop North",
+    area: "Yunusabad",
+    address: "Shoes, apparel, and recovery products for gym routines",
+    hours: "Mon-Sat 10:00 - 21:00",
+    phone: "+998 90 234 56 78",
+  },
+  {
+    title: "FitShop West",
+    area: "Chilanzar",
+    address: "Protein, creatine, amino, and strength training equipment",
+    hours: "Mon-Sun 09:30 - 21:30",
+    phone: "+998 90 345 67 89",
+  },
+  {
+    title: "FitShop South",
+    area: "Sergeli",
+    address: "Outdoor, combat, and home workout essentials",
+    hours: "Mon-Sat 10:00 - 20:00",
+    phone: "+998 90 456 78 90",
+  },
+];
+
+function formatProductMeta(product: Product) {
+  if (product.productVolume) return `${product.productVolume}L`;
+  if (product.productWeight) {
+    const weight = Number(product.productWeight);
+    return weight >= 1000 ? `${weight / 1000}kg` : `${weight}g`;
+  }
+  return product.productSize ? String(product.productSize).replace("_", " ") : "Standard";
+}
+
+function formatPrice(price: number) {
+  return `${price?.toLocaleString()} UZS`;
+}
+
+function getProductImagePath(product: Product) {
+  const image = product.productImages?.[0];
+  if (!image) return "/icons/noimage-list.svg";
+  if (image.startsWith("http")) return image;
+  if (image.startsWith("/")) return `${serverApi}${image}`;
+  return `${serverApi}/${image}`;
+}
+
+function getProductBrandLabel(product: Product) {
+  if (product.productBrand?.trim()) return product.productBrand;
+
+  const name = product.productName.trim();
+  const firstWords = name.split(/\s+/).slice(0, 2).join(" ");
+  return firstWords || "FitShop Pick";
+}
+
+function pickTopBrandProducts(products: Product[]) {
+  const brandPriority = [
+    "nike",
+    "adidas",
+    "puma",
+    "under armour",
+    "optimum nutrition",
+    "dymatize",
+    "muscle tech",
+    "muscletech",
+    "bsn",
+    "myprotein",
+  ];
+
+  return [...products]
+    .sort((first, second) => {
+      const firstBrand = first.productBrand?.toLowerCase() || "";
+      const secondBrand = second.productBrand?.toLowerCase() || "";
+      const firstPriority = brandPriority.findIndex((brand) =>
+        firstBrand.includes(brand),
+      );
+      const secondPriority = brandPriority.findIndex((brand) =>
+        secondBrand.includes(brand),
+      );
+      const normalizedFirstPriority =
+        firstPriority === -1 ? brandPriority.length : firstPriority;
+      const normalizedSecondPriority =
+        secondPriority === -1 ? brandPriority.length : secondPriority;
+
+      if (normalizedFirstPriority !== normalizedSecondPriority) {
+        return normalizedFirstPriority - normalizedSecondPriority;
+      }
+
+      return (second.productViews || 0) - (first.productViews || 0);
+    })
+    .reduce<Product[]>((topBrands, product) => {
+      const brand = product.productBrand?.trim().toLowerCase() || product._id;
+      const alreadyAdded = topBrands.some(
+        (item) => (item.productBrand?.trim().toLowerCase() || item._id) === brand,
+      );
+
+      if (!alreadyAdded && topBrands.length < 4) topBrands.push(product);
+      return topBrands;
+    }, []);
+}
+
 export default function Products(props: ProductsProps) {
   const { onAdd } = props;
   const { setProducts } = actionDispatch(useDispatch());
   const { products } = useSelector(productsRetriever);
+  const [topBrandProducts, setTopBrandProducts] = useState<Product[]>([]);
   const [productSearch, setProductsSearch] = useState<ProductInquiry>({
     page: 1,
     limit: 8,
     order: "createdAt",
-    productCollection: ProductCollection.DISH,
     search: "",
   });
 
@@ -63,14 +194,30 @@ export default function Products(props: ProductsProps) {
   }, [productSearch]);
 
   useEffect(() => {
+    const product = new ProductService();
+    product
+      .getProducts({ page: 1, limit: 40, order: "productViews" })
+      .then((data) => setTopBrandProducts(pickTopBrandProducts(data)))
+      .catch((err) => console.log(err));
+  }, []);
+
+  useEffect(() => {
     if (searchText === "") {
       productSearch.search = "";
       setProductsSearch({ ...productSearch });
     }
   }, [searchText]);
 
+  const featuredBrandProducts = useMemo(
+    () =>
+      topBrandProducts.length > 0
+        ? topBrandProducts
+        : pickTopBrandProducts(products),
+    [products, topBrandProducts],
+  );
+
   /** HANDLERS **/
-  const searchConnectionHandler = (collection: ProductCollection) => {
+  const searchConnectionHandler = (collection?: ProductCategory) => {
     productSearch.page = 1;
     productSearch.productCollection = collection;
     setProductsSearch({ ...productSearch });
@@ -100,12 +247,19 @@ export default function Products(props: ProductsProps) {
         <Container>
           <Stack flexDirection={"column"} alignItems={"center"}>
             <Stack className="avatar-big-box">
-              <Box className={"title"}>Bumarak Restaurant</Box>
+              <Box className="products-heading">
+                <span className="products-kicker">FitShop Catalog</span>
+                <Box className={"title"}>Performance products</Box>
+                <p>
+                  Search, filter, and sort essentials for training, recovery,
+                  apparel, and everyday discipline.
+                </p>
+              </Box>
               <Box className={"single-search-big-box"}>
                 <input
                   type="search"
                   className="single-search-input"
-                  placeholder="Type here"
+                  placeholder="Search products"
                   value={searchText}
                   onChange={(e) => setSearchText(e.target.value)}
                   onKeyDown={(e) => {
@@ -127,7 +281,9 @@ export default function Products(props: ProductsProps) {
               <Stack className="dishes-filter-box">
                 <Button
                   variant="contained"
-                  className="order"
+                  className={`order ${
+                    productSearch.order === "createdAt" ? "active" : ""
+                  }`}
                   color={
                     productSearch.order === "createdAt"
                       ? "primary"
@@ -139,7 +295,9 @@ export default function Products(props: ProductsProps) {
                 </Button>
                 <Button
                   variant="contained"
-                  className="order"
+                  className={`order ${
+                    productSearch.order === "productPrice" ? "active" : ""
+                  }`}
                   color={
                     productSearch.order === "productPrice"
                       ? "primary"
@@ -151,7 +309,9 @@ export default function Products(props: ProductsProps) {
                 </Button>
                 <Button
                   variant="contained"
-                  className="order"
+                  className={`order ${
+                    productSearch.order === "productViews" ? "active" : ""
+                  }`}
                   color={
                     productSearch.order === "productViews"
                       ? "primary"
@@ -168,83 +328,44 @@ export default function Products(props: ProductsProps) {
                 <Stack className="category-main">
                   <Button
                     variant="contained"
-                    color={
-                      productSearch.productCollection ===
-                      ProductCollection.OTHER
-                        ? "primary"
-                        : "secondary"
-                    }
-                    onClick={() =>
-                      searchConnectionHandler(ProductCollection.OTHER)
-                    }
+                    className={!productSearch.productCollection ? "active" : ""}
+                    color={!productSearch.productCollection ? "primary" : "secondary"}
+                    onClick={() => searchConnectionHandler(undefined)}
                   >
-                    OTHER
+                    All Gear
                   </Button>
-                  <Button
-                    variant="contained"
-                    color={
-                      productSearch.productCollection ===
-                      ProductCollection.DESERT
-                        ? "primary"
-                        : "secondary"
-                    }
-                    onClick={() =>
-                      searchConnectionHandler(ProductCollection.DESERT)
-                    }
-                  >
-                    DESSESRT
-                  </Button>
-                  <Button
-                    variant="contained"
-                    color={
-                      productSearch.productCollection ===
-                      ProductCollection.DRINK
-                        ? "primary"
-                        : "secondary"
-                    }
-                    onClick={() =>
-                      searchConnectionHandler(ProductCollection.DRINK)
-                    }
-                  >
-                    DRINK
-                  </Button>
-                  <Button
-                    variant="contained"
-                    color={
-                      productSearch.productCollection ===
-                      ProductCollection.SALAD
-                        ? "primary"
-                        : "secondary"
-                    }
-                    onClick={() =>
-                      searchConnectionHandler(ProductCollection.SALAD)
-                    }
-                  >
-                    SALAD
-                  </Button>
-                  <Button
-                    variant="contained"
-                    color={
-                      productSearch.productCollection === ProductCollection.DISH
-                        ? "primary"
-                        : "secondary"
-                    }
-                    onClick={() =>
-                      searchConnectionHandler(ProductCollection.DISH)
-                    }
-                  >
-                    DISH
-                  </Button>
+                  {productCollectionOrder.map((collection) => (
+                    <Button
+                      key={collection}
+                      variant="contained"
+                      className={
+                        productSearch.productCollection === collection
+                          ? "active"
+                          : ""
+                      }
+                      color={
+                        productSearch.productCollection === collection
+                          ? "primary"
+                          : "secondary"
+                      }
+                      onClick={() => searchConnectionHandler(collection)}
+                    >
+                      {productCollectionLabels[collection]}
+                    </Button>
+                  ))}
                 </Stack>
               </Stack>
               <Stack className="product-wrapper">
                 {products.length !== 0 ? (
                   products.map((product: Product) => {
-                    const imagePath = `${serverApi}/${product.productImages[0]}`;
-                    const sizeVolume =
-                      product.productCollection === ProductCollection.DRINK
-                        ? product.productVolume + "litre"
-                        : product.productSize + "size";
+                    const imagePath = product.productImages?.[0]
+                      ? `${serverApi}/${product.productImages[0]}`
+                      : "/icons/noimage-list.svg";
+                    const sizeVolume = formatProductMeta(product);
+                    const collectionLabel =
+                      productCollectionLabels[
+                        product.productCollection as ProductCategory
+                      ] || String(product.productCollection);
 
                     return (
                       <Stack
@@ -256,7 +377,8 @@ export default function Products(props: ProductsProps) {
                           className={"product-image"}
                           sx={{ backgroundImage: `url(${imagePath})` }}
                         >
-                          <div className="product-sale">{sizeVolume}</div>
+                          <div className="product-sale">{collectionLabel}</div>
+                          <div className="product-meta-chip">{sizeVolume}</div>
                           <Button
                             className={"shop-btn"}
                             onClick={(e) => {
@@ -271,11 +393,7 @@ export default function Products(props: ProductsProps) {
                               e.stopPropagation();
                             }}
                           >
-                            <img
-                              src="/icons/shopping-cart.svg"
-                              alt=""
-                              style={{ display: "flex" }}
-                            />
+                            <AddShoppingCartIcon fontSize="small" />
                           </Button>
                           <Button className="view-btn" sx={{ right: "36px" }}>
                             <Badge
@@ -294,12 +412,14 @@ export default function Products(props: ProductsProps) {
                           </Button>
                         </Stack>
                         <Box className={"product-desc"}>
+                          <span className="product-brand">
+                            {product.productBrand || "FitShop"}
+                          </span>
                           <span className="product-title">
                             {product.productName}
                           </span>
                           <span className="product-price">
-                            <MonetizationOnIcon />
-                            {product.productPrice}
+                            {formatPrice(product.productPrice)}
                           </span>
                         </Box>
                       </Stack>
@@ -313,7 +433,7 @@ export default function Products(props: ProductsProps) {
             <Stack className="pagination-section">
               <Pagination
                 count={
-                  products.length != 0
+                  products.length !== 0
                     ? productSearch.page + 1
                     : productSearch.page
                 }
@@ -338,20 +458,70 @@ export default function Products(props: ProductsProps) {
       <div className="brands-logo">
         <Container>
           <Stack className="main">
-            <Box className="title">Our Family Brands</Box>
+            <Box className="brands-heading">
+              <span className="brands-kicker">FitShop lineup</span>
+              <Box className="title">Our Top Brands</Box>
+              <p>
+                One standout product from each trusted brand in the store.
+              </p>
+            </Box>
             <Stack className="brand-cards">
-              <Box className="brand-card">
-                <img src="/img/gurme.webp" alt="" />
-              </Box>
-              <Box className="brand-card">
-                <img src="/img/seafood.webp" alt="" />
-              </Box>
-              <Box className="brand-card">
-                <img src="/img/sweets.webp" alt="" />
-              </Box>
-              <Box className="brand-card">
-                <img src="/img/doner.webp" alt="" />
-              </Box>
+                {featuredBrandProducts.length !== 0 ? (
+                featuredBrandProducts.map((product) => {
+                  const imagePath = getProductImagePath(product);
+                  const collectionLabel =
+                    productCollectionLabels[
+                      product.productCollection as ProductCategory
+                    ] || String(product.productCollection);
+
+                  return (
+                    <Box
+                      key={product._id}
+                      className="brand-card"
+                      onClick={() => chooseDishHandler(product._id)}
+                    >
+                      <Box
+                        className="brand-product-image"
+                      >
+                        <img
+                          src={imagePath}
+                          alt={product.productName}
+                          onError={(event) => {
+                            event.currentTarget.src = "/icons/noimage-list.svg";
+                          }}
+                        />
+                        <span>{collectionLabel}</span>
+                      </Box>
+                      <Box className="brand-product-info">
+                        <span className="brand-name">
+                          {getProductBrandLabel(product)}
+                        </span>
+                        <strong>{product.productName}</strong>
+                        <span className="brand-price">
+                          {formatPrice(product.productPrice)}
+                        </span>
+                      </Box>
+                      <Button
+                        className="brand-shop-btn"
+                        onClick={(e) => {
+                          onAdd({
+                            _id: product._id,
+                            name: product.productName,
+                            price: product.productPrice,
+                            image: product.productImages?.[0] || "",
+                            quantity: 1,
+                          });
+                          e.stopPropagation();
+                        }}
+                      >
+                        <AddShoppingCartIcon fontSize="small" />
+                      </Button>
+                    </Box>
+                  );
+                })
+              ) : (
+                <Box className="brand-no-data">Top brands are loading.</Box>
+              )}
             </Stack>
           </Stack>
         </Container>
@@ -360,15 +530,54 @@ export default function Products(props: ProductsProps) {
       <div className="address">
         <Container>
           <Stack className="address-main">
-            <Box className="title">Our adress</Box>
-            <iframe
-              style={{ marginTop: "60px" }}
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3610.2949374162613!2d55.27812477436027!3d25.193274331861527!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f6955cdc0a649%3A0xf08ece466df23124!2sCZN%20Burak%20Dubai!5e0!3m2!1sen!2skr!4v1771656536526!5m2!1sen!2skr"
-              width="1320"
-              height="500"
-              title="map-frame"
-              referrerPolicy="no-referrer-when-downgrade"
-            />
+            <Box className="shop-places-heading">
+              <span className="shop-places-kicker">Store locator</span>
+              <Box className="title">Our Shop Places</Box>
+              <p>
+                Visit the closest FitShop branch for sports nutrition,
+                footwear, apparel, and training essentials.
+              </p>
+            </Box>
+            <Box className="shop-places-layout">
+              <Box className="shop-places-list">
+                {shopPlaces.map((place, index) => (
+                  <Box className="shop-place-card" key={place.title}>
+                    <Box className="shop-place-index">
+                      {String(index + 1).padStart(2, "0")}
+                    </Box>
+                    <Box className="shop-place-content">
+                      <Box className="shop-place-title-row">
+                        <StorefrontIcon fontSize="small" />
+                        <strong>{place.title}</strong>
+                      </Box>
+                      <span className="shop-place-area">
+                        <LocationOnIcon fontSize="small" />
+                        {place.area}
+                      </span>
+                      <p>{place.address}</p>
+                      <Box className="shop-place-meta">
+                        <span>
+                          <AccessTimeIcon fontSize="small" />
+                          {place.hours}
+                        </span>
+                        <span>
+                          <LocalPhoneIcon fontSize="small" />
+                          {place.phone}
+                        </span>
+                      </Box>
+                    </Box>
+                  </Box>
+                ))}
+              </Box>
+              <Box className="shop-map-card">
+                <iframe
+                  src="https://www.google.com/maps?q=Tashkent%20fitness%20shop&output=embed"
+                  title="FitShop places map"
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                />
+              </Box>
+            </Box>
           </Stack>
         </Container>
       </div>

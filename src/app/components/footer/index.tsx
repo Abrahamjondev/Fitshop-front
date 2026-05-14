@@ -1,88 +1,236 @@
 import React from "react";
-import { Box, Container, Stack } from "@mui/material";
+import { Box, Container, Stack, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-const Footers = styled.div`
+const Footers = styled.footer`
   width: 100%;
-  height: 590px;
-  display: flex;
-  background: #343434;
-  background-size: cover;
+  background: #0e0e10;
 `;
 
-export default function Footer() {
-  const authMember = null;
+const colors = {
+  bg: "#0E0E10",
+  borderSoft: "rgba(186, 117, 23, 0.1)",
+  socialBg: "rgba(186, 117, 23, 0.1)",
+  socialBorder: "rgba(186, 117, 23, 0.2)",
+  accent: "#BA7517",
+  accentHover: "#ffb869",
+  text: "#FAEEDA",
+  textMuted: "#a1a1aa",
+};
 
+const shopLinks = [
+  { label: "Home", to: "/" },
+  { label: "Products", to: "/products" },
+  { label: "Categories", to: "/catalog" },
+  { label: "Special Offers", to: "/deals" },
+];
+
+const supportLinks = [
+  { label: "Contact Us", to: "/contact" },
+  { label: "FAQ", to: "/faq" },
+  { label: "Shipping Info", to: "/shipping" },
+  { label: "Returns", to: "/returns" },
+  { label: "Terms & Privacy", to: "/terms" },
+];
+
+const socialLinks = [
+  { label: "Facebook", icon: "/icons/facebook.svg", href: "#" },
+  { label: "Twitter/X", icon: "/icons/twitter.svg", href: "#" },
+  { label: "Instagram", icon: "/icons/instagram.svg", href: "#" },
+  { label: "YouTube", icon: "/icons/youtube.svg", href: "#" },
+];
+
+const linkStyles = {
+  width: "fit-content",
+  color: colors.textMuted,
+  fontFamily: "'Inter', sans-serif",
+  fontSize: 14,
+  lineHeight: 1.6,
+  textDecoration: "none",
+  transition: "color 0.2s ease",
+  "&:hover": {
+    color: colors.accentHover,
+  },
+};
+
+const sectionTitleStyles = {
+  mb: 3,
+  color: colors.text,
+  fontFamily: "'Space Grotesk', sans-serif",
+  fontSize: 16,
+  fontWeight: 700,
+  letterSpacing: "1px",
+  lineHeight: 1.2,
+  textTransform: "uppercase",
+};
+
+export default function Footer() {
   return (
     <Footers>
-      <Container>
-        <Stack flexDirection={"row"} sx={{ mt: "94px" }}>
-          <Stack flexDirection={"column"} style={{ width: "340px" }}>
-            <Box>
-              <img width={"100px"} src={"/icons/burak.svg"} />
-            </Box>
-            <Box className={"foot-desc-txt"}>
-              Focusing on the gourmet Turkish breakfast as well as the youth
-              society, CZN Burak Gurme aims to bring Turkish cuisine back. CZN
-              Burak Gurme creates an illusion with its cuisine.
-            </Box>
-            <Box className="sns-context">
-              <img src={"/icons/facebook.svg"} />
-              <img src={"/icons/twitter.svg"} />
-              <img src={"/icons/instagram.svg"} />
-              <img src={"/icons/youtube.svg"} />
-            </Box>
-          </Stack>
-          <Stack sx={{ ml: "288px" }} flexDirection={"row"}>
-            <Stack>
-              <Box>
-                <Box className={"foot-category-title"}>Bo'limlar</Box>
-                <Box className={"foot-category-link"}>
-                  <Link to="/">Home</Link>
-                  <Link to="/products">Products</Link>
-                  {authMember && <Link to="/orders">Orders</Link>}
-                  <Link to="/help">Help</Link>
-                </Box>
+      <Container
+        maxWidth={false}
+        sx={{
+          maxWidth: 1200,
+          mx: "auto",
+          px: { xs: 2, md: 3, lg: 4 },
+          py: { xs: 5, md: 6, lg: 8 },
+        }}
+      >
+        <Box
+          sx={{
+            display: "grid",
+            gridTemplateColumns: {
+              xs: "1fr",
+              md: "repeat(2, minmax(0, 1fr))",
+              lg: "repeat(3, minmax(0, 1fr))",
+            },
+            columnGap: { md: 5, lg: 6 },
+            rowGap: { xs: 4, md: 4 },
+            alignItems: "start",
+          }}
+        >
+          <Box sx={{ gridColumn: { xs: "auto", md: "1", lg: "auto" } }}>
+            <Typography
+              component="h2"
+              sx={{
+                mb: 1.5,
+                fontFamily: "'Space Grotesk', sans-serif",
+                fontSize: 24,
+                fontWeight: 700,
+                lineHeight: 1.2,
+                color: colors.text,
+              }}
+            >
+              Fit
+              <Box component="span" sx={{ color: colors.accent }}>
+                Shop
               </Box>
-            </Stack>
-            <Stack sx={{ ml: "100px" }}>
-              <Box>
-                <Box className={"foot-category-title"}>Find us</Box>
+            </Typography>
+
+            <Typography
+              sx={{
+                maxWidth: 280,
+                color: colors.textMuted,
+                fontFamily: "'Inter', sans-serif",
+                fontSize: 14,
+                lineHeight: 1.6,
+              }}
+            >
+              Shop premium sports gear, training essentials, and fitness equipment
+              built for everyday athletes. FitShop helps you move, train, and recover
+              with confidence.
+            </Typography>
+
+            <Stack direction="row" spacing={1.5} sx={{ mt: 2.5 }}>
+              {socialLinks.map((social) => (
                 <Box
-                  flexDirection={"column"}
-                  sx={{ mt: "20px" }}
-                  className={"foot-category-link"}
-                  justifyContent={"space-between"}
+                  key={social.label}
+                  component="a"
+                  href={social.href}
+                  aria-label={social.label}
+                  sx={{
+                    width: 32,
+                    height: 32,
+                    display: "grid",
+                    placeItems: "center",
+                    borderRadius: "6px",
+                    border: `1px solid ${colors.socialBorder}`,
+                    background: colors.socialBg,
+                    transition:
+                      "background 0.2s ease, border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease",
+                    "& img": {
+                      width: 16,
+                      height: 16,
+                      display: "block",
+                      transition: "filter 0.2s ease",
+                    },
+                    "&:hover": {
+                      background: colors.accent,
+                      borderColor: colors.accent,
+                      transform: "translateY(-2px)",
+                      boxShadow: "0 8px 16px rgba(186, 117, 23, 0.24)",
+                    },
+                    "&:hover img": {
+                      filter: "brightness(0) saturate(100%)",
+                    },
+                  }}
                 >
-                  <Box flexDirection={"row"} className={"find-us"}>
-                    <span>L.</span>
-                    <div>Downtown, Dubai</div>
-                  </Box>
-                  <Box className={"find-us"}>
-                    <span>P.</span>
-                    <div>+971 4 554 7777</div>
-                  </Box>
-                  <Box className={"find-us"}>
-                    <span>E.</span>
-                    <div>devexuz@gmail.com</div>
-                  </Box>
-                  <Box className={"find-us"}>
-                    <span>H.</span>
-                    <div>Visit 24 hours</div>
-                  </Box>
+                  <img alt="" src={social.icon} />
                 </Box>
-              </Box>
+              ))}
             </Stack>
+          </Box>
+
+          <Box sx={{ gridColumn: { xs: "auto", md: "1", lg: "auto" } }}>
+            <Typography component="h3" sx={sectionTitleStyles}>
+              Shop
+            </Typography>
+            <Stack spacing={1.5}>
+              {shopLinks.map((link) => (
+                <Box key={link.label} component={Link} to={link.to} sx={linkStyles}>
+                  {link.label}
+                </Box>
+              ))}
+            </Stack>
+          </Box>
+
+          <Box
+            sx={{
+              gridColumn: { xs: "auto", md: "2", lg: "auto" },
+              gridRow: { xs: "auto", md: "1 / span 2", lg: "auto" },
+            }}
+          >
+            <Typography component="h3" sx={sectionTitleStyles}>
+              Support
+            </Typography>
+            <Stack spacing={1.5}>
+              {supportLinks.map((link) => (
+                <Box key={link.label} component={Link} to={link.to} sx={linkStyles}>
+                  {link.label}
+                </Box>
+              ))}
+            </Stack>
+          </Box>
+        </Box>
+
+        <Box
+          sx={{
+            height: "1px",
+            my: { xs: 4, md: 6 },
+            background: colors.borderSoft,
+          }}
+        />
+
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: { xs: "column", sm: "row" },
+            alignItems: { xs: "flex-start", sm: "center" },
+            justifyContent: "space-between",
+            gap: 2,
+          }}
+        >
+          <Typography
+            sx={{
+              color: colors.textMuted,
+              fontFamily: "'Inter', sans-serif",
+              fontSize: 12,
+              lineHeight: 1.6,
+            }}
+          >
+            © Copyright FitShop. All rights reserved.
+          </Typography>
+
+          <Stack direction="row" spacing={4}>
+            <Box component={Link} to="/terms" sx={{ ...linkStyles, fontSize: 12 }}>
+              Terms of Service
+            </Box>
+            <Box component={Link} to="/privacy" sx={{ ...linkStyles, fontSize: 12 }}>
+              Privacy Policy
+            </Box>
           </Stack>
-        </Stack>
-        <Stack
-          style={{ border: "1px solid #C5C8C9", width: "100%", opacity: "0.2" }}
-          sx={{ mt: "80px" }}
-        ></Stack>
-        <Stack className={"copyright-txt"}>
-          © Copyright Devex Global, All rights reserved.
-        </Stack>
+        </Box>
       </Container>
     </Footers>
   );

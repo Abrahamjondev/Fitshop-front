@@ -1,337 +1,382 @@
 .user-page {
-	width: 100%;
-	height: auto;
-	display: flex;
-	background: #f8f8ff;
-}
-
-.user-page .css-heg063-MuiTabs-flexContainer {
-	flex-direction: column;
-}
-
-.user-page .css-mn3ro6-MuiTabs-indicator {
-	height: 0px;
-	width: 0px;
-}
-
-.user-page .css-1ujnqem-MuiTabs-root {
-	width: 100%;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  background:
+    radial-gradient(circle at 12% 8%, rgba(186, 117, 23, 0.18), transparent 28%),
+    linear-gradient(180deg, #0e0e10 0%, #151518 54%, #0e0e10 100%);
+  color: #faeeda;
 }
 
 .user-page .my-page-frame {
-	width: 100%;
-	height: auto;
-	display: flex;
-	flex-direction: row;
-	padding: 50px 0 50px 0;
+  width: 100%;
+  min-height: 720px;
+  padding: 76px 0 92px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 360px;
+  gap: 28px;
 }
 
-.my-page-frame .my-page-left {
-	width: 70%;
-	height: auto;
-	display: flex;
-	flex-direction: column;
+.my-page-frame .my-page-left,
+.my-page-frame .my-page-right {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .my-page-left .menu-name {
-	width: 100%;
-	height: 70px;
-	display: flex;
-	justify-content: center;
-	border-bottom: 1px solid #f8f8ff;
-	font-family: 'Poppins';
-	font-style: normal;
-	font-weight: 600;
-	font-size: 45px;
-	color: #f8f8ff;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.my-page-left .menu-name span {
+  width: fit-content;
+  padding: 8px 13px;
+  border: 1px solid rgba(186, 117, 23, 0.38);
+  border-radius: 999px;
+  background: rgba(186, 117, 23, 0.12);
+  color: #d7b686;
+  font-family: "Poppins";
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.my-page-left .menu-name h1 {
+  margin: 18px 0 0;
+  color: #faeeda;
+  font-family: "Poppins";
+  font-size: clamp(38px, 5vw, 62px);
+  font-weight: 900;
+  line-height: 1.02;
+  letter-spacing: 0;
+}
+
+.my-page-left .menu-name p {
+  max-width: 590px;
+  margin: 16px 0 0;
+  color: #c9c1b4;
+  font-family: "Poppins";
+  font-size: 16px;
+  line-height: 1.65;
 }
 
 .my-page-left .menu-content {
-	margin-top: 10px;
-	width: 100%;
-	height: auto;
-	display: flex;
-	flex-direction: column;
-}
-
-.my-page-left .write-content {
-	margin-top: 10px;
-	width: 100%;
-	height: auto;
-	display: flex;
-	flex-direction: column;
-}
-
-.user-page .menu-content .post-content {
-	margin-top: 10px;
-	width: 100%;
-	height: auto;
-	display: flex;
-	flex-direction: column;
-}
-
-.my-page-frame .my-page-right {
-	margin-left: 30px;
-	width: 30%;
-	height: auto;
-	display: flex;
-	flex-direction: column;
-}
-
-.user-page .order-info-box {
-	position: relative;
-	padding: 20px;
-	width: 100%;
-	height: auto;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	background: #f6f2ff;
-	box-shadow: 15px 14px 4px rgba(0, 0, 0, 0.25), inset -1px 0px 16px 13px rgb(24 23 112 / 20%);
-	border-radius: 16px;
-}
-
-.user-page .order-info-box .settings-btn {
-	position: absolute;
-	top: 6%;
-	right: 19%;
-	cursor: pointer;
-}
-
-.user-page .order-info-box .order-user-img {
-	position: relative;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-}
-
-.user-page .order-info-box .order-user-img .order-user-avatar {
-	width: 150px;
-	height: 150px;
-	filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-	border-radius: 37px;
-}
-
-.user-page .order-info-box .order-user-icon-box {
-	position: absolute;
-	padding: 5px;
-	width: 37px;
-	height: 37px;
-	top: 81%;
-	right: 0;
-	display: flex;
-	background: rgb(209 209 209 / 33%);
-	border-radius: 37px;
-}
-
-.user-page .order-info-box .order-user-name {
-	margin-top: 10px;
-	font-family: 'Commissioner';
-	font-style: normal;
-	font-weight: 500;
-	font-size: 28px;
-	line-height: 36px;
-	color: #08090d;
-}
-
-.user-page .order-info-box .order-user-prof {
-	font-family: 'Commissioner';
-	font-style: normal;
-	font-weight: 500;
-	font-size: 20px;
-	line-height: 36px;
-	color: #a1a1a1;
-}
-
-.user-page .order-info-box .user-media-box {
-	margin-top: 10px;
-	width: 60%;
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-}
-
-.user-page .order-info-box .user-desc {
-	margin-top: 30px;
-	width: 90%;
-	display: flex;
-	justify-content: center;
-	font-family: 'DM Sans';
-	font-style: normal;
-	font-weight: 400;
-	font-size: 16px;
-	line-height: 24px;
-	color: #616164;
-}
-
-.user-page .order-info-box .css-1e3kzd4-MuiButtonBase-root-MuiButton-root {
-	margin-top: 15px;
-	min-width: 90%;
-	height: 44px;
-	text-transform: capitalize;
-	font-style: normal;
-	font-weight: 600;
-	font-size: 25px;
-	line-height: 38px;
-	color: #f8f8ff;
-}
-
-.user-page .menu-box img {
-	width: 25px;
-}
-
-.user-page .menu-box span {
-	margin-left: 30px;
-	font-family: 'Poppins';
-	font-style: normal;
-	font-weight: 600;
-	font-size: 25px;
-	line-height: 38px;
-	color: #000000;
+  margin-top: 30px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .user-page .settings {
-	width: 95%;
-	height: auto;
-	display: flex;
-	flex-direction: column;
-}
-
-.user-page .settings .input-frame {
-	width: 100%;
-	height: auto;
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-}
-
-.user-page .settings .short-input {
-	width: 49%;
-	height: auto;
-	display: flex;
-	flex-direction: column;
-}
-
-.user-page .settings .long-input {
-	width: 100%;
-	height: auto;
-	display: flex;
-	flex-direction: column;
-}
-.user-page .settings .spec-label {
-	font-family: 'Source Serif Pro';
-	font-style: normal;
-	font-weight: 400;
-	font-size: 16px;
-	line-height: 25px;
-	color: #f8f8ff;
-}
-
-.user-page .settings .spec-input {
-	position: relative;
-	margin-top: 10px;
-	padding-left: 20px;
-	width: 100%;
-	height: 54px;
-	border: none;
-	background: #f7f7f7;
-	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-	border-radius: 5px;
-	font-family: 'GT Walsheim Pro';
-	font-style: normal;
-	font-weight: 400;
-	font-size: 15px;
-	line-height: 26px;
-	color: #4f547b;
-}
-
-.user-page .settings .spec-textarea {
-	position: relative;
-	margin-top: 10px;
-	padding: 20px;
-	width: 100%;
-	height: 200px;
-	border: none;
-	background: #f7f7f7;
-	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-	border-radius: 5px;
-	font-family: 'GT Walsheim Pro';
-	font-style: normal;
-	font-weight: 400;
-	font-size: 15px;
-	line-height: 26px;
-	color: #4f547b;
+  width: 100%;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgba(250, 238, 218, 0.1);
+  border-radius: 22px;
+  background: rgba(31, 31, 35, 0.88);
+  box-shadow: 0 22px 54px rgba(0, 0, 0, 0.24);
 }
 
 .user-page .settings .member-media-frame {
-	margin-top: 25px;
-	position: relative;
-	padding: 10px;
-	width: 100%;
-	height: auto;
-	display: flex;
-	border-radius: 5px;
+  width: 100%;
+  min-height: 126px;
+  padding: 18px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  border-radius: 18px;
+  border: 1px solid rgba(250, 238, 218, 0.1);
+  background: rgba(255, 255, 255, 0.045);
 }
 
 .user-page .settings .member-media-frame .mb-image {
-	width: 100px;
-	height: 100px;
-	border-radius: 50%;
+  width: 94px;
+  height: 94px;
+  flex: 0 0 auto;
+  border-radius: 24px;
+  object-fit: cover;
+  background: #141417;
+  border: 2px solid rgba(186, 117, 23, 0.42);
 }
 
-.user-page .settings .media_change-box {
-	position: relative;
-	margin-left: 20px;
-	width: auto;
-	height: 100%;
-	display: flex;
-	flex-direction: column;
+.user-page .settings .media-change-box {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .user-page .settings .media-change-box span {
-	font-family: 'GT Walsheim Pro';
-	font-style: normal;
-	font-weight: 400;
-	font-size: 16px;
-	line-height: 18px;
-	color: #140342;
+  color: #faeeda;
+  font-family: "Poppins";
+  font-size: 18px;
+  font-weight: 900;
+  line-height: 1.25;
 }
 
 .user-page .settings .media-change-box p {
-	margin: 10px 0px 14px 0px;
-	font-family: 'GT Walsheim Pro';
-	font-style: normal;
-	font-weight: 400;
-	font-size: 14px;
-	line-height: 16px;
-	color: #4f547b;
+  max-width: 430px;
+  margin: 8px 0 12px;
+  color: #a1a1aa;
+  font-family: "Poppins";
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.5;
 }
 
 .user-page .settings .up-del-box {
-	position: relative;
-	width: 37px;
-	height: 37px;
-	display: flex;
-	background: #cbcbcb;
-	border-radius: 8px;
-	justify-content: center;
-	align-items: center;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  background: #ba7517;
+  color: #faeeda;
+  box-shadow: 0 12px 26px rgba(186, 117, 23, 0.28);
 }
 
-.user-page .settings .up-del-box input {
-	position: absolute;
-	width: 20px;
-	height: 16px;
-	padding: 0;
-	background: red;
-	margin: -1px;
-	overflow: hidden;
-	clip: rect(0, 0, 0, 0);
-	border: 0;
+.user-page .settings .up-del-box button {
+  width: 44px;
+  min-width: 44px;
+  height: 44px;
+  color: #faeeda;
+}
+
+.user-page .settings .input-frame {
+  width: 100%;
+  margin-top: 18px;
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+}
+
+.user-page .settings .short-input,
+.user-page .settings .long-input {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.user-page .settings .short-input {
+  flex: 1;
+}
+
+.user-page .settings .spec-label {
+  color: #d7b686;
+  font-family: "Poppins";
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.user-page .settings .spec-input,
+.user-page .settings .spec-textarea {
+  margin-top: 9px;
+  width: 100%;
+  border: 1px solid rgba(250, 238, 218, 0.1);
+  border-radius: 14px;
+  outline: none;
+  background: rgba(255, 255, 255, 0.05);
+  color: #faeeda;
+  font-family: "Poppins";
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.user-page .settings .spec-input {
+  height: 52px;
+  padding: 0 14px;
+}
+
+.user-page .settings .spec-textarea {
+  min-height: 170px;
+  padding: 14px;
+  resize: vertical;
+  line-height: 1.55;
+}
+
+.user-page .settings .spec-input::placeholder,
+.user-page .settings .spec-textarea::placeholder {
+  color: #77777f;
 }
 
 .user-page .settings .save-box {
-	display: flex;
-	justify-content: flex-end;
-	margin-top: 25px;
+  margin-top: 24px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.user-page .settings .save-box button {
+  min-width: 150px;
+  height: 48px;
+  border-radius: 14px;
+  background: #ba7517;
+  color: #faeeda;
+  font-family: "Poppins";
+  font-size: 14px;
+  font-weight: 900;
+  text-transform: none;
+  box-shadow: 0 14px 30px rgba(186, 117, 23, 0.28);
+}
+
+.user-page .settings .save-box button:hover {
+  background: #9a6012;
+}
+
+.user-page .order-info-box {
+  position: sticky;
+  top: 24px;
+  width: 100%;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid rgba(250, 238, 218, 0.1);
+  border-radius: 22px;
+  background:
+    linear-gradient(180deg, rgba(186, 117, 23, 0.16), transparent 38%),
+    rgba(31, 31, 35, 0.9);
+  box-shadow: 0 22px 54px rgba(0, 0, 0, 0.24);
+}
+
+.user-page .order-info-box .order-user-img {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.user-page .order-info-box .order-user-img .order-user-avatar {
+  width: 132px;
+  height: 132px;
+  object-fit: cover;
+  border-radius: 32px;
+  border: 2px solid rgba(186, 117, 23, 0.48);
+  background: #141417;
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.28);
+}
+
+.user-page .order-info-box .order-user-icon-box {
+  position: absolute;
+  right: -6px;
+  bottom: -6px;
+  width: 38px;
+  height: 38px;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 13px;
+  background: #ba7517;
+}
+
+.user-page .order-info-box .order-user-icon-box img {
+  width: 100%;
+  height: 100%;
+  filter: brightness(0) invert(1);
+}
+
+.user-page .order-info-box .order-user-name {
+  margin-top: 18px;
+  color: #faeeda;
+  font-family: "Poppins";
+  font-size: 26px;
+  font-weight: 900;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.user-page .order-info-box .order-user-prof {
+  max-width: 100%;
+  margin-top: 10px;
+  padding: 8px 11px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  border-radius: 999px;
+  background: rgba(186, 117, 23, 0.14);
+  color: #d7b686;
+  font-family: "Poppins";
+  font-size: 12px;
+  font-weight: 900;
+  line-height: 1.2;
+}
+
+.user-page .order-info-box .address-chip {
+  align-items: flex-start;
+  border-radius: 14px;
+  text-align: left;
+}
+
+.user-page .order-info-box .order-user-prof svg {
+  flex: 0 0 auto;
+  color: #ba7517;
+}
+
+.user-page .order-info-box .user-media-box {
+  margin-top: 22px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.user-page .order-info-box .user-media-box svg {
+  width: 100%;
+  height: 42px;
+  padding: 10px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(250, 238, 218, 0.08);
+  color: #ba7517;
+}
+
+.user-page .order-info-box .user-desc {
+  width: 100%;
+  margin: 22px 0 0;
+  padding-top: 18px;
+  border-top: 1px solid rgba(250, 238, 218, 0.1);
+  color: #c9c1b4;
+  font-family: "Poppins";
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.65;
+  text-align: center;
+}
+
+@media (max-width: 980px) {
+  .user-page .my-page-frame {
+    grid-template-columns: 1fr;
+  }
+
+  .user-page .order-info-box {
+    position: static;
+  }
+}
+
+@media (max-width: 620px) {
+  .user-page .my-page-frame {
+    padding: 50px 0 66px;
+  }
+
+  .my-page-left .menu-name h1 {
+    font-size: 34px;
+  }
+
+  .user-page .settings {
+    padding: 18px;
+  }
+
+  .user-page .settings .member-media-frame,
+  .user-page .settings .input-frame {
+    flex-direction: column;
+  }
+
+  .user-page .settings .save-box button {
+    width: 100%;
+  }
 }

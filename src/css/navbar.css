@@ -1484,6 +1484,7 @@
 .other-navbar .fitshop-logo {
   color: var(--gold);
   gap: 12px;
+  perspective: 720px;
 }
 .home-navbar .fitshop-mark,
 .other-navbar .fitshop-mark {
@@ -1498,6 +1499,30 @@
     rgba(14, 124, 90, 0.02)
   );
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16);
+  transform-style: preserve-3d;
+  transition:
+    transform 780ms cubic-bezier(0.34, 1.3, 0.5, 1),
+    box-shadow 420ms ease,
+    border-color 420ms ease,
+    background 420ms ease;
+}
+/* Hover — 3D "coin-flip" + emerald glow */
+.home-navbar .fitshop-logo:hover .fitshop-mark,
+.other-navbar .fitshop-logo:hover .fitshop-mark {
+  transform: rotateY(360deg) scale(1.08);
+  border-color: rgba(14, 124, 90, 0.72);
+  background: linear-gradient(
+    155deg,
+    rgba(18, 160, 116, 0.34),
+    rgba(14, 124, 90, 0.08)
+  );
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.42),
+    0 12px 28px -8px rgba(14, 124, 90, 0.7);
+}
+.home-navbar .fitshop-logo:hover .fitshop-word span,
+.other-navbar .fitshop-logo:hover .fitshop-word span {
+  color: var(--gold-bright);
 }
 .home-navbar .fitshop-word,
 .other-navbar .fitshop-word {

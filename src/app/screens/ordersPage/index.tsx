@@ -201,17 +201,6 @@ export default function OrdersPage() {
                     event.currentTarget.src = "/icons/default-user.svg";
                   }}
                 />
-                <div className="order-user-icon-box">
-                  <img
-                    src={
-                      authMember?.memberType === MemberType.USER
-                        ? "/icons/user-badge.svg"
-                        : "/icons/user.svg"
-                    }
-                    alt=""
-                    className="order-user-prof-img"
-                  />
-                </div>
               </div>
               <span className="order-user-name">{authMember?.memberNick}</span>
               <span className="order-user-prof">

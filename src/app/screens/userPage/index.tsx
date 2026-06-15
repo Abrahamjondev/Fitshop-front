@@ -64,16 +64,6 @@ export default function UserPage() {
                       event.currentTarget.src = "/icons/default-user.svg";
                     }}
                   />
-                  <div className={"order-user-icon-box"}>
-                    <img
-                      src={
-                        authMember?.memberType === MemberType.USER
-                          ? "/icons/user.svg"
-                          : "/icons/user-badge.svg"
-                      }
-                      alt=""
-                    />
-                  </div>
                 </div>
                 <span className={"order-user-name"}>
                   {authMember?.memberNick}

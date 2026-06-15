@@ -496,10 +496,11 @@
   width: 108px;
   height: 108px;
   object-fit: cover;
-  border-radius: 28px;
-  border: 2px solid rgba(14, 124, 90, 0.48);
+  border-radius: 50%;
+  border: 3px solid #ffffff;
   background: #F7F8FA;
-  box-shadow: 0 16px 34px rgba(14, 17, 22, 0.08);
+  box-shadow: 0 0 0 2px rgba(14, 124, 90, 0.42),
+    0 14px 30px -12px rgba(14, 17, 22, 0.18);
 }
 
 .order-page .order-info-box .order-user-icon-box {

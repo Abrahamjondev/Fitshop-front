@@ -5,8 +5,24 @@ import styled from "styled-components";
 
 const Footers = styled.footer`
   width: 100%;
+  position: relative;
   background: #f6f7f9;
   border-top: 1px solid #e6e8ec;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: -1px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(14, 124, 90, 0.5),
+      transparent
+    );
+  }
 `;
 
 const colors = {
@@ -17,7 +33,7 @@ const colors = {
   accent: "#0E7C5A",
   accentHover: "#12A074",
   text: "#0E1116",
-  textMuted: "#5B6470",
+  textMuted: "#444C58",
 };
 
 // Faqat mavjud routelarga yo'naltiramiz
@@ -152,7 +168,7 @@ export default function Footer() {
                       boxShadow: "0 8px 16px rgba(14, 124, 90, 0.24)",
                     },
                     "&:hover img": {
-                      filter: "brightness(0) saturate(100%)",
+                      filter: "brightness(0) invert(1)",
                     },
                   }}
                 >

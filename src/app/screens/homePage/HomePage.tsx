@@ -1,7 +1,8 @@
 import React from "react";
 import StatSection from "./StatSection";
 import TopProductsSection from "./TopProductsSection";
-import ComingSoonSection from "./ComingSoonSection";
+import TopUsersSection from "./TopUsersSection";
+import CategorySection from "./CategorySection";
 import "../../../css/home.css";
 import { CartItem } from "../../../lib/types/search";
 
@@ -14,7 +15,8 @@ export default function HomePage({ onAdd }: HomePageProps) {
     <div className={"homepage"}>
       <StatSection />
       <TopProductsSection onAddToCart={onAdd} />
-      <ComingSoonSection />
+      <TopUsersSection />
+      <CategorySection />
     </div>
   );
 }

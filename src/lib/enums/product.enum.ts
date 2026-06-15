@@ -1,44 +1,45 @@
 export enum ProductSize {
+  // Kiyim-kechak (Apparel)
   XS = "XS",
   S = "S",
   M = "M",
   L = "L",
   XL = "XL",
   XXL = "XXL",
+
+  // Oyoq kiyim (Shoes) - EU o'lchamlari
+  EU_38 = "38",
+  EU_39 = "39",
+  EU_40 = "40",
+  EU_41 = "41",
+  EU_42 = "42",
+  EU_43 = "43",
+  EU_44 = "44",
+  EU_45 = "45",
+
+  // Universal va Maxsus
   ONE_SIZE = "ONE_SIZE",
-  SMALL = "SMALL",
-  NORMAL = "NORMAL",
-  LARGE = "LARGE",
-  SET = "SET",
+  NOT_APPLICABLE = "N/A",
 }
 
 export enum ProductWeight {
+  NOT_APPLICABLE = 0,
   GRAM_250 = 250,
   GRAM_500 = 500,
   KG_1 = 1000,
   KG_2 = 2000,
   KG_2_5 = 2500,
   KG_5 = 5000,
-}
-
-export enum ProductVolume {
-  HALF = 0.5,
-  ONE = 1,
-  ONE_POINT_TWO = 1.2,
-  ONE_POINT_FIVE = 1.5,
-  TWO = 2,
+  KG_10 = 10000,
+  KG_20 = 20000,
 }
 
 export enum ProductStatus {
   ACTIVE = "ACTIVE",
+  PAUSE = "PAUSE",
   OUT_OF_STOCK = "OUT_OF_STOCK",
   COMING_SOON = "COMING_SOON",
   DELETED = "DELETED",
-  PAUSE = "PAUSE",
-  PROCESS = "PROCESS",
-  DELETE = "DELETE",
-  NORMAL = "NORMAL",
-  ONE = "ONE",
 }
 
 export enum ProductCategory {
@@ -50,12 +51,4 @@ export enum ProductCategory {
   TECH = "TECH",
   COMBAT = "COMBAT",
   OUTDOOR = "OUTDOOR",
-}
-
-export enum ProductCollection {
-  DISH = "DISH",
-  SALAD = "SALAD",
-  DESERT = "DESERT",
-  DRINK = "DRINK",
-  OTHER = "OTHER",
 }

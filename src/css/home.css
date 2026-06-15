@@ -75,7 +75,7 @@
 .homepage .popular-dishes-frame .popular-section .category-title {
   color: #000;
   text-align: center;
-  font-family: "Roboto Serif";
+  font-family: "Plus Jakarta Sans";
   font-size: 36px;
   font-style: normal;
   font-weight: 600;
@@ -99,8 +99,8 @@
 
 .homepage .popular-dishes-frame .cards-frame .card .card-cover {
   background:
-    linear-gradient(to top, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0) 200px),
-    linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0) 300px);
+    linear-gradient(to top, rgba(14, 17, 22, 0.08), rgba(0, 0, 0, 0) 200px),
+    linear-gradient(to top, rgba(14, 17, 22, 0.11), rgba(0, 0, 0, 0) 300px);
 }
 
 .homepage .popular-dishes-frame .no-data {
@@ -110,7 +110,7 @@
   justify-content: center;
   align-items: center;
   text-transform: capitalize;
-  font-family: "Poppins";
+  font-family: "Plus Jakarta Sans";
   font-style: normal;
   font-weight: 400;
   font-size: 30px;
@@ -124,7 +124,7 @@
 .homepage .new-products-frame {
   width: 100%;
   height: 605px;
-  background: #f8f8ff;
+  background: #0E1116;
   display: flex;
 }
 
@@ -140,7 +140,7 @@
 .homepage .new-products-frame .category-title {
   color: #000;
   text-align: center;
-  font-family: "Roboto Serif";
+  font-family: "Plus Jakarta Sans";
   font-size: 36px;
   font-style: normal;
   font-weight: 600;
@@ -177,12 +177,12 @@
   background: #ff9200;
   box-shadow: 4px 6px 20px rgba(0, 0, 0, 0.1);
   border-radius: 25px;
-  font-family: "Poppins";
+  font-family: "Plus Jakarta Sans";
   font-style: normal;
   font-weight: 600;
   font-size: 12px;
   line-height: 21px;
-  color: #f8f8ff;
+  color: #0E1116;
 }
 
 /* Cardlarning pstgi qismida wiews ,narx uchun yaratilgan joy cardi */
@@ -193,7 +193,7 @@
   justify-content: center;
   margin-top: -12px;
   border-top: 1px solid;
-  border-color: #f8f8ff;
+  border-color: #0E1116;
   background-color: #fafbfb;
 }
 
@@ -240,7 +240,7 @@
   justify-content: center;
   align-items: center;
   text-transform: capitalize;
-  font-family: "Poppins";
+  font-family: "Plus Jakarta Sans";
   font-style: normal;
   font-weight: 400;
   font-size: 30px;
@@ -273,7 +273,7 @@
 .homepage .active-users-frame {
   width: 100%;
   height: 420px;
-  background: #f8f8ff;
+  background: #0E1116;
 }
 
 .homepage .active-users-frame .main {
@@ -292,7 +292,7 @@
   flex-direction: column;
   justify-content: center;
   color: #343434;
-  font-family: "Roboto Serif";
+  font-family: "Plus Jakarta Sans";
   font-size: 36px;
   font-style: normal;
   font-weight: 600;
@@ -307,7 +307,7 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  background-color: #f8f8ff;
+  background-color: #0E1116;
 }
 
 .homepage .active-users-frame .cards-frame .card {
@@ -318,8 +318,8 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: #f8f8ff;
-  border: #f8f8ff;
+  background-color: #0E1116;
+  border: #0E1116;
   border-radius: 12px 12px 0px 0;
 }
 
@@ -328,9 +328,9 @@
   width: 271px;
   height: 26.757px;
   color: #000;
-  background-color: #f8f8ff;
+  background-color: #0E1116;
   text-align: center;
-  font-family: "Roboto Serif";
+  font-family: "Plus Jakarta Sans";
   font-size: 12px;
   font-style: normal;
   font-weight: 600;
@@ -344,7 +344,7 @@
   justify-content: center;
   align-items: center;
   text-transform: capitalize;
-  font-family: "Poppins";
+  font-family: "Plus Jakarta Sans";
   font-style: normal;
   font-weight: 400;
   font-size: 30px;
@@ -357,7 +357,7 @@
 .homepage .events-frame {
   width: 100%;
   height: 745px;
-  background: #f8f8ff;
+  background: #0E1116;
   display: flex;
 }
 
@@ -381,7 +381,7 @@
 }
 
 .homepage .events-frame .category-title {
-  font-family: "Dancing Script";
+  font-family: "Clash Display";
   font-style: normal;
   font-weight: 700;
   font-size: 36px;
@@ -438,7 +438,7 @@
   width: 90%;
   height: auto;
   bottom: 5px;
-  background: #f8f8ff;
+  background: #0E1116;
   box-shadow: 0px 40px 30px rgba(25, 25, 46, 0.04);
   border-radius: 8px;
 }
@@ -476,7 +476,7 @@
 }
 
 .homepage .events-frame .event-organizator .spec-text-author {
-  font-family: "GT Walsheim Pro";
+  font-family: "Plus Jakarta Sans";
   font-style: normal;
   line-height: 34px;
   color: #140342;
@@ -484,7 +484,7 @@
 
 .homepage .events-frame .bott-left .text-desc {
   margin-top: 10px;
-  font-family: "GT Walsheim Pro";
+  font-family: "Plus Jakarta Sans";
   font-style: normal;
   font-weight: 400;
   font-size: 17px;
@@ -508,7 +508,7 @@
   flex-direction: row;
   width: auto;
   height: 100%;
-  font-family: "GT Walsheim Pro";
+  font-family: "Plus Jakarta Sans";
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
@@ -531,7 +531,7 @@
   height: 8px;
   text-align: center;
   opacity: 1;
-  background: #f8f8ff;
+  background: #0E1116;
   border-radius: 50%;
 }
 

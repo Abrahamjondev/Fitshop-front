@@ -1,3 +1,15 @@
 {
-  "name": "Burak"
+  "short_name": "FitShop",
+  "name": "FitShop — Premium Training Gear",
+  "icons": [
+    {
+      "src": "icons/favicon.svg",
+      "type": "image/svg+xml",
+      "sizes": "any"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#0E7C5A",
+  "background_color": "#0E1116"
 }

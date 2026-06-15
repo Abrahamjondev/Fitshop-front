@@ -1,26 +1,17 @@
-import axios from "axios";
-import { serverApi } from "../../lib/config";
-// import { Order, OrderInquiry, OrderItemInput, OrderUpdateInput } from "../../lib/types/order";
+import api from "./api";
 import { CartItem } from "../../lib/types/search";
-
-// import { Order, OrderInquiry, OrderItemInput } from "../../lib/types/orders";
 import {
   Order,
   OrderInquiry,
   OrderItemInput,
+  OrdersResult,
   OrderUpdateInput,
 } from "../../lib/types/orders";
 
 class OrderService {
-  private readonly path: string;
-
-  constructor() {
-    this.path = serverApi;
-  }
-
   public async createOrder(input: CartItem[]): Promise<Order> {
     try {
-      const orderItem: OrderItemInput[] = input.map((cartItem: CartItem) => {
+      const orderItems: OrderItemInput[] = input.map((cartItem: CartItem) => {
         return {
           itemQuantity: cartItem.quantity,
           itemPrice: cartItem.price,
@@ -28,44 +19,41 @@ class OrderService {
         };
       });
 
-      const url = `${this.path}/order/create`;
-      const result = await axios.post(url, orderItem, {
-        withCredentials: true,
-      });
-      console.log("createOrder:", result);
-
+      const result = await api.post("/order/create", orderItems);
       return result.data;
     } catch (err) {
-      console.log("Error createOrder:", err);
+      console.error("Error, createOrder:", err);
       throw err;
     }
   }
 
-  public async getMyOrders(input: OrderInquiry): Promise<Order[]> {
+  public async getMyOrders(input: OrderInquiry): Promise<OrdersResult> {
     try {
-      axios.defaults.withCredentials = true;
-      const url = `${this.path}/order/all`;
-      const query = `?page=${input.page}&limit=${input.limit}&orderStatus=${input.orderStatus}`;
+      const result = await api.get("/order/all", {
+        params: {
+          page: input.page,
+          limit: input.limit,
+          orderStatus: input.orderStatus,
+        },
+      });
 
-      const result = await axios.get(url + query, { withCredentials: true });
-      console.log("getMyOrders:", result);
-
-      return result.data;
+      // Backend { list, total } qaytaradi
+      return {
+        list: result.data?.list ?? [],
+        total: result.data?.total ?? 0,
+      };
     } catch (err) {
-      console.log("Error getMyOrders:", err);
+      console.error("Error, getMyOrders:", err);
       throw err;
     }
   }
 
   public async updateOrder(input: OrderUpdateInput): Promise<Order> {
     try {
-      const url = `${this.path}/order/update`;
-      const result = await axios.post(url, input, { withCredentials: true });
-      console.log("updateOrder:", result);
-
+      const result = await api.post("/order/update", input);
       return result.data;
     } catch (err) {
-      console.log("Error getMyOrders:", err);
+      console.error("Error, updateOrder:", err);
       throw err;
     }
   }

@@ -1,86 +1,54 @@
 import React from "react";
-import { Stack, Box, Button } from "@mui/material";
+import { Stack, Box, Button, Pagination } from "@mui/material";
 import TabPanel from "@mui/lab/TabPanel";
 import moment from "moment";
 
 import { useSelector } from "react-redux";
 import { createSelector } from "reselect";
-import { retrieveProcessOrders } from "./selector";
-import { Messages, serverApi } from "../../../lib/config";
-// import { Order, OrderItem, OrderUpdateInput } from "../../../lib/types/order";
-import { Product } from "../../../lib/types/product";
+import { retrieveProcessOrders, retrieveProcessTotal } from "./selector";
+import { Messages } from "../../../lib/config";
+import {
+  formatPrice,
+  getOrderProduct,
+  getOrderSubtotal,
+  getOrderDelivery,
+  getOrderTotal,
+  getProductImage,
+} from "../../../lib/utils";
 import { useGlobals } from "../../hooks/useGlobals";
 import { T } from "../../../lib/types/common";
 import OrderService from "../../services/OrderService";
-// import { OrderStatus } from "../../../lib/enums/order.num";
-import { sweetErrorHandling } from "../../../lib/sweetAlert";
+import {
+  sweetConfirmAlert,
+  sweetErrorHandling,
+} from "../../../lib/sweetAlert";
 import { OrderStatus } from "../../../lib/enums/order.enum";
 import { Order, OrderItem, OrderUpdateInput } from "../../../lib/types/orders";
 
 /** REDUX SLICE & SELECTOR */
 const processOrdersRetriever = createSelector(
   retrieveProcessOrders,
-  (processOrders) => ({ processOrders }),
+  retrieveProcessTotal,
+  (processOrders, processTotal) => ({ processOrders, processTotal }),
 );
-
-const DELIVERY_FREE_THRESHOLD = 500000;
-const DELIVERY_COST = 30000;
-
-function getOrderProduct(
-  order: Order,
-  item: OrderItem,
-): Product | undefined {
-  return order.productData.find((ele: Product) => item.productId === ele._id);
-}
-
-function getProductImage(product?: Product) {
-  const image = product?.productImages?.[0];
-  if (!image) return "/icons/noimage-list.svg";
-  if (image.startsWith("http")) return image;
-  if (image.startsWith("/")) return `${serverApi}${image}`;
-  return `${serverApi}/${image}`;
-}
-
-function formatOrderPrice(price: number) {
-  return `${price?.toLocaleString()} UZS`;
-}
-
-function getOrderSubtotal(order: Order) {
-  return order.orderItems.reduce(
-    (total, item) => total + item.itemQuantity * item.itemPrice,
-    0,
-  );
-}
-
-function getOrderDelivery(order: Order) {
-  if (order.orderDelivery > 0) return order.orderDelivery;
-
-  const subtotal = getOrderSubtotal(order);
-  return subtotal < DELIVERY_FREE_THRESHOLD ? DELIVERY_COST : 0;
-}
-
-function getOrderTotal(order: Order) {
-  const subtotal = getOrderSubtotal(order);
-  const delivery = getOrderDelivery(order);
-  const calculatedTotal = subtotal + delivery;
-
-  return order.orderTotal >= calculatedTotal ? order.orderTotal : calculatedTotal;
-}
 
 interface ProcessOrderProps {
   setValue: (input: string) => void;
+  page: number;
+  limit: number;
+  onPageChange: (page: number) => void;
 }
 
-export default function PausedOrders(props: ProcessOrderProps) {
-  const { setValue } = props;
+export default function ProcessOrders(props: ProcessOrderProps) {
+  const { setValue, page, limit, onPageChange } = props;
   const { authMember, setOrderBuilder } = useGlobals();
-  const { processOrders } = useSelector(processOrdersRetriever);
+  const { processOrders, processTotal } = useSelector(processOrdersRetriever);
+  const totalPages = Math.max(1, Math.ceil(processTotal / limit));
 
   /** HANDLERS **/
   const finishedOrderHandler = async (e: T) => {
     try {
       if (!authMember) throw new Error(Messages.error2);
-      // PAYMENT PROCESS shu joyda bo'lish kerak
 
       const orderId = e.target.value;
       const input: OrderUpdateInput = {
@@ -88,17 +56,17 @@ export default function PausedOrders(props: ProcessOrderProps) {
         orderStatus: OrderStatus.FINISH,
       };
 
-      const confirmation = window.confirm("Have you received your order?");
+      const confirmation = await sweetConfirmAlert(
+        "Have you received your order?",
+      );
       if (confirmation) {
         const order = new OrderService();
         await order.updateOrder(input);
-        // PROCESS ORDER
         setValue("3");
-        // ORDER REBUILD
         setOrderBuilder(new Date());
       }
     } catch (err) {
-      console.log(err);
+      console.error(err);
       sweetErrorHandling(err).then();
     }
   };
@@ -118,7 +86,9 @@ export default function PausedOrders(props: ProcessOrderProps) {
                   <span className="order-status-pill process">In progress</span>
                   <strong>Order #{order._id.slice(-6).toUpperCase()}</strong>
                 </Box>
-                <span>{moment().format("YY-MM-DD HH:mm")}</span>
+                <span>
+                  {moment(order.updatedAt).format("YYYY-MM-DD HH:mm")}
+                </span>
               </Box>
               <Box className="order-box-scroll">
                 {order?.orderItems?.map((item: OrderItem) => {
@@ -138,11 +108,11 @@ export default function PausedOrders(props: ProcessOrderProps) {
                         {product?.productName || "Unavailable product"}
                       </p>
                       <Box className="price-box">
-                        <p>{formatOrderPrice(item.itemPrice)}</p>
+                        <p>{formatPrice(item.itemPrice)}</p>
                         <span>x</span>
                         <p>{item.itemQuantity}</p>
                         <strong>
-                          {formatOrderPrice(item.itemQuantity * item.itemPrice)}
+                          {formatPrice(item.itemQuantity * item.itemPrice)}
                         </strong>
                       </Box>
                     </Box>
@@ -153,17 +123,13 @@ export default function PausedOrders(props: ProcessOrderProps) {
               <Box className="total-price-box">
                 <Box className="box-total">
                   <p className="bold-txt">Product price</p>
-                  <p className="normal-txt">
-                    {formatOrderPrice(orderSubtotal)}
-                  </p>
+                  <p className="normal-txt">{formatPrice(orderSubtotal)}</p>
                   <p className="bold-txt">Delivery cost</p>
                   <p className="normal-txt">
-                    {orderDelivery === 0 ? "Free" : formatOrderPrice(orderDelivery)}
+                    {orderDelivery === 0 ? "Free" : formatPrice(orderDelivery)}
                   </p>
                   <p className="bold-txt">Total</p>
-                  <p className="normal-txt">
-                    {formatOrderPrice(orderTotal)}
-                  </p>
+                  <p className="normal-txt">{formatPrice(orderTotal)}</p>
                 </Box>
                 <Button
                   value={order._id}
@@ -179,14 +145,24 @@ export default function PausedOrders(props: ProcessOrderProps) {
           );
         })}
 
-        {!processOrders ||
-          (processOrders.length === 0 && (
-            <Box className="order-empty-state">
-              <img src="/icons/noimage-list.svg" alt="" />
-              <strong>No processing orders</strong>
-              <span>Paid orders being prepared will appear here.</span>
-            </Box>
-          ))}
+        {(!processOrders || processOrders.length === 0) && (
+          <Box className="order-empty-state">
+            <img src="/icons/noimage-list.svg" alt="" />
+            <strong>No processing orders</strong>
+            <span>Paid orders being prepared will appear here.</span>
+          </Box>
+        )}
+
+        {processTotal > limit && (
+          <Stack alignItems="center" sx={{ mt: 2 }}>
+            <Pagination
+              count={totalPages}
+              page={page}
+              onChange={(e, value) => onPageChange(value)}
+              color="secondary"
+            />
+          </Stack>
+        )}
       </Stack>
     </TabPanel>
   );

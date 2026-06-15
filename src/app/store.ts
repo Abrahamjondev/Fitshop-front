@@ -4,10 +4,13 @@ import reduxLogger from "redux-logger";
 import ProductsPageReducer from "./screens/productsPage/slice";
 import OrdersPageReducer from "./screens/ordersPage/slice";
 
+const isDev = process.env.NODE_ENV === "development";
+
 export const store = configureStore({
   middleware: (getDefaultMiddleware) =>
-    // @ts-ignore
-    getDefaultMiddleware().concat(reduxLogger),
+    isDev
+      ? getDefaultMiddleware().concat(reduxLogger as any)
+      : getDefaultMiddleware(),
 
   reducer: {
     home: homeReducer,

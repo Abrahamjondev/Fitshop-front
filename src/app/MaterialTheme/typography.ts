@@ -1,16 +1,23 @@
-export default {
+const DISPLAY = '"Clash Display", "Plus Jakarta Sans", sans-serif';
+const BODY = '"Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif';
+
+const typography = {
+	fontFamily: BODY,
 	h1: {
-		fontWeight: 500,
+		fontFamily: DISPLAY,
+		fontWeight: 600,
 		fontSize: 35,
 		letterSpacing: '-0.24px',
 	},
 	h2: {
-		fontWeight: 500,
+		fontFamily: DISPLAY,
+		fontWeight: 600,
 		fontSize: 29,
 		letterSpacing: '-0.24px',
 	},
 	h3: {
-		fontWeight: 500,
+		fontFamily: DISPLAY,
+		fontWeight: 600,
 		fontSize: 24,
 		letterSpacing: '-0.06px',
 	},
@@ -33,3 +40,5 @@ export default {
 		fontWeight: 500,
 	},
 };
+
+export default typography;

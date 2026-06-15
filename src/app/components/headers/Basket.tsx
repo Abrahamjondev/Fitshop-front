@@ -20,6 +20,7 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { useHistory } from "react-router-dom";
 import { CartItem } from "../../../lib/types/search";
 import { Messages, serverApi } from "../../../lib/config";
+import { getDeliveryCost, formatPrice } from "../../../lib/utils";
 import { sweetErrorHandling } from "../../../lib/sweetAlert";
 import { useGlobals } from "../../hooks/useGlobals";
 import OrderService from "../../services/OrderService";
@@ -40,9 +41,13 @@ export default function Basket(props: BasketProps) {
     (a: number, c: CartItem) => a + c.quantity * c.price,
     0,
   );
+  const totalQuantity: number = cartItems.reduce(
+    (a: number, c: CartItem) => a + c.quantity,
+    0,
+  );
 
-  const shippingCost: number = itemsPrice < 500000 ? 30000 : 0;
-  const totalPrice = (itemsPrice + shippingCost).toFixed(1);
+  const shippingCost: number = getDeliveryCost(itemsPrice);
+  const totalPrice: number = itemsPrice + shippingCost;
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -75,8 +80,6 @@ export default function Basket(props: BasketProps) {
     }
   };
 
-  const formatPrice = (price: number) => `${price.toLocaleString()} UZS`;
-
   return (
     <Box className={"hover-line"}>
       <Tooltip title="Basket">
@@ -90,30 +93,30 @@ export default function Basket(props: BasketProps) {
           sx={{
             width: 46,
             height: 46,
-            border: "1px solid rgba(186, 117, 23, 0.38)",
+            border: "1px solid rgba(14, 124, 90, 0.38)",
             bgcolor: open
-              ? "rgba(186, 117, 23, 0.18)"
+              ? "rgba(14, 124, 90, 0.18)"
               : "rgba(255,255,255,0.04)",
-            color: "#BA7517",
+            color: "#0E7C5A",
             transition: "all 200ms ease",
             "&:hover": {
-              bgcolor: "rgba(186, 117, 23, 0.16)",
-              borderColor: "rgba(186, 117, 23, 0.72)",
+              bgcolor: "rgba(14, 124, 90, 0.16)",
+              borderColor: "rgba(14, 124, 90, 0.72)",
               transform: "translateY(-1px)",
             },
           }}
         >
           <Badge
-            badgeContent={cartItems.length}
+            badgeContent={totalQuantity}
             sx={{
               "& .MuiBadge-badge": {
-                bgcolor: "#BA7517",
-                color: "#FAEEDA",
+                bgcolor: "#0E7C5A",
+                color: "#FFFFFF",
                 fontWeight: 800,
                 minWidth: 18,
                 height: 18,
                 fontSize: 11,
-                boxShadow: "0 0 0 2px #0E0E10",
+                boxShadow: "0 0 0 2px #FFFFFF",
               },
             }}
           >
@@ -134,12 +137,12 @@ export default function Basket(props: BasketProps) {
             width: { xs: "calc(100vw - 28px)", sm: 440 },
             maxWidth: "calc(100vw - 28px)",
             borderRadius: "22px",
-            bgcolor: "#0E0E10",
-            color: "#FAEEDA",
-            border: "1px solid rgba(186, 117, 23, 0.3)",
-            boxShadow: "0 26px 70px rgba(0,0,0,0.5)",
+            bgcolor: "#FFFFFF",
+            color: "#0E1116",
+            border: "1px solid rgba(14, 124, 90, 0.3)",
+            boxShadow: "0 26px 70px rgba(14, 17, 22, 0.45)",
             backgroundImage:
-              "linear-gradient(180deg, rgba(186,117,23,0.13), rgba(14,14,16,0) 42%)",
+              "linear-gradient(180deg, rgba(14, 124, 90,0.13), rgba(255, 255, 255,0) 42%)",
             "&:before": {
               content: '""',
               display: "block",
@@ -148,9 +151,9 @@ export default function Basket(props: BasketProps) {
               right: 14,
               width: 10,
               height: 10,
-              bgcolor: "#151518",
-              borderLeft: "1px solid rgba(186, 117, 23, 0.3)",
-              borderTop: "1px solid rgba(186, 117, 23, 0.3)",
+              bgcolor: "#F4F5F7",
+              borderLeft: "1px solid rgba(14, 124, 90, 0.3)",
+              borderTop: "1px solid rgba(14, 124, 90, 0.3)",
               transform: "translateY(-50%) rotate(45deg)",
               zIndex: 0,
             },
@@ -176,11 +179,17 @@ export default function Basket(props: BasketProps) {
           >
             <Box>
               <Typography
-                sx={{ color: "#FAEEDA", fontSize: 22, fontWeight: 900 }}
+                sx={{
+                  fontFamily: "'Clash Display', sans-serif",
+                  color: "#0E1116",
+                  fontSize: 22,
+                  fontWeight: 600,
+                  letterSpacing: "-0.02em",
+                }}
               >
                 Basket
               </Typography>
-              <Typography sx={{ color: "#a1a1aa", fontSize: 13 }}>
+              <Typography sx={{ color: "#444C58", fontSize: 13 }}>
                 {cartItems.length === 0
                   ? "No products selected"
                   : `${cartItems.length} selected product${
@@ -193,10 +202,10 @@ export default function Basket(props: BasketProps) {
                 aria-label="Close basket"
                 onClick={handleClose}
                 sx={{
-                  color: "#a1a1aa",
-                  border: "1px solid rgba(250,238,218,0.12)",
+                  color: "#444C58",
+                  border: "1px solid rgba(14, 124, 90, 0.18)",
                   "&:hover": {
-                    color: "#FAEEDA",
+                    color: "#0E1116",
                     bgcolor: "rgba(255,255,255,0.06)",
                   },
                 }}
@@ -224,7 +233,7 @@ export default function Basket(props: BasketProps) {
             )}
           </Stack>
 
-          <Divider sx={{ borderColor: "rgba(250,238,218,0.1)" }} />
+          <Divider sx={{ borderColor: "rgba(14, 124, 90, 0.18)" }} />
 
           {cartItems.length === 0 ? (
             <Stack
@@ -243,20 +252,20 @@ export default function Basket(props: BasketProps) {
                   borderRadius: "18px",
                   display: "grid",
                   placeItems: "center",
-                  color: "#BA7517",
-                  bgcolor: "rgba(186,117,23,0.12)",
-                  border: "1px solid rgba(186,117,23,0.28)",
+                  color: "#0E7C5A",
+                  bgcolor: "rgba(14, 124, 90,0.12)",
+                  border: "1px solid rgba(14, 124, 90,0.28)",
                   mb: 2,
                 }}
               >
                 <ShoppingBagOutlinedIcon sx={{ fontSize: 34 }} />
               </Box>
               <Typography
-                sx={{ color: "#FAEEDA", fontSize: 18, fontWeight: 800 }}
+                sx={{ color: "#0E1116", fontSize: 18, fontWeight: 800 }}
               >
                 Cart is empty
               </Typography>
-              <Typography sx={{ color: "#a1a1aa", mt: 0.6, fontSize: 14 }}>
+              <Typography sx={{ color: "#444C58", mt: 0.6, fontSize: 14 }}>
                 Add your favorite training essentials and they will appear here.
               </Typography>
             </Stack>
@@ -275,7 +284,7 @@ export default function Basket(props: BasketProps) {
                   pr: 0.5,
                   "&::-webkit-scrollbar": { width: 6 },
                   "&::-webkit-scrollbar-thumb": {
-                    bgcolor: "rgba(186,117,23,0.65)",
+                    bgcolor: "rgba(14, 124, 90,0.65)",
                     borderRadius: 99,
                   },
                   "&::-webkit-scrollbar-track": {
@@ -298,8 +307,10 @@ export default function Basket(props: BasketProps) {
                         gap: 1.5,
                         p: 1.2,
                         borderRadius: "16px",
-                        bgcolor: "rgba(255,255,255,0.045)",
-                        border: "1px solid rgba(250,238,218,0.08)",
+                        bgcolor: "#F6F7F9",
+                        border: "1px solid #EDEFF2",
+                        transition: "border-color 280ms cubic-bezier(0.32,0.72,0,1)",
+                        "&:hover": { borderColor: "rgba(14,124,90,0.32)" },
                       }}
                     >
                       <Box
@@ -316,15 +327,15 @@ export default function Basket(props: BasketProps) {
                           height: 64,
                           borderRadius: "14px",
                           objectFit: "cover",
-                          bgcolor: "#17171A",
-                          border: "1px solid rgba(186,117,23,0.18)",
+                          bgcolor: "#F4F5F7",
+                          border: "1px solid rgba(14, 124, 90,0.18)",
                         }}
                       />
 
                       <Stack sx={{ minWidth: 0, flex: 1 }}>
                         <Typography
                           sx={{
-                            color: "#FAEEDA",
+                            color: "#0E1116",
                             fontSize: 15,
                             fontWeight: 800,
                             lineHeight: 1.25,
@@ -337,7 +348,7 @@ export default function Basket(props: BasketProps) {
                         </Typography>
                         <Typography
                           sx={{
-                            color: "#BA7517",
+                            color: "#0E7C5A",
                             fontSize: 13,
                             fontWeight: 800,
                             mt: 0.5,
@@ -346,7 +357,7 @@ export default function Basket(props: BasketProps) {
                           {formatPrice(item.price)} x {item.quantity}
                         </Typography>
                         <Typography
-                          sx={{ color: "#a1a1aa", fontSize: 12, mt: 0.2 }}
+                          sx={{ color: "#444C58", fontSize: 12, mt: 0.2 }}
                         >
                           Subtotal {formatPrice(item.price * item.quantity)}
                         </Typography>
@@ -357,10 +368,10 @@ export default function Basket(props: BasketProps) {
                         alignItems="center"
                         sx={{
                           flex: "0 0 auto",
-                          border: "1px solid rgba(250,238,218,0.12)",
+                          border: "1px solid rgba(14, 124, 90, 0.18)",
                           borderRadius: "12px",
                           overflow: "hidden",
-                          bgcolor: "rgba(14,14,16,0.7)",
+                          bgcolor: "rgba(255, 255, 255,0.7)",
                         }}
                       >
                         <IconButton
@@ -370,8 +381,8 @@ export default function Basket(props: BasketProps) {
                             width: 30,
                             height: 30,
                             borderRadius: 0,
-                            color: "#FAEEDA",
-                            "&:hover": { bgcolor: "rgba(186,117,23,0.16)" },
+                            color: "#0E1116",
+                            "&:hover": { bgcolor: "rgba(14, 124, 90,0.16)" },
                           }}
                         >
                           <RemoveIcon sx={{ fontSize: 16 }} />
@@ -380,7 +391,7 @@ export default function Basket(props: BasketProps) {
                           sx={{
                             width: 28,
                             textAlign: "center",
-                            color: "#FAEEDA",
+                            color: "#0E1116",
                             fontSize: 13,
                             fontWeight: 800,
                           }}
@@ -394,8 +405,8 @@ export default function Basket(props: BasketProps) {
                             width: 30,
                             height: 30,
                             borderRadius: 0,
-                            color: "#BA7517",
-                            "&:hover": { bgcolor: "rgba(186,117,23,0.16)" },
+                            color: "#0E7C5A",
+                            "&:hover": { bgcolor: "rgba(14, 124, 90,0.16)" },
                           }}
                         >
                           <AddIcon sx={{ fontSize: 16 }} />
@@ -412,8 +423,8 @@ export default function Basket(props: BasketProps) {
                             right: 6,
                             width: 24,
                             height: 24,
-                            color: "#a1a1aa",
-                            bgcolor: "rgba(14,14,16,0.66)",
+                            color: "#444C58",
+                            bgcolor: "rgba(255, 255, 255,0.66)",
                             "&:hover": {
                               color: "#ef4444",
                               bgcolor: "rgba(239,68,68,0.14)",
@@ -432,18 +443,18 @@ export default function Basket(props: BasketProps) {
 
           {cartItems.length !== 0 ? (
             <Stack sx={{ gap: 1.5 }}>
-              <Divider sx={{ borderColor: "rgba(250,238,218,0.1)" }} />
+              <Divider sx={{ borderColor: "rgba(14, 124, 90, 0.18)" }} />
               <Stack spacing={0.8}>
                 <Stack
                   direction="row"
                   alignItems="center"
                   justifyContent="space-between"
                 >
-                  <Typography sx={{ color: "#a1a1aa", fontSize: 13 }}>
+                  <Typography sx={{ color: "#444C58", fontSize: 13 }}>
                     Products
                   </Typography>
                   <Typography
-                    sx={{ color: "#FAEEDA", fontSize: 13, fontWeight: 700 }}
+                    sx={{ color: "#0E1116", fontSize: 13, fontWeight: 700 }}
                   >
                     {formatPrice(itemsPrice)}
                   </Typography>
@@ -455,14 +466,14 @@ export default function Basket(props: BasketProps) {
                 >
                   <Stack direction="row" alignItems="center" spacing={0.7}>
                     <LocalShippingOutlinedIcon
-                      sx={{ color: "#BA7517", fontSize: 17 }}
+                      sx={{ color: "#0E7C5A", fontSize: 17 }}
                     />
-                    <Typography sx={{ color: "#a1a1aa", fontSize: 13 }}>
+                    <Typography sx={{ color: "#444C58", fontSize: 13 }}>
                       Shipping
                     </Typography>
                   </Stack>
                   <Typography
-                    sx={{ color: "#FAEEDA", fontSize: 13, fontWeight: 700 }}
+                    sx={{ color: "#0E1116", fontSize: 13, fontWeight: 700 }}
                   >
                     {shippingCost === 0 ? "Free" : formatPrice(shippingCost)}
                   </Typography>
@@ -474,31 +485,35 @@ export default function Basket(props: BasketProps) {
                 justifyContent="space-between"
               >
                 <Box>
-                  <Typography sx={{ color: "#a1a1aa", fontSize: 12 }}>
+                  <Typography sx={{ color: "#444C58", fontSize: 12 }}>
                     Total
                   </Typography>
                   <Typography
-                    sx={{ color: "#FAEEDA", fontSize: 24, fontWeight: 900 }}
+                    sx={{ color: "#0E1116", fontSize: 24, fontWeight: 900 }}
                   >
-                    {formatPrice(Number(totalPrice))}
+                    {formatPrice(totalPrice)}
                   </Typography>
                 </Box>
                 <Button
                   onClick={proceedOrderHandler}
                   startIcon={<ShoppingCartIcon />}
                   variant={"contained"}
+                  disableElevation
                   sx={{
                     height: 48,
                     px: 3,
-                    borderRadius: "14px",
-                    bgcolor: "#BA7517",
-                    color: "#FAEEDA",
-                    fontWeight: 900,
+                    borderRadius: "999px",
+                    background:
+                      "linear-gradient(135deg, #12A074 0%, #0E7C5A 52%, #0A5E44 100%)",
+                    color: "#FFFFFF",
+                    fontWeight: 800,
                     textTransform: "none",
-                    boxShadow: "0 14px 30px rgba(186,117,23,0.28)",
+                    boxShadow:
+                      "inset 0 1px 0 rgba(255,255,255,0.35), 0 14px 30px -14px rgba(14, 124, 90,0.8)",
+                    transition: "all 320ms cubic-bezier(0.32,0.72,0,1)",
                     "&:hover": {
-                      bgcolor: "#9A6012",
-                      boxShadow: "0 16px 34px rgba(186,117,23,0.36)",
+                      filter: "brightness(1.05)",
+                      transform: "translateY(-1px)",
                     },
                   }}
                 >

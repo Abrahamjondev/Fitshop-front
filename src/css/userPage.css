@@ -3,9 +3,9 @@
   min-height: 100vh;
   display: flex;
   background:
-    radial-gradient(circle at 12% 8%, rgba(186, 117, 23, 0.18), transparent 28%),
-    linear-gradient(180deg, #0e0e10 0%, #151518 54%, #0e0e10 100%);
-  color: #faeeda;
+    radial-gradient(circle at 12% 8%, rgba(14, 124, 90, 0.18), transparent 28%),
+    linear-gradient(180deg, #FFFFFF 0%, #F4F5F7 54%, #FFFFFF 100%);
+  color: #0E1116;
 }
 
 .user-page .my-page-frame {
@@ -34,33 +34,34 @@
 .my-page-left .menu-name span {
   width: fit-content;
   padding: 8px 13px;
-  border: 1px solid rgba(186, 117, 23, 0.38);
+  border: 1px solid rgba(14, 124, 90, 0.38);
   border-radius: 999px;
-  background: rgba(186, 117, 23, 0.12);
-  color: #d7b686;
-  font-family: "Poppins";
-  font-size: 12px;
-  font-weight: 900;
-  letter-spacing: 0.04em;
+  background: rgba(14, 124, 90, 0.12);
+  color: #0E7C5A;
+  font-family: "Space Mono", monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
 }
 
 .my-page-left .menu-name h1 {
   margin: 18px 0 0;
-  color: #faeeda;
-  font-family: "Poppins";
-  font-size: clamp(38px, 5vw, 62px);
-  font-weight: 900;
-  line-height: 1.02;
-  letter-spacing: 0;
+  color: #0E1116;
+  font-family: "Clash Display", sans-serif;
+  font-size: clamp(36px, 5vw, 56px);
+  font-weight: 600;
+  line-height: 1.04;
+  letter-spacing: -0.02em;
 }
 
 .my-page-left .menu-name p {
   max-width: 590px;
   margin: 16px 0 0;
-  color: #c9c1b4;
-  font-family: "Poppins";
+  color: #444C58;
+  font-family: "Plus Jakarta Sans";
   font-size: 16px;
+  font-weight: 500;
   line-height: 1.65;
 }
 
@@ -76,10 +77,10 @@
   padding: 24px;
   display: flex;
   flex-direction: column;
-  border: 1px solid rgba(250, 238, 218, 0.1);
+  border: 1px solid #E6E8EC;
   border-radius: 22px;
-  background: rgba(31, 31, 35, 0.88);
-  box-shadow: 0 22px 54px rgba(0, 0, 0, 0.24);
+  background: #FFFFFF;
+  box-shadow: 0 1px 2px rgba(14,17,22,0.04), 0 20px 44px -24px rgba(14,17,22,0.16);
 }
 
 .user-page .settings .member-media-frame {
@@ -90,8 +91,8 @@
   align-items: center;
   gap: 18px;
   border-radius: 18px;
-  border: 1px solid rgba(250, 238, 218, 0.1);
-  background: rgba(255, 255, 255, 0.045);
+  border: 1px solid #EDEFF2;
+  background: #F6F7F9;
 }
 
 .user-page .settings .member-media-frame .mb-image {
@@ -100,8 +101,8 @@
   flex: 0 0 auto;
   border-radius: 24px;
   object-fit: cover;
-  background: #141417;
-  border: 2px solid rgba(186, 117, 23, 0.42);
+  background: #F7F8FA;
+  border: 2px solid rgba(14, 124, 90, 0.42);
 }
 
 .user-page .settings .media-change-box {
@@ -111,8 +112,8 @@
 }
 
 .user-page .settings .media-change-box span {
-  color: #faeeda;
-  font-family: "Poppins";
+  color: #0E1116;
+  font-family: "Plus Jakarta Sans";
   font-size: 18px;
   font-weight: 900;
   line-height: 1.25;
@@ -121,10 +122,10 @@
 .user-page .settings .media-change-box p {
   max-width: 430px;
   margin: 8px 0 12px;
-  color: #a1a1aa;
-  font-family: "Poppins";
+  color: #444C58;
+  font-family: "Plus Jakarta Sans";
   font-size: 13px;
-  font-weight: 700;
+  font-weight: 600;
   line-height: 1.5;
 }
 
@@ -135,16 +136,16 @@
   align-items: center;
   justify-content: center;
   border-radius: 14px;
-  background: #ba7517;
-  color: #faeeda;
-  box-shadow: 0 12px 26px rgba(186, 117, 23, 0.28);
+  background: linear-gradient(135deg, #12A074 0%, #0E7C5A 52%, #0A5E44 100%);
+  color: #FFFFFF;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.35), 0 12px 26px -14px rgba(14, 124, 90, 0.75);
 }
 
 .user-page .settings .up-del-box button {
   width: 44px;
   min-width: 44px;
   height: 44px;
-  color: #faeeda;
+  color: #FFFFFF;
 }
 
 .user-page .settings .input-frame {
@@ -167,24 +168,31 @@
 }
 
 .user-page .settings .spec-label {
-  color: #d7b686;
-  font-family: "Poppins";
+  color: #444C58;
+  font-family: "Plus Jakarta Sans";
   font-size: 13px;
-  font-weight: 900;
+  font-weight: 800;
 }
 
 .user-page .settings .spec-input,
 .user-page .settings .spec-textarea {
   margin-top: 9px;
   width: 100%;
-  border: 1px solid rgba(250, 238, 218, 0.1);
+  border: 1px solid #E6E8EC;
   border-radius: 14px;
   outline: none;
-  background: rgba(255, 255, 255, 0.05);
-  color: #faeeda;
-  font-family: "Poppins";
+  background: #F6F7F9;
+  color: #0E1116;
+  font-family: "Plus Jakarta Sans";
   font-size: 14px;
-  font-weight: 700;
+  font-weight: 600;
+  transition: border-color 220ms ease, background-color 220ms ease;
+}
+
+.user-page .settings .spec-input:focus,
+.user-page .settings .spec-textarea:focus {
+  border-color: #0E7C5A;
+  background: #FFFFFF;
 }
 
 .user-page .settings .spec-input {
@@ -201,7 +209,7 @@
 
 .user-page .settings .spec-input::placeholder,
 .user-page .settings .spec-textarea::placeholder {
-  color: #77777f;
+  color: #6B7280;
 }
 
 .user-page .settings .save-box {
@@ -213,18 +221,20 @@
 .user-page .settings .save-box button {
   min-width: 150px;
   height: 48px;
-  border-radius: 14px;
-  background: #ba7517;
-  color: #faeeda;
-  font-family: "Poppins";
+  border-radius: 999px;
+  background: linear-gradient(135deg, #12A074 0%, #0E7C5A 52%, #0A5E44 100%);
+  color: #FFFFFF;
+  font-family: "Plus Jakarta Sans";
   font-size: 14px;
-  font-weight: 900;
+  font-weight: 800;
   text-transform: none;
-  box-shadow: 0 14px 30px rgba(186, 117, 23, 0.28);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.35), 0 14px 30px -14px rgba(14, 124, 90, 0.75);
+  transition: filter 320ms ease, transform 320ms cubic-bezier(0.32,0.72,0,1);
 }
 
 .user-page .settings .save-box button:hover {
-  background: #9a6012;
+  filter: brightness(1.05);
+  transform: translateY(-1px);
 }
 
 .user-page .order-info-box {
@@ -235,12 +245,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: 1px solid rgba(250, 238, 218, 0.1);
+  border: 1px solid #E6E8EC;
   border-radius: 22px;
   background:
-    linear-gradient(180deg, rgba(186, 117, 23, 0.16), transparent 38%),
-    rgba(31, 31, 35, 0.9);
-  box-shadow: 0 22px 54px rgba(0, 0, 0, 0.24);
+    linear-gradient(180deg, rgba(14, 124, 90, 0.1), transparent 34%),
+    #FFFFFF;
+  box-shadow: 0 1px 2px rgba(14,17,22,0.04), 0 20px 44px -24px rgba(14,17,22,0.16);
 }
 
 .user-page .order-info-box .order-user-img {
@@ -255,9 +265,9 @@
   height: 132px;
   object-fit: cover;
   border-radius: 32px;
-  border: 2px solid rgba(186, 117, 23, 0.48);
-  background: #141417;
-  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.28);
+  border: 2px solid rgba(14, 124, 90, 0.48);
+  background: #F7F8FA;
+  box-shadow: 0 16px 34px rgba(14, 17, 22, 0.08);
 }
 
 .user-page .order-info-box .order-user-icon-box {
@@ -271,7 +281,7 @@
   align-items: center;
   justify-content: center;
   border-radius: 13px;
-  background: #ba7517;
+  background: #0E7C5A;
 }
 
 .user-page .order-info-box .order-user-icon-box img {
@@ -282,8 +292,8 @@
 
 .user-page .order-info-box .order-user-name {
   margin-top: 18px;
-  color: #faeeda;
-  font-family: "Poppins";
+  color: #0E1116;
+  font-family: "Plus Jakarta Sans";
   font-size: 26px;
   font-weight: 900;
   line-height: 1.2;
@@ -298,11 +308,12 @@
   align-items: center;
   gap: 7px;
   border-radius: 999px;
-  background: rgba(186, 117, 23, 0.14);
-  color: #d7b686;
-  font-family: "Poppins";
+  background: rgba(14, 124, 90, 0.1);
+  border: 1px solid rgba(14, 124, 90, 0.24);
+  color: #0A5E44;
+  font-family: "Plus Jakarta Sans";
   font-size: 12px;
-  font-weight: 900;
+  font-weight: 800;
   line-height: 1.2;
 }
 
@@ -314,7 +325,7 @@
 
 .user-page .order-info-box .order-user-prof svg {
   flex: 0 0 auto;
-  color: #ba7517;
+  color: #0E7C5A;
 }
 
 .user-page .order-info-box .user-media-box {
@@ -330,20 +341,28 @@
   height: 42px;
   padding: 10px;
   border-radius: 14px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(250, 238, 218, 0.08);
-  color: #ba7517;
+  background: #F6F7F9;
+  border: 1px solid #E6E8EC;
+  color: #0E7C5A;
+  cursor: pointer;
+  transition: background-color 280ms ease, border-color 280ms ease, transform 280ms cubic-bezier(0.32,0.72,0,1);
+}
+
+.user-page .order-info-box .user-media-box svg:hover {
+  background: rgba(14, 124, 90, 0.1);
+  border-color: rgba(14, 124, 90, 0.4);
+  transform: translateY(-2px);
 }
 
 .user-page .order-info-box .user-desc {
   width: 100%;
   margin: 22px 0 0;
   padding-top: 18px;
-  border-top: 1px solid rgba(250, 238, 218, 0.1);
-  color: #c9c1b4;
-  font-family: "Poppins";
+  border-top: 1px solid #EDEFF2;
+  color: #444C58;
+  font-family: "Plus Jakarta Sans";
   font-size: 14px;
-  font-weight: 700;
+  font-weight: 500;
   line-height: 1.65;
   text-align: center;
 }

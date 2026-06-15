@@ -7,22 +7,14 @@ import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { Settings } from "./Settings";
 import "../../../css/userPage.css";
+import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useGlobals } from "../../hooks/useGlobals";
-import { serverApi } from "../../../lib/config";
+import { getMemberImage } from "../../../lib/utils";
 import { MemberType } from "../../../lib/enums/member.enum";
-import { Member } from "../../../lib/types/member";
-
-function getMemberImage(member: Member | null) {
-  const image = member?.memberImage;
-  if (!image) return "/icons/default-user.svg";
-  if (image.startsWith("http")) return image;
-  if (image.startsWith("/")) return `${serverApi}${image}`;
-  return `${serverApi}/${image}`;
-}
 
 function getFitShopMemberLabel(memberType?: MemberType) {
-  if (memberType === MemberType.RESTAURANT) return "FitShop Partner";
+  if (memberType === MemberType.SHOP) return "FitShop Partner";
   return "FitShop Member";
 }
 
@@ -30,7 +22,12 @@ export default function UserPage() {
   const history = useHistory();
   const { authMember } = useGlobals();
 
-  if (!authMember) history.push("/");
+  // Auth guard — render paytida emas, effect ichida redirect qilamiz
+  useEffect(() => {
+    if (!authMember) history.push("/");
+  }, [authMember, history]);
+
+  if (!authMember) return null;
   return (
     <div className={"user-page"}>
       <Container>

@@ -184,6 +184,13 @@ export default function HomeNavbar(props: HomeNavbarProps) {
                 </NavLink>
               </Box>
             ) : null}
+            {authMember ? (
+              <Box className={"hover-line "}>
+                <NavLink to="/wishlist" activeClassName={"underline"}>
+                  Wishlist
+                </NavLink>
+              </Box>
+            ) : null}
             <Box className={"hover-line "}>
               <NavLink to="/help" activeClassName={"underline"}>
                 Help
@@ -191,14 +198,16 @@ export default function HomeNavbar(props: HomeNavbarProps) {
             </Box>
           </Stack>
           <Stack className="header-actions">
-            {/* BASKET */}
-            <Basket
-              cartItems={cartItems}
-              onAdd={onAdd}
-              onRemove={onRemove}
-              onDelete={onDelete}
-              onDeleteAll={onDeleteAll}
-            />
+            {/* BASKET — faqat login bo'lgan member uchun ko'rinadi */}
+            {authMember ? (
+              <Basket
+                cartItems={cartItems}
+                onAdd={onAdd}
+                onRemove={onRemove}
+                onDelete={onDelete}
+                onDeleteAll={onDeleteAll}
+              />
+            ) : null}
             {!authMember ? (
               <Stack className="auth-buttons">
                 <Button
@@ -286,9 +295,7 @@ export default function HomeNavbar(props: HomeNavbarProps) {
         </Stack>
         <Stack className="header-frame">
           <Stack className="detail">
-            <Box className="hero-kicker">
-              Premium training gear for modern athletes
-            </Box>
+            <Box className="hero-kicker">Premium Training Equipment</Box>
             <Box className="head-main-txt" component="h1">
               <span className="animated-title-line">
                 {titleLetters.map((char, index) => (

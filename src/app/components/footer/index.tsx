@@ -5,33 +5,33 @@ import styled from "styled-components";
 
 const Footers = styled.footer`
   width: 100%;
-  background: #0e0e10;
+  background: #f6f7f9;
+  border-top: 1px solid #e6e8ec;
 `;
 
 const colors = {
-  bg: "#0E0E10",
-  borderSoft: "rgba(186, 117, 23, 0.1)",
-  socialBg: "rgba(186, 117, 23, 0.1)",
-  socialBorder: "rgba(186, 117, 23, 0.2)",
-  accent: "#BA7517",
-  accentHover: "#ffb869",
-  text: "#FAEEDA",
-  textMuted: "#a1a1aa",
+  bg: "#FFFFFF",
+  borderSoft: "rgba(14, 124, 90, 0.1)",
+  socialBg: "rgba(14, 124, 90, 0.1)",
+  socialBorder: "rgba(14, 124, 90, 0.2)",
+  accent: "#0E7C5A",
+  accentHover: "#12A074",
+  text: "#0E1116",
+  textMuted: "#5B6470",
 };
 
+// Faqat mavjud routelarga yo'naltiramiz
 const shopLinks = [
   { label: "Home", to: "/" },
   { label: "Products", to: "/products" },
-  { label: "Categories", to: "/catalog" },
-  { label: "Special Offers", to: "/deals" },
+  { label: "My Orders", to: "/orders" },
+  { label: "My Page", to: "/member-page" },
 ];
 
 const supportLinks = [
-  { label: "Contact Us", to: "/contact" },
-  { label: "FAQ", to: "/faq" },
-  { label: "Shipping Info", to: "/shipping" },
-  { label: "Returns", to: "/returns" },
-  { label: "Terms & Privacy", to: "/terms" },
+  { label: "Contact Us", to: "/help" },
+  { label: "FAQ", to: "/help" },
+  { label: "Terms & Privacy", to: "/help" },
 ];
 
 const socialLinks = [
@@ -44,7 +44,7 @@ const socialLinks = [
 const linkStyles = {
   width: "fit-content",
   color: colors.textMuted,
-  fontFamily: "'Inter', sans-serif",
+  fontFamily: "'Plus Jakarta Sans', sans-serif",
   fontSize: 14,
   lineHeight: 1.6,
   textDecoration: "none",
@@ -57,7 +57,7 @@ const linkStyles = {
 const sectionTitleStyles = {
   mb: 3,
   color: colors.text,
-  fontFamily: "'Space Grotesk', sans-serif",
+  fontFamily: "'Clash Display', sans-serif",
   fontSize: 16,
   fontWeight: 700,
   letterSpacing: "1px",
@@ -95,7 +95,7 @@ export default function Footer() {
               component="h2"
               sx={{
                 mb: 1.5,
-                fontFamily: "'Space Grotesk', sans-serif",
+                fontFamily: "'Clash Display', sans-serif",
                 fontSize: 24,
                 fontWeight: 700,
                 lineHeight: 1.2,
@@ -112,7 +112,7 @@ export default function Footer() {
               sx={{
                 maxWidth: 280,
                 color: colors.textMuted,
-                fontFamily: "'Inter', sans-serif",
+                fontFamily: "'Plus Jakarta Sans', sans-serif",
                 fontSize: 14,
                 lineHeight: 1.6,
               }}
@@ -149,7 +149,7 @@ export default function Footer() {
                       background: colors.accent,
                       borderColor: colors.accent,
                       transform: "translateY(-2px)",
-                      boxShadow: "0 8px 16px rgba(186, 117, 23, 0.24)",
+                      boxShadow: "0 8px 16px rgba(14, 124, 90, 0.24)",
                     },
                     "&:hover img": {
                       filter: "brightness(0) saturate(100%)",
@@ -214,7 +214,7 @@ export default function Footer() {
           <Typography
             sx={{
               color: colors.textMuted,
-              fontFamily: "'Inter', sans-serif",
+              fontFamily: "'Plus Jakarta Sans', sans-serif",
               fontSize: 12,
               lineHeight: 1.6,
             }}
@@ -223,10 +223,10 @@ export default function Footer() {
           </Typography>
 
           <Stack direction="row" spacing={4}>
-            <Box component={Link} to="/terms" sx={{ ...linkStyles, fontSize: 12 }}>
+            <Box component={Link} to="/help" sx={{ ...linkStyles, fontSize: 12 }}>
               Terms of Service
             </Box>
-            <Box component={Link} to="/privacy" sx={{ ...linkStyles, fontSize: 12 }}>
+            <Box component={Link} to="/help" sx={{ ...linkStyles, fontSize: 12 }}>
               Privacy Policy
             </Box>
           </Stack>

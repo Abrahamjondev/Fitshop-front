@@ -4,39 +4,56 @@ import React, {
   useMemo,
   useState,
 } from "react";
-import { Box, Button, Container, Stack } from "@mui/material";
+import { Box, Button, Container, IconButton, Stack } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
+import FavoriteRoundedIcon from "@mui/icons-material/FavoriteRounded";
+import FavoriteBorderRoundedIcon from "@mui/icons-material/FavoriteBorderRounded";
 import StorefrontIcon from "@mui/icons-material/Storefront";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
-import Badge from "@mui/material/Badge";
 import Pagination from "@mui/material/Pagination";
 import PaginationItem from "@mui/material/PaginationItem";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { useDispatch, useSelector } from "react-redux";
 import { Dispatch } from "@reduxjs/toolkit";
-import { Product, ProductInquiry } from "../../../lib/types/product";
+import {
+  Product,
+  ProductInquiry,
+  ProductsResult,
+} from "../../../lib/types/product";
 import { createSelector } from "reselect";
-import { retrieveProducts } from "./selector";
+import { retrieveProducts, retrieveProductsTotal } from "./selector";
 import { setProducts } from "./slice";
 import ProductService from "../../services/ProductService";
 import { ProductCategory } from "../../../lib/enums/product.enum";
 import { serverApi } from "../../../lib/config";
-import { useHistory } from "react-router-dom";
+import { isProductAvailable, formatPrice } from "../../../lib/utils";
+import {
+  sweetTopSmallSuccessAlert,
+  sweetTopSmallErrorAlert,
+} from "../../../lib/sweetAlert";
+import { useGlobals } from "../../hooks/useGlobals";
+import { useHistory, useLocation } from "react-router-dom";
 import { CartItem } from "../../../lib/types/search";
+import useWishlist from "../../hooks/useWishlist";
 
 /**.REDUX SLICE & SELECTOR **/
 const actionDispatch = (dispatch: Dispatch) => ({
-  setProducts: (data: Product[]) => dispatch(setProducts(data)),
+  setProducts: (data: ProductsResult) => dispatch(setProducts(data)),
 });
 
-const productsRetriever = createSelector(retrieveProducts, (products) => ({
-  products,
-}));
+const productsRetriever = createSelector(
+  retrieveProducts,
+  retrieveProductsTotal,
+  (products, productsTotal) => ({
+    products,
+    productsTotal,
+  }),
+);
 
 interface ProductsProps {
   onAdd: (item: CartItem) => void;
@@ -96,16 +113,13 @@ const shopPlaces = [
 ];
 
 function formatProductMeta(product: Product) {
-  if (product.productVolume) return `${product.productVolume}L`;
   if (product.productWeight) {
     const weight = Number(product.productWeight);
     return weight >= 1000 ? `${weight / 1000}kg` : `${weight}g`;
   }
-  return product.productSize ? String(product.productSize).replace("_", " ") : "Standard";
-}
-
-function formatPrice(price: number) {
-  return `${price?.toLocaleString()} UZS`;
+  return product.productSize && product.productSize !== "N/A"
+    ? String(product.productSize).replace("_", " ")
+    : "Standard";
 }
 
 function getProductImagePath(product: Product) {
@@ -117,94 +131,71 @@ function getProductImagePath(product: Product) {
 }
 
 function getProductBrandLabel(product: Product) {
-  if (product.productBrand?.trim()) return product.productBrand;
-
   const name = product.productName.trim();
   const firstWords = name.split(/\s+/).slice(0, 2).join(" ");
   return firstWords || "FitShop Pick";
 }
 
+/** Eng ko'p ko'rilgan mahsulotlardan har bir kategoriyadan bittadan, 4 ta */
 function pickTopBrandProducts(products: Product[]) {
-  const brandPriority = [
-    "nike",
-    "adidas",
-    "puma",
-    "under armour",
-    "optimum nutrition",
-    "dymatize",
-    "muscle tech",
-    "muscletech",
-    "bsn",
-    "myprotein",
-  ];
-
   return [...products]
-    .sort((first, second) => {
-      const firstBrand = first.productBrand?.toLowerCase() || "";
-      const secondBrand = second.productBrand?.toLowerCase() || "";
-      const firstPriority = brandPriority.findIndex((brand) =>
-        firstBrand.includes(brand),
+    .sort((first, second) => (second.productViews || 0) - (first.productViews || 0))
+    .reduce<Product[]>((featured, product) => {
+      const alreadyAdded = featured.some(
+        (item) => item.productCollection === product.productCollection,
       );
-      const secondPriority = brandPriority.findIndex((brand) =>
-        secondBrand.includes(brand),
-      );
-      const normalizedFirstPriority =
-        firstPriority === -1 ? brandPriority.length : firstPriority;
-      const normalizedSecondPriority =
-        secondPriority === -1 ? brandPriority.length : secondPriority;
-
-      if (normalizedFirstPriority !== normalizedSecondPriority) {
-        return normalizedFirstPriority - normalizedSecondPriority;
-      }
-
-      return (second.productViews || 0) - (first.productViews || 0);
-    })
-    .reduce<Product[]>((topBrands, product) => {
-      const brand = product.productBrand?.trim().toLowerCase() || product._id;
-      const alreadyAdded = topBrands.some(
-        (item) => (item.productBrand?.trim().toLowerCase() || item._id) === brand,
-      );
-
-      if (!alreadyAdded && topBrands.length < 4) topBrands.push(product);
-      return topBrands;
+      if (!alreadyAdded && featured.length < 4) featured.push(product);
+      return featured;
     }, []);
 }
 
 export default function Products(props: ProductsProps) {
   const { onAdd } = props;
+  const { authMember } = useGlobals();
   const { setProducts } = actionDispatch(useDispatch());
-  const { products } = useSelector(productsRetriever);
+  const { products, productsTotal } = useSelector(productsRetriever);
   const [topBrandProducts, setTopBrandProducts] = useState<Product[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [loadError, setLoadError] = useState<boolean>(false);
+  const location = useLocation<{ collection?: ProductCategory } | undefined>();
   const [productSearch, setProductsSearch] = useState<ProductInquiry>({
     page: 1,
     limit: 8,
     order: "createdAt",
     search: "",
+    productCollection: location.state?.collection,
   });
 
   const [searchText, setSearchText] = useState<string>("");
   const history = useHistory();
+  const { isInWishlist, toggleWishlist } = useWishlist();
 
   useEffect(() => {
+    setIsLoading(true);
+    setLoadError(false);
     const product = new ProductService();
     product
       .getProducts(productSearch)
       .then((data) => setProducts(data))
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.error(err);
+        setLoadError(true);
+      })
+      .finally(() => setIsLoading(false));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [productSearch]);
 
   useEffect(() => {
     const product = new ProductService();
     product
       .getProducts({ page: 1, limit: 40, order: "productViews" })
-      .then((data) => setTopBrandProducts(pickTopBrandProducts(data)))
-      .catch((err) => console.log(err));
+      .then((data) => setTopBrandProducts(pickTopBrandProducts(data.list)))
+      .catch((err) => console.error(err));
   }, []);
 
   useEffect(() => {
     if (searchText === "") {
-      productSearch.search = "";
-      setProductsSearch({ ...productSearch });
+      setProductsSearch((prev) => ({ ...prev, page: 1, search: "" }));
     }
   }, [searchText]);
 
@@ -216,30 +207,52 @@ export default function Products(props: ProductsProps) {
     [products, topBrandProducts],
   );
 
+  const totalPages = Math.max(
+    1,
+    Math.ceil(productsTotal / productSearch.limit),
+  );
+
   /** HANDLERS **/
   const searchConnectionHandler = (collection?: ProductCategory) => {
-    productSearch.page = 1;
-    productSearch.productCollection = collection;
-    setProductsSearch({ ...productSearch });
+    setProductsSearch((prev) => ({
+      ...prev,
+      page: 1,
+      productCollection: collection,
+    }));
   };
 
   const searchOrderHandler = (order: string) => {
-    productSearch.page = 1;
-    productSearch.order = order;
-    setProductsSearch({ ...productSearch });
+    setProductsSearch((prev) => ({ ...prev, page: 1, order }));
   };
 
   const searchproductHandler = () => {
-    productSearch.search = searchText;
-    setProductsSearch({ ...productSearch });
+    setProductsSearch((prev) => ({ ...prev, page: 1, search: searchText }));
   };
   const peginationHandler = (e: ChangeEvent<any>, value: number) => {
-    productSearch.page = value;
-    setProductsSearch({ ...productSearch });
+    setProductsSearch((prev) => ({ ...prev, page: value }));
   };
 
-  const chooseDishHandler = (id: string) => {
+  const chooseProductHandler = (id: string) => {
     history.push(`/products/${id}`);
+  };
+
+  const addToCartHandler = (product: Product) => {
+    if (!isProductAvailable(product)) return;
+
+    // Login bo'lmagan foydalanuvchi savatga qo'sha olmaydi
+    if (!authMember) {
+      sweetTopSmallErrorAlert("Please login to add items to your basket!", 1500);
+      return;
+    }
+
+    onAdd({
+      _id: product._id,
+      name: product.productName,
+      price: product.productPrice,
+      image: product.productImages?.[0] || "",
+      quantity: 1,
+    });
+    sweetTopSmallSuccessAlert("Added to basket!", 1200);
   };
   return (
     <div>
@@ -356,12 +369,19 @@ export default function Products(props: ProductsProps) {
                 </Stack>
               </Stack>
               <Stack className="product-wrapper">
-                {products.length !== 0 ? (
+                {isLoading ? (
+                  <Box className={"no-data"}>Loading products...</Box>
+                ) : loadError ? (
+                  <Box className={"no-data"}>
+                    Failed to load products. Please try again later.
+                  </Box>
+                ) : products.length !== 0 ? (
                   products.map((product: Product) => {
                     const imagePath = product.productImages?.[0]
                       ? `${serverApi}/${product.productImages[0]}`
                       : "/icons/noimage-list.svg";
                     const sizeVolume = formatProductMeta(product);
+                    const available = isProductAvailable(product);
                     const collectionLabel =
                       productCollectionLabels[
                         product.productCollection as ProductCategory
@@ -371,56 +391,82 @@ export default function Products(props: ProductsProps) {
                       <Stack
                         key={product._id}
                         className={"product-card"}
-                        onClick={() => chooseDishHandler(product._id)}
+                        onClick={() => chooseProductHandler(product._id)}
                       >
                         <Stack
                           className={"product-image"}
                           sx={{ backgroundImage: `url(${imagePath})` }}
                         >
-                          <div className="product-sale">{collectionLabel}</div>
-                          <div className="product-meta-chip">{sizeVolume}</div>
-                          <Button
-                            className={"shop-btn"}
+                          <div className="product-sale">
+                            {available ? collectionLabel : "OUT OF STOCK"}
+                          </div>
+                          <IconButton
+                            aria-label={
+                              isInWishlist(product._id)
+                                ? "Remove from wishlist"
+                                : "Add to wishlist"
+                            }
                             onClick={(e) => {
-                           
-                              onAdd({
-                                _id: product._id,
-                                name: product.productName,
-                                price: product.productPrice,
-                                image: product.productImages[0],
-                                quantity: 1,
-                              });
                               e.stopPropagation();
+                              toggleWishlist(product._id);
+                            }}
+                            sx={{
+                              position: "absolute",
+                              top: 12,
+                              right: 12,
+                              zIndex: 3,
+                              width: 38,
+                              height: 38,
+                              bgcolor: "rgba(255,255,255,0.85)",
+                              backdropFilter: "blur(10px)",
+                              border: "1px solid rgba(14,17,22,0.08)",
+                              color: isInWishlist(product._id)
+                                ? "#ef4444"
+                                : "#0E1116",
+                              boxShadow: "0 6px 18px -8px rgba(14,17,22,0.45)",
+                              transition: "all 320ms cubic-bezier(0.32,0.72,0,1)",
+                              "&:hover": {
+                                bgcolor: "#FFFFFF",
+                                color: "#ef4444",
+                                transform: "scale(1.08)",
+                              },
                             }}
                           >
-                            <AddShoppingCartIcon fontSize="small" />
-                          </Button>
-                          <Button className="view-btn" sx={{ right: "36px" }}>
-                            <Badge
-                              badgeContent={product.productViews}
-                              color="secondary"
-                            >
-                              <RemoveRedEyeIcon
-                                sx={{
-                                  color:
-                                    product.productViews === 0
-                                      ? "gray"
-                                      : "white",
-                                }}
-                              />
-                            </Badge>
-                          </Button>
+                            {isInWishlist(product._id) ? (
+                              <FavoriteRoundedIcon sx={{ fontSize: 19 }} />
+                            ) : (
+                              <FavoriteBorderRoundedIcon sx={{ fontSize: 19 }} />
+                            )}
+                          </IconButton>
                         </Stack>
                         <Box className={"product-desc"}>
                           <span className="product-brand">
-                            {product.productBrand || "FitShop"}
+                            {getProductBrandLabel(product)}
                           </span>
                           <span className="product-title">
                             {product.productName}
                           </span>
-                          <span className="product-price">
-                            {formatPrice(product.productPrice)}
-                          </span>
+                          <Box className="product-meta-row">
+                            <span className="product-price">
+                              {formatPrice(product.productPrice)}
+                            </span>
+                            <span className="product-views">
+                              <RemoveRedEyeIcon sx={{ fontSize: 15 }} />
+                              {product.productViews ?? 0}
+                            </span>
+                          </Box>
+                          <span className="product-size">{sizeVolume}</span>
+                          <Button
+                            className="add-cart-btn"
+                            disabled={!available}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              addToCartHandler(product);
+                            }}
+                          >
+                            <AddShoppingCartIcon sx={{ fontSize: 18, mr: 1 }} />
+                            {available ? "Add to Cart" : "Out of Stock"}
+                          </Button>
                         </Box>
                       </Stack>
                     );
@@ -432,11 +478,7 @@ export default function Products(props: ProductsProps) {
             </Stack>
             <Stack className="pagination-section">
               <Pagination
-                count={
-                  products.length !== 0
-                    ? productSearch.page + 1
-                    : productSearch.page
-                }
+                count={totalPages}
                 page={productSearch.page}
                 renderItem={(item) => (
                   <PaginationItem
@@ -478,7 +520,7 @@ export default function Products(props: ProductsProps) {
                     <Box
                       key={product._id}
                       className="brand-card"
-                      onClick={() => chooseDishHandler(product._id)}
+                      onClick={() => chooseProductHandler(product._id)}
                     >
                       <Box
                         className="brand-product-image"
@@ -503,15 +545,10 @@ export default function Products(props: ProductsProps) {
                       </Box>
                       <Button
                         className="brand-shop-btn"
+                        disabled={!isProductAvailable(product)}
                         onClick={(e) => {
-                          onAdd({
-                            _id: product._id,
-                            name: product.productName,
-                            price: product.productPrice,
-                            image: product.productImages?.[0] || "",
-                            quantity: 1,
-                          });
                           e.stopPropagation();
+                          addToCartHandler(product);
                         }}
                       >
                         <AddShoppingCartIcon fontSize="small" />

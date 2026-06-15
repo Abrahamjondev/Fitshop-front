@@ -15,6 +15,11 @@ import TabPanel from "@mui/lab/TabPanel";
 import "../../../css/help.css";
 import { faq } from "../../../lib/data/faq";
 import { terms } from "../../../lib/data/terms";
+import { Messages } from "../../../lib/config";
+import {
+  sweetErrorHandling,
+  sweetTopSmallSuccessAlert,
+} from "../../../lib/sweetAlert";
 
 export default function HelpPage() {
   const [value, setValue] = React.useState("1");
@@ -22,6 +27,29 @@ export default function HelpPage() {
   /** HANDLERS **/
   const handleChange = (e: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
+  };
+
+  const handleContactSubmit = async (
+    e: React.FormEvent<HTMLFormElement>,
+  ) => {
+    // Sahifa reload bo'lib xabar yo'qolmasligi uchun
+    e.preventDefault();
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    const name = String(formData.get("memberNick") ?? "").trim();
+    const email = String(formData.get("memberEmail") ?? "").trim();
+    const message = String(formData.get("memberMsg") ?? "").trim();
+
+    if (!name || !email || !message) {
+      await sweetErrorHandling(new Error(Messages.error3));
+      return;
+    }
+
+    form.reset();
+    await sweetTopSmallSuccessAlert(
+      "Message received! Our team will contact you soon.",
+      2000,
+    );
   };
 
   return (
@@ -112,8 +140,7 @@ export default function HelpPage() {
                       </p>
                     </Box>
                     <form
-                      action={"#"}
-                      method={"POST"}
+                      onSubmit={handleContactSubmit}
                       className={"admin-letter-frame"}
                     >
                       <div className={"admin-input-box"}>

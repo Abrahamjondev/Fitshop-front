@@ -3,9 +3,9 @@
   min-height: 100vh;
   display: flex;
   background:
-    radial-gradient(circle at 14% 8%, rgba(186, 117, 23, 0.18), transparent 28%),
-    linear-gradient(180deg, #0e0e10 0%, #151518 54%, #0e0e10 100%);
-  color: #faeeda;
+    radial-gradient(circle at 14% 8%, rgba(14, 124, 90, 0.18), transparent 28%),
+    linear-gradient(180deg, #FFFFFF 0%, #F4F5F7 54%, #FFFFFF 100%);
+  color: #0E1116;
 }
 
 .help-page .help-container {
@@ -24,35 +24,36 @@
 .help-page .help-hero > span {
   width: fit-content;
   padding: 8px 13px;
-  border: 1px solid rgba(186, 117, 23, 0.38);
+  border: 1px solid rgba(14, 124, 90, 0.38);
   border-radius: 999px;
-  background: rgba(186, 117, 23, 0.12);
-  color: #d7b686;
-  font-family: "Poppins";
-  font-size: 12px;
-  font-weight: 900;
-  letter-spacing: 0.04em;
+  background: rgba(14, 124, 90, 0.12);
+  color: #0E7C5A;
+  font-family: "Space Mono", monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
 }
 
 .help-page .help-hero h1 {
   grid-column: 1;
   margin: 18px 0 0;
-  color: #faeeda;
-  font-family: "Poppins";
-  font-size: clamp(42px, 6vw, 68px);
-  font-weight: 900;
-  line-height: 1.02;
-  letter-spacing: 0;
+  color: #0E1116;
+  font-family: "Clash Display", sans-serif;
+  font-size: clamp(40px, 6vw, 60px);
+  font-weight: 600;
+  line-height: 1.04;
+  letter-spacing: -0.02em;
 }
 
 .help-page .help-hero p {
   grid-column: 1;
   max-width: 590px;
   margin: 16px 0 0;
-  color: #c9c1b4;
-  font-family: "Poppins";
+  color: #444C58;
+  font-family: "Plus Jakarta Sans";
   font-size: 16px;
+  font-weight: 500;
   line-height: 1.65;
 }
 
@@ -70,10 +71,10 @@
   grid-template-columns: 42px 1fr;
   column-gap: 12px;
   align-items: center;
-  border: 1px solid rgba(250, 238, 218, 0.1);
+  border: 1px solid #E6E8EC;
   border-radius: 18px;
-  background: rgba(31, 31, 35, 0.86);
-  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.18);
+  background: #FFFFFF;
+  box-shadow: 0 1px 2px rgba(14,17,22,0.04), 0 16px 36px -22px rgba(14,17,22,0.14);
 }
 
 .help-page .help-feature-grid svg {
@@ -82,35 +83,36 @@
   height: 42px;
   padding: 9px;
   border-radius: 14px;
-  background: rgba(186, 117, 23, 0.14);
-  color: #ba7517;
+  background: rgba(14, 124, 90, 0.14);
+  color: #0E7C5A;
 }
 
 .help-page .help-feature-grid strong,
 .help-page .help-feature-grid small {
-  font-family: "Poppins";
+  font-family: "Plus Jakarta Sans";
 }
 
 .help-page .help-feature-grid strong {
-  color: #faeeda;
+  color: #0E1116;
   font-size: 15px;
   font-weight: 900;
 }
 
 .help-page .help-feature-grid small {
   margin-top: 3px;
-  color: #a1a1aa;
+  color: #444C58;
   font-size: 12px;
-  font-weight: 800;
+  font-weight: 700;
 }
 
 .help-page .help-menu {
   width: 100%;
   min-height: 64px;
   display: flex;
-  border: 1px solid rgba(250, 238, 218, 0.1);
+  border: 1px solid #E6E8EC;
   border-radius: 18px;
-  background: rgba(255, 255, 255, 0.045);
+  background: #FFFFFF;
+  box-shadow: 0 1px 2px rgba(14,17,22,0.04), 0 12px 30px -22px rgba(14,17,22,0.14);
   overflow: hidden;
 }
 
@@ -133,12 +135,19 @@
   min-height: 48px;
   flex: 1;
   border-radius: 14px;
-  color: #a1a1aa;
-  font-family: "Poppins";
+  color: #444C58;
+  font-family: "Plus Jakarta Sans";
   font-size: 13px;
-  font-weight: 900;
+  font-weight: 800;
   letter-spacing: 0;
   text-transform: none;
+  transition: background-color 320ms cubic-bezier(0.32, 0.72, 0, 1),
+    color 320ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+.help-page .table_list .MuiTab-root:hover {
+  background-color: rgba(14, 124, 90, 0.08);
+  color: #0A5E44;
 }
 
 .help-page .table_list .MuiTab-root svg {
@@ -146,9 +155,9 @@
 }
 
 .help-page .table_list .Mui-selected {
-  background: #ba7517;
-  color: #faeeda !important;
-  box-shadow: 0 12px 26px rgba(186, 117, 23, 0.28);
+  background-image: linear-gradient(135deg, #12A074 0%, #0E7C5A 52%, #0A5E44 100%);
+  color: #FFFFFF !important;
+  box-shadow: 0 12px 26px -12px rgba(14, 124, 90, 0.6);
 }
 
 .help-page .table_list .MuiTabs-indicator {
@@ -168,10 +177,10 @@
 .help-page .admin-letter-box,
 .help-page .accordion-menu {
   width: 100%;
-  border: 1px solid rgba(250, 238, 218, 0.1);
+  border: 1px solid #E6E8EC;
   border-radius: 22px;
-  background: rgba(31, 31, 35, 0.88);
-  box-shadow: 0 22px 54px rgba(0, 0, 0, 0.24);
+  background: #FFFFFF;
+  box-shadow: 0 1px 2px rgba(14,17,22,0.04), 0 20px 44px -24px rgba(14,17,22,0.16);
 }
 
 .help-page .rules-box,
@@ -193,8 +202,14 @@
   grid-template-columns: 46px 1fr;
   gap: 14px;
   border-radius: 18px;
-  border: 1px solid rgba(250, 238, 218, 0.08);
-  background: rgba(255, 255, 255, 0.045);
+  border: 1px solid #EDEFF2;
+  background: #F6F7F9;
+  transition: border-color 320ms cubic-bezier(0.32,0.72,0,1), transform 320ms cubic-bezier(0.32,0.72,0,1);
+}
+
+.rules-box .rule-item:hover {
+  border-color: rgba(14, 124, 90, 0.32);
+  transform: translateY(-2px);
 }
 
 .rules-box .rule-item span {
@@ -204,19 +219,20 @@
   align-items: center;
   justify-content: center;
   border-radius: 14px;
-  background: rgba(186, 117, 23, 0.14);
-  color: #d7b686;
-  font-family: "Poppins";
+  background: rgba(14, 124, 90, 0.1);
+  border: 1px solid rgba(14, 124, 90, 0.24);
+  color: #0E7C5A;
+  font-family: "Space Mono", monospace;
   font-size: 13px;
-  font-weight: 900;
+  font-weight: 700;
 }
 
 .rules-box .rule-item p {
   margin: 0;
-  color: #c9c1b4;
-  font-family: "Poppins";
+  color: #444C58;
+  font-family: "Plus Jakarta Sans";
   font-size: 14px;
-  font-weight: 700;
+  font-weight: 500;
   line-height: 1.65;
 }
 
@@ -228,9 +244,9 @@
 .help-page .accordion-menu .MuiAccordion-root {
   overflow: hidden;
   border-radius: 16px !important;
-  border: 1px solid rgba(250, 238, 218, 0.08);
-  background: rgba(255, 255, 255, 0.045);
-  color: #faeeda;
+  border: 1px solid #EDEFF2;
+  background: #F6F7F9;
+  color: #0E1116;
   box-shadow: none;
 }
 
@@ -244,15 +260,15 @@
 }
 
 .help-page .accordion-menu .MuiAccordionSummary-root svg {
-  color: #ba7517;
+  color: #0E7C5A;
 }
 
 .help-page .accordion-menu .MuiTypography-root {
-  font-family: "Poppins";
+  font-family: "Plus Jakarta Sans";
 }
 
 .help-page .accordion-menu .MuiAccordionSummary-content .MuiTypography-root {
-  color: #faeeda;
+  color: #0E1116;
   font-size: 15px;
   font-weight: 900;
 }
@@ -262,9 +278,9 @@
 }
 
 .help-page .accordion-menu .MuiAccordionDetails-root .MuiTypography-root {
-  color: #c9c1b4;
+  color: #444C58;
   font-size: 14px;
-  font-weight: 700;
+  font-weight: 500;
   line-height: 1.65;
 }
 
@@ -281,20 +297,21 @@
 }
 
 .help-page .admin-letter-frame span {
-  color: #faeeda;
-  font-family: "Poppins";
-  font-size: 32px;
-  font-weight: 900;
+  color: #0E1116;
+  font-family: "Clash Display", sans-serif;
+  font-size: 30px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
   line-height: 1.15;
 }
 
 .help-page .admin-letter-frame p {
   max-width: 360px;
   margin: 14px 0 0;
-  color: #a1a1aa;
-  font-family: "Poppins";
+  color: #444C58;
+  font-family: "Plus Jakarta Sans";
   font-size: 15px;
-  font-weight: 700;
+  font-weight: 500;
   line-height: 1.65;
 }
 
@@ -310,24 +327,31 @@
 }
 
 .help-page .admin-letter-frame .admin-input-box label {
-  color: #d7b686;
-  font-family: "Poppins";
+  color: #444C58;
+  font-family: "Plus Jakarta Sans";
   font-size: 13px;
-  font-weight: 900;
+  font-weight: 800;
 }
 
 .help-page .admin-letter-frame .admin-input-box input,
 .help-page .admin-letter-frame .admin-input-box textarea {
   margin-top: 9px;
   width: 100%;
-  border: 1px solid rgba(250, 238, 218, 0.1);
+  border: 1px solid #E6E8EC;
   border-radius: 14px;
   outline: none;
-  background: rgba(255, 255, 255, 0.05);
-  color: #faeeda;
-  font-family: "Poppins";
+  background: #F6F7F9;
+  color: #0E1116;
+  font-family: "Plus Jakarta Sans";
   font-size: 14px;
-  font-weight: 700;
+  font-weight: 600;
+  transition: border-color 220ms ease, background-color 220ms ease;
+}
+
+.help-page .admin-letter-frame .admin-input-box input:focus,
+.help-page .admin-letter-frame .admin-input-box textarea:focus {
+  border-color: #0E7C5A;
+  background: #FFFFFF;
 }
 
 .help-page .admin-letter-frame .admin-input-box input {
@@ -344,24 +368,26 @@
 
 .help-page .admin-letter-frame .admin-input-box input::placeholder,
 .help-page .admin-letter-frame .admin-input-box textarea::placeholder {
-  color: #77777f;
+  color: #6B7280;
 }
 
 .help-page .admin-letter-frame button {
   min-width: 136px;
   height: 48px;
-  border-radius: 14px;
-  background: #ba7517;
-  color: #faeeda;
-  font-family: "Poppins";
+  border-radius: 999px;
+  background: linear-gradient(135deg, #12A074 0%, #0E7C5A 52%, #0A5E44 100%);
+  color: #FFFFFF;
+  font-family: "Plus Jakarta Sans";
   font-size: 14px;
-  font-weight: 900;
+  font-weight: 800;
   text-transform: none;
-  box-shadow: 0 14px 30px rgba(186, 117, 23, 0.28);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.35), 0 14px 30px -14px rgba(14, 124, 90, 0.75);
+  transition: filter 320ms ease, transform 320ms cubic-bezier(0.32,0.72,0,1);
 }
 
 .help-page .admin-letter-frame button:hover {
-  background: #9a6012;
+  filter: brightness(1.05);
+  transform: translateY(-1px);
 }
 
 @media (max-width: 900px) {

@@ -41,3 +41,9 @@ export interface OrderUpdateInput {
   orderId: string;
   orderStatus: OrderStatus;
 }
+
+/** Backend /order/all javobi: ro'yxat + jami soni (pagination uchun) */
+export interface OrdersResult {
+  list: Order[];
+  total: number;
+}

@@ -3,17 +3,12 @@ import { AppRootState } from "../../../lib/types/screen";
 
 const selectHome = (state: AppRootState) => state.home;
 
-export const selectProducts = createSelector(
+export const retrieveTopProducts = createSelector(
   selectHome,
-  (home) => home.products,
+  (home) => home.topProducts,
 );
 
-export const selectHeroData = createSelector(
+export const retrieveTopUsers = createSelector(
   selectHome,
-  (home) => home.heroData,
-);
-
-export const selectHomeLoading = createSelector(
-  selectHome,
-  (home) => home.loading,
+  (home) => home.topUsers,
 );

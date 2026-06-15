@@ -1,7 +1,6 @@
 import { Member } from "./member";
 import { Order } from "./orders";
 import { Product } from "./product";
-import { ProductCategory } from "../enums/product.enum";
 
 /** REACT APP STATE **/
 export interface AppRootState {
@@ -11,27 +10,25 @@ export interface AppRootState {
 }
 
 /** HOME PAGE **/
-export interface HeroData {
-  title: string;
-  subtitle: string;
-  images: string[];
-  category: ProductCategory;
+export interface HomeState {
+  topProducts: Product[];
+  topUsers: Member[];
 }
 
-export interface HomeState {
-  products: Product[];
-  heroData: HeroData[];
-  loading: boolean;
-}
 /** PRODUCTS PAGE **/
 export interface ProductsPageState {
-  restaurant: Member | null;
+  shop: Member | null;
   chosenProduct: Product | null;
   products: Product[];
+  productsTotal: number;
 }
+
 /** ORDERS PAGE **/
 export interface OrdersPageState {
   pausedOrders: Order[];
+  pausedTotal: number;
   processOrders: Order[];
+  processTotal: number;
   finishedOrders: Order[];
+  finishedTotal: number;
 }

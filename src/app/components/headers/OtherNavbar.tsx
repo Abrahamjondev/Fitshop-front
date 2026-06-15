@@ -7,7 +7,6 @@ import {
   Menu,
   MenuItem,
   Stack,
-  Typography,
 } from "@mui/material";
 import { NavLink } from "react-router-dom";
 import { Logout } from "@mui/icons-material";
@@ -106,6 +105,13 @@ export default function OtherNavbar(props: OtherNavbarProps) {
                 </NavLink>
               </Box>
             ) : null}
+            {authMember ? (
+              <Box className={"hover-line "}>
+                <NavLink to="/wishlist" activeClassName={"underline"}>
+                  Wishlist
+                </NavLink>
+              </Box>
+            ) : null}
             <Box className={"hover-line "}>
               <NavLink to="/help" activeClassName={"underline"}>
                 Help
@@ -113,13 +119,16 @@ export default function OtherNavbar(props: OtherNavbarProps) {
             </Box>
           </Stack>
           <Stack className="header-actions">
-            <Basket
-              cartItems={cartItems}
-              onAdd={onAdd}
-              onRemove={onRemove}
-              onDelete={onDelete}
-              onDeleteAll={onDeleteAll}
-            />
+            {/* BASKET — faqat login bo'lgan member uchun ko'rinadi */}
+            {authMember ? (
+              <Basket
+                cartItems={cartItems}
+                onAdd={onAdd}
+                onRemove={onRemove}
+                onDelete={onDelete}
+                onDeleteAll={onDeleteAll}
+              />
+            ) : null}
             {!authMember ? (
               <Stack className="auth-buttons">
                 <Button
@@ -171,17 +180,17 @@ export default function OtherNavbar(props: OtherNavbarProps) {
 
                 sx: {
                   overflow: "visible",
-                  bgcolor: "#151518",
-                  color: "#FAEEDA",
-                  border: "1px solid rgba(186, 117, 23, 0.3)",
+                  bgcolor: "#F4F5F7",
+                  color: "#0E1116",
+                  border: "1px solid rgba(14, 124, 90, 0.3)",
                   borderRadius: "14px",
-                  boxShadow: "0 18px 44px rgba(0,0,0,0.45)",
+                  boxShadow: "0 18px 44px rgba(14, 17, 22, 0.09)",
                   mt: 1.5,
                   "& .MuiMenuItem-root": {
                     fontWeight: 700,
                     gap: 0.5,
                     "&:hover": {
-                      bgcolor: "rgba(186,117,23,0.14)",
+                      bgcolor: "rgba(14, 124, 90,0.14)",
                     },
                   },
                   "&:before": {
@@ -192,9 +201,9 @@ export default function OtherNavbar(props: OtherNavbarProps) {
                     right: 14,
                     width: 10,
                     height: 10,
-                    bgcolor: "#151518",
-                    borderLeft: "1px solid rgba(186, 117, 23, 0.3)",
-                    borderTop: "1px solid rgba(186, 117, 23, 0.3)",
+                    bgcolor: "#F4F5F7",
+                    borderLeft: "1px solid rgba(14, 124, 90, 0.3)",
+                    borderTop: "1px solid rgba(14, 124, 90, 0.3)",
                     transform: "translateY(-50%) rotate(45deg)",
                     zIndex: 0,
                   },
@@ -205,17 +214,12 @@ export default function OtherNavbar(props: OtherNavbarProps) {
             >
               <MenuItem onClick={handleLogoutRequest}>
                 <ListItemIcon>
-                  <Logout fontSize="small" style={{ color: "#BA7517" }} />
+                  <Logout fontSize="small" style={{ color: "#0E7C5A" }} />
                 </ListItemIcon>
                 Logout
               </MenuItem>
             </Menu>
           </Stack>
-        </Stack>
-        <Stack className="other-hero-copy">
-          <Box className="hero-kicker">FitShop essentials</Box>
-          <Typography component="h1" className="other-title"></Typography>
-          <Typography className="other-subtitle"></Typography>
         </Stack>
       </Container>
     </div>

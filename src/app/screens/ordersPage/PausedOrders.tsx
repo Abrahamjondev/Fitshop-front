@@ -1,16 +1,25 @@
 import React from "react";
-import { Stack, Box, Button } from "@mui/material";
+import { Stack, Box, Button, Pagination } from "@mui/material";
 import TabPanel from "@mui/lab/TabPanel";
+import moment from "moment";
 
 import { useSelector } from "react-redux";
 import { createSelector } from "reselect";
-import { retrievePausedOrders } from "./selector";
-import { Messages, serverApi } from "../../../lib/config";
-// import { Order, OrderItem, OrderUpdateInput } from "../../../lib/types/order";
-import { Product } from "../../../lib/types/product";
+import { retrievePausedOrders, retrievePausedTotal } from "./selector";
+import { Messages } from "../../../lib/config";
+import {
+  formatPrice,
+  getOrderProduct,
+  getOrderSubtotal,
+  getOrderDelivery,
+  getOrderTotal,
+  getProductImage,
+} from "../../../lib/utils";
 import { T } from "../../../lib/types/common";
-import { sweetErrorHandling } from "../../../lib/sweetAlert";
-// import { OrderStatus } from "../../../lib/enums/order.num";
+import {
+  sweetConfirmAlert,
+  sweetErrorHandling,
+} from "../../../lib/sweetAlert";
 import { useGlobals } from "../../hooks/useGlobals";
 import OrderService from "../../services/OrderService";
 import { Order, OrderItem, OrderUpdateInput } from "../../../lib/types/orders";
@@ -19,61 +28,22 @@ import { OrderStatus } from "../../../lib/enums/order.enum";
 /** REDUX SLICE & SELECTOR */
 const pausedOrdersRetriever = createSelector(
   retrievePausedOrders,
-  (pausedOrders) => ({ pausedOrders }),
+  retrievePausedTotal,
+  (pausedOrders, pausedTotal) => ({ pausedOrders, pausedTotal }),
 );
-
-const DELIVERY_FREE_THRESHOLD = 500000;
-const DELIVERY_COST = 30000;
-
-function getOrderProduct(
-  order: Order,
-  item: OrderItem,
-): Product | undefined {
-  return order.productData.find((ele: Product) => item.productId === ele._id);
-}
-
-function getProductImage(product?: Product) {
-  const image = product?.productImages?.[0];
-  if (!image) return "/icons/noimage-list.svg";
-  if (image.startsWith("http")) return image;
-  if (image.startsWith("/")) return `${serverApi}${image}`;
-  return `${serverApi}/${image}`;
-}
-
-function formatOrderPrice(price: number) {
-  return `${price?.toLocaleString()} UZS`;
-}
-
-function getOrderSubtotal(order: Order) {
-  return order.orderItems.reduce(
-    (total, item) => total + item.itemQuantity * item.itemPrice,
-    0,
-  );
-}
-
-function getOrderDelivery(order: Order) {
-  if (order.orderDelivery > 0) return order.orderDelivery;
-
-  const subtotal = getOrderSubtotal(order);
-  return subtotal < DELIVERY_FREE_THRESHOLD ? DELIVERY_COST : 0;
-}
-
-function getOrderTotal(order: Order) {
-  const subtotal = getOrderSubtotal(order);
-  const delivery = getOrderDelivery(order);
-  const calculatedTotal = subtotal + delivery;
-
-  return order.orderTotal >= calculatedTotal ? order.orderTotal : calculatedTotal;
-}
 
 interface PausedOrderProps {
   setValue: (input: string) => void;
+  page: number;
+  limit: number;
+  onPageChange: (page: number) => void;
 }
 
 export default function PausedOrders(props: PausedOrderProps) {
-  const { setValue } = props;
+  const { setValue, page, limit, onPageChange } = props;
   const { authMember, setOrderBuilder } = useGlobals();
-  const { pausedOrders } = useSelector(pausedOrdersRetriever);
+  const { pausedOrders, pausedTotal } = useSelector(pausedOrdersRetriever);
+  const totalPages = Math.max(1, Math.ceil(pausedTotal / limit));
 
   /** HANDLERS **/
   const deleteOrderHandler = async (e: T) => {
@@ -85,15 +55,16 @@ export default function PausedOrders(props: PausedOrderProps) {
         orderStatus: OrderStatus.DELETE,
       };
 
-      const confirmation = window.confirm("Do you wont to delete the order?");
+      const confirmation = await sweetConfirmAlert(
+        "Do you want to cancel this order?",
+      );
       if (confirmation) {
         const order = new OrderService();
         await order.updateOrder(input);
-        // ORDER REBUILD
         setOrderBuilder(new Date());
       }
     } catch (err) {
-      console.log(err);
+      console.error(err);
       sweetErrorHandling(err).then();
     }
   };
@@ -101,7 +72,6 @@ export default function PausedOrders(props: PausedOrderProps) {
   const processOrderHandler = async (e: T) => {
     try {
       if (!authMember) throw new Error(Messages.error2);
-      // PAYMENT PROCESS shu joyda bo'lish kerak
 
       const orderId = e.target.value;
       const input: OrderUpdateInput = {
@@ -109,19 +79,17 @@ export default function PausedOrders(props: PausedOrderProps) {
         orderStatus: OrderStatus.PROCESS,
       };
 
-      const confirmation = window.confirm(
-        "Do you wont to proceed with payment?",
+      const confirmation = await sweetConfirmAlert(
+        "Do you want to proceed with payment?",
       );
       if (confirmation) {
         const order = new OrderService();
         await order.updateOrder(input);
-        // PROCESS ORDER
         setValue("2");
-        // ORDER REBUILD
         setOrderBuilder(new Date());
       }
     } catch (err) {
-      console.log(err);
+      console.error(err);
       sweetErrorHandling(err).then();
     }
   };
@@ -138,10 +106,14 @@ export default function PausedOrders(props: PausedOrderProps) {
             <Box key={order._id} className="order-main-box">
               <Box className="order-card-head">
                 <Box>
-                  <span className="order-status-pill paused">Awaiting payment</span>
+                  <span className="order-status-pill paused">
+                    Awaiting payment
+                  </span>
                   <strong>Order #{order._id.slice(-6).toUpperCase()}</strong>
                 </Box>
-                <span>{order.orderItems.length} items</span>
+                <span>
+                  {moment(order.createdAt).format("YYYY-MM-DD HH:mm")}
+                </span>
               </Box>
               <Box className="order-box-scroll">
                 {order?.orderItems?.map((item: OrderItem) => {
@@ -161,11 +133,11 @@ export default function PausedOrders(props: PausedOrderProps) {
                         {product?.productName || "Unavailable product"}
                       </p>
                       <Box className="price-box">
-                        <p>{formatOrderPrice(item.itemPrice)}</p>
+                        <p>{formatPrice(item.itemPrice)}</p>
                         <span>x</span>
                         <p>{item.itemQuantity}</p>
                         <strong>
-                          {formatOrderPrice(item.itemQuantity * item.itemPrice)}
+                          {formatPrice(item.itemQuantity * item.itemPrice)}
                         </strong>
                       </Box>
                     </Box>
@@ -176,17 +148,13 @@ export default function PausedOrders(props: PausedOrderProps) {
               <Box className="total-price-box">
                 <Box className="box-total">
                   <p className="bold-txt">Product price</p>
-                  <p className="normal-txt">
-                    {formatOrderPrice(orderSubtotal)}
-                  </p>
+                  <p className="normal-txt">{formatPrice(orderSubtotal)}</p>
                   <p className="bold-txt">Delivery cost</p>
                   <p className="normal-txt">
-                    {orderDelivery === 0 ? "Free" : formatOrderPrice(orderDelivery)}
+                    {orderDelivery === 0 ? "Free" : formatPrice(orderDelivery)}
                   </p>
                   <p className="bold-txt">Total</p>
-                  <p className="normal-txt">
-                    {formatOrderPrice(orderTotal)}
-                  </p>
+                  <p className="normal-txt">{formatPrice(orderTotal)}</p>
                 </Box>
                 <Button
                   value={order._id}
@@ -210,14 +178,24 @@ export default function PausedOrders(props: PausedOrderProps) {
           );
         })}
 
-        {!pausedOrders ||
-          (pausedOrders.length === 0 && (
-            <Box className="order-empty-state">
-              <img src="/icons/noimage-list.svg" alt="" />
-              <strong>No paused orders</strong>
-              <span>Your unpaid baskets will appear here.</span>
-            </Box>
-          ))}
+        {(!pausedOrders || pausedOrders.length === 0) && (
+          <Box className="order-empty-state">
+            <img src="/icons/noimage-list.svg" alt="" />
+            <strong>No paused orders</strong>
+            <span>Your unpaid baskets will appear here.</span>
+          </Box>
+        )}
+
+        {pausedTotal > limit && (
+          <Stack alignItems="center" sx={{ mt: 2 }}>
+            <Pagination
+              count={totalPages}
+              page={page}
+              onChange={(e, value) => onPageChange(value)}
+              color="secondary"
+            />
+          </Stack>
+        )}
       </Stack>
     </TabPanel>
   );

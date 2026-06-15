@@ -1,55 +1,37 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Box, Container, Grid, Stack, Typography } from "@mui/material";
-import PeopleAltRoundedIcon from "@mui/icons-material/PeopleAltRounded";
-import Inventory2RoundedIcon from "@mui/icons-material/Inventory2Rounded";
-import SupportAgentRoundedIcon from "@mui/icons-material/SupportAgentRounded";
-import PublicRoundedIcon from "@mui/icons-material/PublicRounded";
+import { Box, Container, Grid, Typography } from "@mui/material";
+import MemberService from "../../services/MemberService";
+import { formatStat } from "../../../lib/utils";
 
 const fitShopColors = {
-  bg: "#0E0E10",
-  surface: "#17171A",
-  card: "#1F1F23",
-  border: "#2F2F36",
-  accent: "#BA7517",
-  text: "#FAEEDA",
-  textMuted: "#a1a1aa",
+  bg: "#F6F7F9",
+  accent: "#0E7C5A",
+  text: "#0E1116",
+  textMuted: "#444C58",
 };
 
-const stats = [
-  {
-    value: 50,
-    suffix: "K+",
-    label: "Fit Athletes",
-    Icon: PeopleAltRoundedIcon,
-  },
-  {
-    value: 2,
-    suffix: "K+",
-    label: "Premium Items",
-    Icon: Inventory2RoundedIcon,
-  },
-  {
-    value: 24,
-    suffix: "/7",
-    label: "Fast Support",
-    Icon: SupportAgentRoundedIcon,
-  },
-  {
-    value: 200,
-    suffix: "+",
-    label: "Destinations",
-    Icon: PublicRoundedIcon,
-  },
+interface Stat {
+  value: number;
+  suffix: string;
+  label: string;
+}
+
+/** Backend javobi kelguncha (yoki xato bo'lsa) ko'rsatiladigan zaxira holat */
+const fallbackStats: Stat[] = [
+  { value: 0, suffix: "+", label: "Fit Athletes" },
+  { value: 0, suffix: "+", label: "Premium Items" },
+  { value: 24, suffix: "/7", label: "Fast Support" },
+  { value: 0, suffix: "+", label: "Orders Delivered" },
 ];
 
 interface StatCardProps {
   value: number;
   suffix: string;
   label: string;
-  Icon: typeof PeopleAltRoundedIcon;
+  index: number;
 }
 
-function StatCard({ value, suffix, label, Icon }: StatCardProps) {
+function StatCard({ value, suffix, label, index }: StatCardProps) {
   const [count, setCount] = useState(0);
   const cardRef = useRef<HTMLDivElement | null>(null);
 
@@ -87,78 +69,129 @@ function StatCard({ value, suffix, label, Icon }: StatCardProps) {
     <Box
       ref={cardRef}
       sx={{
+        position: "relative",
         height: "100%",
-        p: { xs: 3, md: 3.5 },
-        border: `1px solid ${fitShopColors.border}`,
-        borderRadius: "16px",
-        background:
-          "linear-gradient(145deg, rgba(31,31,35,0.98), rgba(23,23,26,0.96))",
-        boxShadow: "0 18px 45px rgba(0,0,0,0.28)",
-        transition: "transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease",
-        "&:hover": {
-          transform: "translateY(-6px) scale(1.02)",
-          borderColor: fitShopColors.accent,
-          boxShadow: "0 26px 60px rgba(186,117,23,0.18)",
+        p: { xs: 2.5, md: 2.75 },
+        border: "1px solid #E6E8EC",
+        borderRadius: "18px",
+        background: "#FFFFFF",
+        overflow: "hidden",
+        boxShadow:
+          "0 1px 2px rgba(14,17,22,0.04), 0 12px 30px -18px rgba(14,17,22,0.14)",
+        transition: "all 460ms cubic-bezier(0.32,0.72,0,1)",
+        // Yuqori chetda yashil "machined" highlight chizig'i
+        "&::before": {
+          content: '""',
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          height: "1px",
+          background:
+            "linear-gradient(90deg, transparent, rgba(14,124,90,0.45), transparent)",
+          opacity: 0,
+          transition: "opacity 460ms cubic-bezier(0.32,0.72,0,1)",
         },
+        "&:hover": {
+          transform: "translateY(-5px)",
+          borderColor: "rgba(14, 124, 90, 0.4)",
+          boxShadow:
+            "0 1px 2px rgba(14,17,22,0.05), 0 24px 48px -22px rgba(14,17,22,0.18)",
+        },
+        "&:hover::before": { opacity: 1 },
+        "&:hover .stat-accent": { width: 44 },
       }}
     >
-      <Stack spacing={2.25} alignItems="center" textAlign="center">
-        <Box
-          sx={{
-            width: 58,
-            height: 58,
-            display: "grid",
-            placeItems: "center",
-            borderRadius: "16px",
-            color: fitShopColors.accent,
-            background: "rgba(186,117,23,0.12)",
-            border: "1px solid rgba(186,117,23,0.24)",
-          }}
-        >
-          <Icon fontSize="large" />
-        </Box>
-        <Typography
-          component="div"
-          sx={{
-            color: fitShopColors.text,
-            fontSize: { xs: 38, md: 44 },
-            fontWeight: 800,
-            lineHeight: 1,
-          }}
-        >
-          {count}
-          {suffix}
-        </Typography>
-        <Typography
-          sx={{
-            color: fitShopColors.textMuted,
-            fontSize: 14,
-            fontWeight: 700,
-            letterSpacing: "0.08em",
-            textTransform: "uppercase",
-          }}
-        >
-          {label}
-        </Typography>
-      </Stack>
+      <Typography
+        component="div"
+        sx={{
+          fontFamily: "'Space Mono', monospace",
+          color: fitShopColors.accent,
+          fontSize: 11,
+          fontWeight: 700,
+          letterSpacing: "0.16em",
+          mb: { xs: 1.25, md: 1.75 },
+        }}
+      >
+        {String(index + 1).padStart(2, "0")}
+      </Typography>
+
+      <Typography
+        component="div"
+        sx={{
+          fontFamily: "'Clash Display', sans-serif",
+          color: fitShopColors.text,
+          fontSize: { xs: 34, md: 42 },
+          fontWeight: 700,
+          letterSpacing: "-0.03em",
+          lineHeight: 1,
+        }}
+      >
+        {count}
+        {suffix}
+      </Typography>
+
+      <Box
+        className="stat-accent"
+        sx={{
+          height: "3px",
+          width: 24,
+          mt: 1.5,
+          mb: 1.25,
+          borderRadius: "999px",
+          background: "linear-gradient(90deg, #12A074, #0E7C5A)",
+          transition: "width 520ms cubic-bezier(0.32,0.72,0,1)",
+        }}
+      />
+
+      <Typography
+        sx={{
+          fontFamily: "'Space Mono', monospace",
+          color: fitShopColors.textMuted,
+          fontSize: 10.5,
+          fontWeight: 600,
+          letterSpacing: "0.16em",
+          textTransform: "uppercase",
+        }}
+      >
+        {label}
+      </Typography>
     </Box>
   );
 }
 
 export default function StatSection() {
+  const [stats, setStats] = useState<Stat[]>(fallbackStats);
+
+  useEffect(() => {
+    const service = new MemberService();
+    service
+      .getStats()
+      .then((data) => {
+        setStats([
+          { ...formatStat(data.athletes), label: "Fit Athletes" },
+          { ...formatStat(data.products), label: "Premium Items" },
+          // 24/7 — bu hisob emas, statik qoladi
+          { value: 24, suffix: "/7", label: "Fast Support" },
+          { ...formatStat(data.orders), label: "Orders Delivered" },
+        ]);
+      })
+      .catch((err) => console.error("Error, loadStats:", err));
+  }, []);
+
   return (
     <Box
       component="section"
       sx={{
-        py: { xs: 6, md: 8 },
+        py: { xs: 3.5, md: 4.5 },
         background: fitShopColors.bg,
       }}
     >
       <Container>
-        <Grid container spacing={3}>
-          {stats.map((stat) => (
-            <Grid size={{ xs: 12, sm: 6, lg: 3 }} key={stat.label}>
-              <StatCard {...stat} />
+        <Grid container spacing={2}>
+          {stats.map((stat, index) => (
+            <Grid size={{ xs: 6, lg: 3 }} key={stat.label}>
+              <StatCard {...stat} index={index} />
             </Grid>
           ))}
         </Grid>

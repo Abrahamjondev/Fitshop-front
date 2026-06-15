@@ -7,8 +7,8 @@
   isolation: isolate;
   --spotlight-x: 50%;
   --spotlight-y: 42%;
-  background: #0e0e10;
-  color: #faeeda;
+  background: #FFFFFF;
+  color: #0E1116;
 }
 
 .home-navbar:before {
@@ -17,9 +17,9 @@
   inset: 0;
   z-index: -5;
   background:
-    radial-gradient(circle at 18% 38%, rgba(186, 117, 23, 0.12), transparent 34%),
-    radial-gradient(circle at 82% 24%, rgba(186, 117, 23, 0.08), transparent 30%),
-    linear-gradient(135deg, #0e0e10 0%, #0e0e10 62%, #1a1a1d 100%);
+    radial-gradient(circle at 18% 38%, rgba(14, 124, 90, 0.12), transparent 34%),
+    radial-gradient(circle at 82% 24%, rgba(14, 124, 90, 0.08), transparent 30%),
+    linear-gradient(135deg, #FFFFFF 0%, #FFFFFF 62%, #FFFFFF 100%);
   background-size: 180% 180%;
   animation: heroGradientMorph 16s ease-in-out infinite;
 }
@@ -33,7 +33,7 @@
     linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
   background-size: 72px 72px;
-  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.9), transparent 82%);
+  mask-image: linear-gradient(to bottom, rgba(14, 17, 22, 0.13), transparent 82%);
   animation: heroGridDrift 30s linear infinite;
 }
 
@@ -51,7 +51,7 @@
   z-index: -4;
   opacity: 0.32;
   background:
-    conic-gradient(from 120deg at 50% 50%, rgba(186, 117, 23, 0.2), transparent, rgba(47, 47, 54, 0.28), transparent, rgba(186, 117, 23, 0.16));
+    conic-gradient(from 120deg at 50% 50%, rgba(14, 124, 90, 0.2), transparent, rgba(47, 47, 54, 0.28), transparent, rgba(14, 124, 90, 0.16));
   filter: blur(60px);
   animation: heroAuraSpin 34s linear infinite;
 }
@@ -63,7 +63,7 @@
   width: 360px;
   height: 360px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(186, 117, 23, 0.22) 0%, rgba(186, 117, 23, 0.1) 34%, transparent 68%);
+  background: radial-gradient(circle, rgba(14, 124, 90, 0.22) 0%, rgba(14, 124, 90, 0.1) 34%, transparent 68%);
   filter: blur(26px);
   opacity: 0.86;
   transition: left 120ms ease-out, top 120ms ease-out, opacity 220ms ease;
@@ -83,7 +83,7 @@
   height: 270px;
   left: 5%;
   top: 18%;
-  background: rgba(186, 117, 23, 0.28);
+  background: rgba(14, 124, 90, 0.28);
   animation: heroOrbBreathe 8s ease-in-out infinite;
 }
 
@@ -92,7 +92,7 @@
   height: 360px;
   right: 8%;
   top: 12%;
-  background: rgba(186, 117, 23, 0.16);
+  background: rgba(14, 124, 90, 0.16);
   animation: heroOrbBreathe 10s ease-in-out infinite reverse;
 }
 
@@ -117,8 +117,8 @@
   width: var(--particle-size);
   height: var(--particle-size);
   border-radius: 50%;
-  background: #f0a94a;
-  box-shadow: 0 0 18px rgba(240, 169, 74, 0.75);
+  background: #12A074;
+  box-shadow: 0 0 18px rgba(14, 124, 90, 0.75);
   opacity: 0;
   animation: heroParticleFloat var(--particle-duration) ease-in-out var(--particle-delay) infinite;
   transform: translate3d(0, 0, 0);
@@ -154,14 +154,14 @@
   height: 120px;
   left: 8%;
   bottom: 24%;
-  border-color: rgba(186, 117, 23, 0.44);
+  border-color: rgba(14, 124, 90, 0.44);
   animation: heroShapeOrbit 16s linear infinite reverse;
 }
 
 .home-navbar .hero-slash {
   width: 210px;
   height: 2px;
-  background: linear-gradient(90deg, transparent, rgba(255, 185, 80, 0.78), transparent);
+  background: linear-gradient(90deg, transparent, rgba(14, 124, 90, 0.78), transparent);
   transform-origin: center;
 }
 
@@ -196,7 +196,7 @@
   gap: 24px;
   border: 1px solid rgba(47, 47, 54, 0.95);
   border-radius: 18px;
-  background: rgba(14, 14, 16, 0.82);
+  background: rgba(255, 255, 255, 0.82);
   backdrop-filter: blur(18px);
   box-shadow: 0 18px 48px rgba(0, 0, 0, 0.24);
   animation: heroRevealDown 700ms ease both;
@@ -210,12 +210,12 @@
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  color: #ba7517;
+  color: #0E7C5A;
   transition: transform 200ms ease, color 200ms ease;
 }
 
 .home-navbar .fitshop-logo:hover {
-  color: #d58b25;
+  color: #0A5E44;
   transform: translateY(-1px);
 }
 
@@ -223,15 +223,15 @@
   width: 42px;
   height: 42px;
   padding: 7px;
-  border: 1px solid rgba(186, 117, 23, 0.38);
+  border: 1px solid rgba(14, 124, 90, 0.38);
   border-radius: 12px;
-  background: rgba(186, 117, 23, 0.1);
-  box-shadow: 0 12px 26px rgba(186, 117, 23, 0.18);
+  background: rgba(14, 124, 90, 0.1);
+  box-shadow: 0 12px 26px rgba(14, 124, 90, 0.18);
 }
 
 .home-navbar .fitshop-word {
-  color: #faeeda;
-  font-family: "Poppins";
+  color: #0E1116;
+  font-family: "Plus Jakarta Sans";
   font-size: 24px;
   font-weight: 800;
   letter-spacing: 0;
@@ -239,7 +239,7 @@
 }
 
 .home-navbar .fitshop-word span {
-  color: #ba7517;
+  color: #0E7C5A;
 }
 
 .home-navbar .navbar-container .menu .links,
@@ -273,7 +273,7 @@
   height: 46px;
   padding: 12px 22px;
   border-radius: 12px;
-  font-family: "Poppins";
+  font-family: "Plus Jakarta Sans";
   font-size: 14px;
   font-weight: 800;
   line-height: 1;
@@ -282,30 +282,30 @@
 }
 
 .home-navbar .navbar-container .menu .nav-signup-button {
-  background: #ba7517;
-  color: #faeeda;
-  box-shadow: 0 10px 25px rgba(186, 117, 23, 0.3);
+  background: #0E7C5A;
+  color: #0E1116;
+  box-shadow: 0 10px 25px rgba(14, 124, 90, 0.3);
 }
 
 .home-navbar .navbar-container .menu .nav-signup-button:hover {
-  background: #9a6012;
+  background: #0A5E44;
   transform: scale(1.05);
-  box-shadow: 0 10px 25px rgba(186, 117, 23, 0.4);
+  box-shadow: 0 10px 25px rgba(14, 124, 90, 0.4);
 }
 
 .home-navbar .navbar-container .menu .login-button {
-  border: 2px solid #ba7517;
+  border: 2px solid #0E7C5A;
   background: transparent;
-  color: #ba7517;
+  color: #0E7C5A;
   box-shadow: none;
 }
 
 .home-navbar .navbar-container .menu .login-button:hover {
-  border-color: #9a6012;
-  background: rgba(186, 117, 23, 0.1);
-  color: #9a6012;
+  border-color: #0A5E44;
+  background: rgba(14, 124, 90, 0.1);
+  color: #0A5E44;
   transform: scale(1.05);
-  box-shadow: 0 10px 25px rgba(186, 117, 23, 0.2);
+  box-shadow: 0 10px 25px rgba(14, 124, 90, 0.2);
 }
 
 .home-navbar .navbar-container .menu .login-button:active,
@@ -316,7 +316,7 @@
 .home-navbar .navbar-container .menu .user-avatar {
   width: 50px;
   height: 50px;
-  border: 2px solid rgba(186, 117, 23, 0.55);
+  border: 2px solid rgba(14, 124, 90, 0.55);
   border-radius: 50%;
   cursor: pointer;
 }
@@ -324,9 +324,9 @@
   text-decoration: none;
 }
 .home-navbar .hover-line a {
-  color: #faeeda;
+  color: #0E1116;
   z-index: 100;
-  font-family: "Poppins";
+  font-family: "Plus Jakarta Sans";
   font-size: 15px;
   font-weight: 600;
   letter-spacing: 0.01em;
@@ -334,19 +334,19 @@
 }
 
 .home-navbar .hover-line:hover a {
-  color: #ba7517;
+  color: #0E7C5A;
 }
 
 .home-navbar .underline {
   display: block;
   content: "";
-  border-bottom: solid 2px #ba7517;
+  border-bottom: solid 2px #0E7C5A;
 }
 
 .home-navbar .hover-line:after {
   display: block;
   content: "";
-  border-bottom: solid 2px #ba7517;
+  border-bottom: solid 2px #0E7C5A;
   transform: scaleX(0);
   transition: transform 250ms ease-in-out;
 }
@@ -380,10 +380,10 @@
   padding: 9px 14px;
   border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: 999px;
-  color: #ba7517;
+  color: #0E7C5A;
   background: rgba(255, 255, 255, 0.06);
   backdrop-filter: blur(14px);
-  font-family: "Poppins";
+  font-family: "Plus Jakarta Sans";
   font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.08em;
@@ -394,13 +394,13 @@
   width: min(620px, 100%);
   min-height: 150px;
   margin: 0;
-  font-family: "Roboto Serial";
+  font-family: "Clash Display";
   font-size: clamp(46px, 6.2vw, 86px);
   font-style: normal;
   font-weight: 800;
   line-height: 0.94;
   letter-spacing: 0;
-  color: #f8f8ff;
+  color: #0E1116;
   text-transform: uppercase;
   text-wrap: balance;
 }
@@ -411,8 +411,8 @@
 }
 
 .home-navbar .title-accent {
-  color: #ba7517;
-  background: linear-gradient(90deg, #ba7517, #ffb14b, #f8f8ff, #ba7517);
+  color: #0E7C5A;
+  background: linear-gradient(90deg, #0E7C5A, #12A074, #0E1116, #0E7C5A);
   background-size: 220% auto;
   -webkit-background-clip: text;
   background-clip: text;
@@ -430,13 +430,13 @@
 .home-navbar .navbar-container .header-frame .detail .wel-txt {
   width: min(560px, 100%);
   margin-top: 22px;
-  font-family: "Roboto Serif";
+  font-family: "Plus Jakarta Sans";
   font-style: normal;
   font-weight: 400;
   font-size: 20px;
   line-height: 1.6;
   letter-spacing: 0;
-  color: #a1a1aa;
+  color: #5B6470;
   animation: heroRevealUp 760ms 900ms ease both;
 }
 
@@ -451,12 +451,12 @@
 .home-navbar .hero-stat {
   min-width: 126px;
   padding-left: 16px;
-  border-left: 1px solid rgba(186, 117, 23, 0.52);
+  border-left: 1px solid rgba(14, 124, 90, 0.52);
 }
 
 .home-navbar .hero-stat-num {
-  color: #f8f8ff;
-  font-family: "Poppins";
+  color: #0E1116;
+  font-family: "Plus Jakarta Sans";
   font-size: 28px;
   font-weight: 700;
   line-height: 1;
@@ -465,7 +465,7 @@
 .home-navbar .hero-stat-label {
   margin-top: 8px;
   color: rgba(248, 248, 255, 0.62);
-  font-family: "Poppins";
+  font-family: "Plus Jakarta Sans";
   font-size: 12px;
   font-weight: 500;
   letter-spacing: 0.05em;
@@ -487,17 +487,17 @@
   width: 190px;
   height: 60px;
   border-radius: 12px;
-  background: #ba7517;
-  font-family: "Poppins";
+  background: #0E7C5A;
+  font-family: "Plus Jakarta Sans";
   font-style: normal;
   font-weight: 700;
   font-size: 17px;
   line-height: normal;
   text-align: center;
-  color: #faeeda;
+  color: #0E1116;
   overflow: hidden;
   position: relative;
-  box-shadow: 0 18px 42px rgba(186, 117, 23, 0.32);
+  box-shadow: 0 18px 42px rgba(14, 124, 90, 0.32);
   transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease, border-color 180ms ease;
 }
 
@@ -511,9 +511,9 @@
 }
 
 .home-navbar .navbar-container .detail .signup .signup-button:hover {
-  background: #9a6012;
+  background: #0A5E44;
   transform: translateY(-3px) scale(1.03);
-  box-shadow: 0 24px 55px rgba(186, 117, 23, 0.42);
+  box-shadow: 0 24px 55px rgba(14, 124, 90, 0.42);
 }
 
 .home-navbar .navbar-container .detail .signup .signup-button:hover:before {
@@ -522,17 +522,17 @@
 
 .home-navbar .navbar-container .detail .signup .hero-secondary-button {
   width: 150px;
-  border: 2px solid #ba7517;
+  border: 2px solid #0E7C5A;
   background: transparent;
-  color: #ba7517;
+  color: #0E7C5A;
   backdrop-filter: blur(12px);
   box-shadow: none;
 }
 
 .home-navbar .navbar-container .detail .signup .hero-secondary-button:hover {
-  border-color: #9a6012;
-  background: rgba(186, 117, 23, 0.1);
-  color: #9a6012;
+  border-color: #0A5E44;
+  background: rgba(14, 124, 90, 0.1);
+  color: #0A5E44;
 }
 
 .home-navbar .hero-visual-panel {
@@ -556,24 +556,24 @@
   inset: 34px;
   border: 1px solid rgba(47, 47, 54, 0.95);
   background:
-    radial-gradient(circle at 50% 50%, rgba(186, 117, 23, 0.14), transparent 36%),
-    linear-gradient(145deg, rgba(250, 238, 218, 0.08), rgba(250, 238, 218, 0.01));
+    radial-gradient(circle at 50% 50%, rgba(14, 124, 90, 0.14), transparent 36%),
+    linear-gradient(145deg, rgba(14, 124, 90, 0.18), rgba(14, 124, 90, 0.18));
   box-shadow:
-    inset 0 0 70px rgba(186, 117, 23, 0.12),
-    0 42px 90px rgba(0, 0, 0, 0.28);
+    inset 0 0 70px rgba(14, 124, 90, 0.12),
+    0 42px 90px rgba(14, 17, 22, 0.08);
   backdrop-filter: blur(10px);
   animation: heroStageFloat 8s ease-in-out infinite;
 }
 
 .home-navbar .hero-visual-panel:after {
   inset: 118px;
-  background: #ba7517;
-  box-shadow: 0 0 58px rgba(186, 117, 23, 0.42);
+  background: #0E7C5A;
+  box-shadow: 0 0 58px rgba(14, 124, 90, 0.42);
   animation: heroOrbBreathe 6s ease-in-out infinite;
 }
 
 .home-navbar .hero-visual-ring {
-  border: 1px solid rgba(186, 117, 23, 0.36);
+  border: 1px solid rgba(14, 124, 90, 0.36);
 }
 
 .home-navbar .hero-visual-ring-one {
@@ -583,14 +583,14 @@
 
 .home-navbar .hero-visual-ring-two {
   inset: 74px;
-  border-color: rgba(250, 238, 218, 0.12);
+  border-color: rgba(14, 124, 90, 0.18);
   animation: heroShapeOrbit 14s linear infinite reverse;
 }
 
 .home-navbar .hero-visual-pulse {
   inset: 166px;
-  border: 2px solid rgba(250, 238, 218, 0.3);
-  box-shadow: 0 0 40px rgba(186, 117, 23, 0.3);
+  border: 2px solid rgba(14, 124, 90, 0.18);
+  box-shadow: 0 0 40px rgba(14, 124, 90, 0.3);
   animation: heroPulse 2.8s ease-in-out infinite;
 }
 
@@ -612,7 +612,7 @@
 }
 
 .home-navbar .wave-back {
-  fill: rgba(186, 117, 23, 0.18);
+  fill: rgba(14, 124, 90, 0.18);
   animation: heroWaveMove 10s ease-in-out infinite;
 }
 
@@ -948,48 +948,32 @@
 .other-navbar {
   position: relative;
   width: 100%;
-  min-height: 320px;
-  display: flex;
+  min-height: auto;
+  display: block;
   overflow: hidden;
-  background:
-    linear-gradient(115deg, #0e0e10 0%, #151518 52%, #0b0b0d 100%);
-  color: #faeeda;
+  padding-bottom: 18px;
+  background: linear-gradient(180deg, #FFFFFF 0%, #F6F7F9 100%);
+  border-bottom: 1px solid rgba(14, 17, 22, 0.06);
+  color: #0E1116;
 }
 
+/* Yengil emerald nur — band chiziqlar o'rniga */
 .other-navbar:before {
   content: "";
   position: absolute;
-  inset: -25%;
+  inset: 0;
   background:
-    repeating-linear-gradient(115deg, rgba(250, 238, 218, 0.035) 0 1px, transparent 1px 34px),
-    repeating-linear-gradient(25deg, rgba(186, 117, 23, 0.05) 0 1px, transparent 1px 46px);
-  opacity: 0.9;
-  transform: translate3d(0, 0, 0) rotate(0.001deg);
-  animation: otherSurfaceDrift 18s linear infinite;
+    radial-gradient(60% 120% at 88% -10%, rgba(14, 124, 90, 0.12), transparent 60%),
+    radial-gradient(50% 120% at 6% -20%, rgba(18, 160, 116, 0.08), transparent 60%);
+  pointer-events: none;
 }
 
 .other-navbar:after {
-  content: "";
-  position: absolute;
-  left: -12%;
-  right: -12%;
-  bottom: -86px;
-  height: 150px;
-  background:
-    linear-gradient(90deg, transparent 0%, rgba(186, 117, 23, 0.18) 18%, transparent 42%),
-    #0e0e10;
-  transform: rotate(-2.4deg);
-  transform-origin: center;
+  display: none;
 }
 
 .other-navbar .other-navbar-bg {
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(100deg, transparent 0 52%, rgba(186, 117, 23, 0.18) 52% 53%, transparent 53% 100%),
-    linear-gradient(104deg, transparent 0 63%, rgba(250, 238, 218, 0.08) 63% 64%, transparent 64% 100%),
-    linear-gradient(90deg, rgba(186, 117, 23, 0.16), transparent 58%);
-  pointer-events: none;
+  display: none;
 }
 
 .other-navbar .other-navbar-bg:before,
@@ -999,20 +983,20 @@
   top: 34px;
   bottom: 40px;
   width: 28%;
-  border: 1px solid rgba(186, 117, 23, 0.16);
+  border: 1px solid rgba(14, 124, 90, 0.16);
   transform: skewX(-18deg);
 }
 
 .other-navbar .other-navbar-bg:before {
   right: 10%;
   background:
-    linear-gradient(90deg, rgba(186, 117, 23, 0.12), transparent),
-    repeating-linear-gradient(0deg, transparent 0 16px, rgba(250, 238, 218, 0.045) 16px 17px);
+    linear-gradient(90deg, rgba(14, 124, 90, 0.12), transparent),
+    repeating-linear-gradient(0deg, transparent 0 16px, rgba(14, 124, 90, 0.18) 16px 17px);
 }
 
 .other-navbar .other-navbar-bg:after {
   right: -7%;
-  background: rgba(250, 238, 218, 0.035);
+  background: rgba(14, 124, 90, 0.18);
 }
 
 @keyframes otherSurfaceDrift {
@@ -1038,10 +1022,10 @@
   justify-content: space-between;
   align-items: center;
   gap: 22px;
-  border: 1px solid rgba(250, 238, 218, 0.1);
+  border: 1px solid rgba(14, 124, 90, 0.18);
   border-radius: 18px;
-  background: rgba(18, 18, 21, 0.74);
-  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.28);
+  background: rgba(255, 255, 255, 0.74);
+  box-shadow: 0 18px 48px rgba(14, 17, 22, 0.08);
   backdrop-filter: blur(18px);
 }
 
@@ -1062,22 +1046,22 @@
   display: inline-flex;
   align-items: center;
   gap: 12px;
-  color: #ba7517;
+  color: #0E7C5A;
 }
 
 .other-navbar .fitshop-mark {
   width: 40px;
   height: 40px;
   padding: 7px;
-  border: 1px solid rgba(186, 117, 23, 0.38);
+  border: 1px solid rgba(14, 124, 90, 0.38);
   border-radius: 12px;
-  background: rgba(186, 117, 23, 0.1);
-  box-shadow: 0 12px 26px rgba(186, 117, 23, 0.16);
+  background: rgba(14, 124, 90, 0.1);
+  box-shadow: 0 12px 26px rgba(14, 124, 90, 0.16);
 }
 
 .other-navbar .fitshop-word {
-  color: #faeeda;
-  font-family: "Poppins";
+  color: #0E1116;
+  font-family: "Plus Jakarta Sans";
   font-size: 23px;
   font-weight: 800;
   letter-spacing: 0;
@@ -1085,7 +1069,7 @@
 }
 
 .other-navbar .fitshop-word span {
-  color: #ba7517;
+  color: #0E7C5A;
 }
 
 .other-navbar .navbar-container .menu .links {
@@ -1111,7 +1095,7 @@
   height: 44px;
   padding: 11px 20px;
   border-radius: 12px;
-  font-family: "Poppins";
+  font-family: "Plus Jakarta Sans";
   font-size: 13px;
   font-weight: 800;
   line-height: 1;
@@ -1120,39 +1104,39 @@
 }
 
 .other-navbar .navbar-container .menu .nav-signup-button {
-  background: #ba7517;
-  color: #faeeda;
-  box-shadow: 0 10px 24px rgba(186, 117, 23, 0.28);
+  background: #0E7C5A;
+  color: #0E1116;
+  box-shadow: 0 10px 24px rgba(14, 124, 90, 0.28);
 }
 
 .other-navbar .navbar-container .menu .nav-signup-button:hover {
-  background: #9a6012;
+  background: #0A5E44;
   transform: translateY(-1px);
-  box-shadow: 0 12px 28px rgba(186, 117, 23, 0.36);
+  box-shadow: 0 12px 28px rgba(14, 124, 90, 0.36);
 }
 
 .other-navbar .navbar-container .menu .login-button {
-  border: 2px solid rgba(186, 117, 23, 0.78);
+  border: 2px solid rgba(14, 124, 90, 0.78);
   background: transparent;
-  color: #ba7517;
+  color: #0E7C5A;
   box-shadow: none;
 }
 
 .other-navbar .navbar-container .menu .login-button:hover {
-  border-color: #ba7517;
-  background: rgba(186, 117, 23, 0.12);
-  color: #faeeda;
+  border-color: #0E7C5A;
+  background: rgba(14, 124, 90, 0.12);
+  color: #0E1116;
   transform: translateY(-1px);
 }
 
 .other-navbar .navbar-container .menu .user-avatar {
   width: 48px;
   height: 48px;
-  border: 2px solid rgba(186, 117, 23, 0.55);
+  border: 2px solid rgba(14, 124, 90, 0.55);
   border-radius: 50%;
   object-fit: cover;
   cursor: pointer;
-  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.28);
+  box-shadow: 0 10px 22px rgba(14, 17, 22, 0.08);
 }
 
 .other-navbar a {
@@ -1160,9 +1144,9 @@
 }
 
 .other-navbar .hover-line a {
-  color: #faeeda;
+  color: #0E1116;
   z-index: 100;
-  font-family: "Poppins";
+  font-family: "Plus Jakarta Sans";
   font-size: 15px;
   font-weight: 600;
   line-height: 24px;
@@ -1171,21 +1155,21 @@
 }
 
 .other-navbar .hover-line a:hover {
-  color: #ba7517;
+  color: #0E7C5A;
   opacity: 1;
 }
 
 .other-navbar .underline {
   display: block;
   content: "";
-  color: #ba7517 !important;
-  border-bottom: solid 2px #ba7517;
+  color: #0E7C5A !important;
+  border-bottom: solid 2px #0E7C5A;
 }
 
 .other-navbar .hover-line:after {
   display: block;
   content: "";
-  border-bottom: solid 2px #ba7517;
+  border-bottom: solid 2px #0E7C5A;
   transform: scaleX(0);
   transition: transform 250ms ease-in-out;
 }
@@ -1207,11 +1191,11 @@
 .other-navbar .hero-kicker {
   width: fit-content;
   padding: 8px 13px;
-  border: 1px solid rgba(186, 117, 23, 0.38);
+  border: 1px solid rgba(14, 124, 90, 0.38);
   border-radius: 999px;
-  background: rgba(186, 117, 23, 0.12);
+  background: rgba(14, 124, 90, 0.12);
   color: #d7b686;
-  font-family: "Poppins";
+  font-family: "Plus Jakarta Sans";
   font-size: 12px;
   font-weight: 800;
   letter-spacing: 0.04em;
@@ -1220,8 +1204,8 @@
 
 .other-navbar .other-title {
   margin-top: 18px;
-  color: #faeeda;
-  font-family: "Poppins";
+  color: #0E1116;
+  font-family: "Plus Jakarta Sans";
   font-size: clamp(38px, 5vw, 62px);
   font-weight: 900;
   line-height: 1.02;
@@ -1232,7 +1216,7 @@
   max-width: 520px;
   margin-top: 14px;
   color: #c9c1b4;
-  font-family: "Poppins";
+  font-family: "Plus Jakarta Sans";
   font-size: 17px;
   line-height: 1.65;
 }
@@ -1307,7 +1291,7 @@
   height: auto;
   display: flex;
   flex-direction: column;
-  background: #f8f8ff;
+  background: #0E1116;
   border-radius: 16px;
 }
 
@@ -1344,7 +1328,7 @@
 .basket-info-box .product-name {
   margin-left: 11px;
   width: 185px;
-  font-family: "Poppins";
+  font-family: "Plus Jakarta Sans";
   font-style: normal;
   font-weight: 400;
   font-size: 20px;
@@ -1354,7 +1338,7 @@
 
 .basket-info-box .product-price {
   width: 80px;
-  font-family: "Poppins";
+  font-family: "Plus Jakarta Sans";
   font-style: normal;
   font-weight: 600;
   font-size: 15px;
@@ -1386,13 +1370,13 @@
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
-  border-top: 1px solid rgba(0, 0, 0, 0.5);
+  border-top: 1px solid rgba(14, 17, 22, 0.45);
 }
 
 .basket-order .price {
   width: 200px;
   display: flex;
-  font-family: "Poppins";
+  font-family: "Plus Jakarta Sans";
   font-style: normal;
   font-weight: 400;
   font-size: 20px;
@@ -1431,4 +1415,493 @@
   height: 260px;
   display: flex;
   flex-direction: column;
+}
+
+/* ============================================================
+   FORGED — premium navbar redesign  (override layer, oxirida turadi).
+   Konsepsiya: kuch-quvvat anjomi metalldek — onyx + nafis champagne oltin,
+   yuzuvchi "machined" pill, Clash Display / Plus Jakarta tipografiyasi.
+   Faqat CSS — markup tegilmagan.
+   ============================================================ */
+
+.home-navbar,
+.other-navbar {
+  --ink: #FFFFFF;
+  --bone: #0E1116;
+  --muted: rgba(14, 17, 22, 0.52);
+  --line: rgba(14, 17, 22, 0.1);
+  --gold: #0E7C5A;
+  --gold-bright: #12A074;
+  --gold-deep: #0A5E44;
+}
+
+/* --- Bar = yuzuvchi "pill" (Home + Other umumiy) --- */
+.home-navbar .navbar-container .menu,
+.other-navbar .navbar-container .menu {
+  width: max-content;
+  max-width: calc(100% - 16px);
+  margin: 0 auto;
+  min-height: 62px;
+  padding: 8px 8px 8px 24px;
+  gap: 44px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.72),
+    rgba(255, 255, 255, 0.5)
+  );
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 22px 55px -24px rgba(14, 17, 22, 0.12);
+}
+.other-navbar .navbar-container .menu {
+  position: relative;
+}
+
+/* yuqori qirrada nozik oltin yoy — "machined" detal */
+.home-navbar .navbar-container .menu::before,
+.other-navbar .navbar-container .menu::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 26%;
+  right: 26%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(14, 124, 90, 0.6),
+    transparent
+  );
+  pointer-events: none;
+}
+
+/* --- Logo --- */
+.home-navbar .fitshop-logo,
+.other-navbar .fitshop-logo {
+  color: var(--gold);
+  gap: 12px;
+}
+.home-navbar .fitshop-mark,
+.other-navbar .fitshop-mark {
+  width: 38px;
+  height: 38px;
+  padding: 7px;
+  border: 1px solid rgba(14, 124, 90, 0.42);
+  border-radius: 12px;
+  background: linear-gradient(
+    155deg,
+    rgba(14, 124, 90, 0.2),
+    rgba(14, 124, 90, 0.02)
+  );
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16);
+}
+.home-navbar .fitshop-word,
+.other-navbar .fitshop-word {
+  font-family: "Clash Display", "Plus Jakarta Sans", sans-serif;
+  color: var(--bone);
+  font-size: 21px;
+  font-weight: 600;
+  letter-spacing: 0.005em;
+}
+.home-navbar .fitshop-word span,
+.other-navbar .fitshop-word span {
+  color: var(--gold);
+}
+
+/* --- Nav linklar --- */
+.home-navbar .navbar-container .menu .links,
+.other-navbar .navbar-container .menu .links {
+  gap: 34px;
+}
+.home-navbar .hover-line a,
+.other-navbar .hover-line a {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  color: var(--muted);
+  font-size: 13.5px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  opacity: 1;
+  transition: color 280ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+.home-navbar .hover-line:hover a,
+.other-navbar .hover-line:hover a,
+.other-navbar .hover-line a:hover {
+  color: var(--bone);
+  opacity: 1;
+}
+/* hover indikatori: markazdan o'sadigan nozik oltin chiziq */
+.home-navbar .hover-line:after,
+.other-navbar .hover-line:after,
+.home-navbar div.hover-line:after,
+.other-navbar div.hover-line:after {
+  height: 1.5px;
+  margin-top: 5px;
+  border: 0;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--gold), var(--gold-bright));
+  transform: scaleX(0);
+  transform-origin: 50% 50%;
+  transition: transform 320ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+.home-navbar .hover-line:hover:after,
+.other-navbar .hover-line:hover:after {
+  transform: scaleX(1);
+}
+/* aktiv sahifa: oltin matn + to'liq chiziq */
+.home-navbar .underline,
+.other-navbar .underline {
+  color: var(--gold) !important;
+  border-bottom: 1.5px solid var(--gold);
+}
+
+/* --- CTA tugmalar (pill) --- */
+.home-navbar .navbar-container .menu .login-button,
+.home-navbar .navbar-container .menu .nav-signup-button,
+.other-navbar .navbar-container .menu .login-button,
+.other-navbar .navbar-container .menu .nav-signup-button {
+  height: 46px;
+  border-radius: 999px;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: none;
+  transition: transform 420ms cubic-bezier(0.32, 0.72, 0, 1),
+    box-shadow 420ms cubic-bezier(0.32, 0.72, 0, 1),
+    background 320ms ease, border-color 320ms ease, color 320ms ease;
+}
+/* SIGN UP — oltin pill + ichki "tugma-ichida-tugma" strelka */
+.home-navbar .navbar-container .menu .nav-signup-button,
+.other-navbar .navbar-container .menu .nav-signup-button {
+  min-width: 0;
+  padding: 0 8px 0 22px;
+  background: linear-gradient(135deg, #12A074 0%, #0E7C5A 50%, #0A5E44 100%);
+  color: #FFFFFF;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.35),
+    0 10px 26px -10px rgba(14, 124, 90, 0.7);
+}
+.home-navbar .navbar-container .menu .nav-signup-button::after,
+.other-navbar .navbar-container .menu .nav-signup-button::after {
+  content: "→";
+  display: inline-grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  margin-left: 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.16);
+  color: #FFFFFF;
+  font-size: 14px;
+  line-height: 1;
+  transition: transform 420ms cubic-bezier(0.32, 0.72, 0, 1),
+    background 320ms ease;
+}
+.home-navbar .navbar-container .menu .nav-signup-button:hover,
+.other-navbar .navbar-container .menu .nav-signup-button:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    0 18px 38px -12px rgba(14, 124, 90, 0.85);
+}
+.home-navbar .navbar-container .menu .nav-signup-button:hover::after,
+.other-navbar .navbar-container .menu .nav-signup-button:hover::after {
+  transform: translate(3px, -1px);
+  background: rgba(255, 255, 255, 0.26);
+}
+.home-navbar .navbar-container .menu .nav-signup-button:active,
+.other-navbar .navbar-container .menu .nav-signup-button:active {
+  transform: scale(0.98);
+}
+/* LOG IN — ghost pill */
+.home-navbar .navbar-container .menu .login-button,
+.other-navbar .navbar-container .menu .login-button {
+  min-width: 0;
+  padding: 0 22px;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--bone);
+  box-shadow: none;
+}
+.home-navbar .navbar-container .menu .login-button:hover,
+.other-navbar .navbar-container .menu .login-button:hover {
+  border-color: rgba(14, 124, 90, 0.55);
+  background: rgba(14, 124, 90, 0.08);
+  color: var(--gold-bright);
+  transform: translateY(-2px);
+}
+
+/* --- Avatar --- */
+.home-navbar .navbar-container .menu .user-avatar,
+.other-navbar .navbar-container .menu .user-avatar {
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(14, 124, 90, 0.5);
+  box-shadow: 0 0 0 3px rgba(14, 124, 90, 0.1);
+  transition: transform 420ms cubic-bezier(0.32, 0.72, 0, 1),
+    box-shadow 320ms ease;
+}
+.home-navbar .navbar-container .menu .user-avatar:hover,
+.other-navbar .navbar-container .menu .user-avatar:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 0 0 4px rgba(14, 124, 90, 0.18);
+}
+
+/* --- Mobil: pill yumshoq to'rtburchakka tushadi --- */
+@media (max-width: 960px) {
+  .home-navbar .navbar-container .menu,
+  .other-navbar .navbar-container .menu {
+    width: auto;
+    max-width: none;
+    border-radius: 22px;
+    gap: 18px;
+  }
+}
+
+/* --- Hero fonini tinchlantirish (premium ko'rinish uchun) --- */
+.home-navbar .hero-particle {
+  display: none;
+}
+.home-navbar .hero-orb {
+  opacity: 0.26;
+  filter: blur(54px);
+}
+.home-navbar .hero-orb-three,
+.home-navbar .hero-slash {
+  display: none;
+}
+.home-navbar .hero-ring {
+  opacity: 0.4;
+}
+.home-navbar .wave-front {
+  fill: #FFFFFF;
+}
+.home-navbar .wave-back {
+  fill: rgba(14, 124, 90, 0.1);
+}
+
+/* ============================================================
+   FORGED HERO — premium hero typografiyasi va CTA
+   ============================================================ */
+
+/* Eyebrow — "anjom spetsifikatsiyasi" hissi (Space Mono + oltin marker) */
+.home-navbar .navbar-container .header-frame .detail .hero-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 26px;
+  padding: 8px 16px 8px 13px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--muted);
+  font-family: "Space Mono", monospace;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.home-navbar .navbar-container .header-frame .detail .hero-kicker::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--gold);
+  box-shadow: 0 0 12px var(--gold-bright);
+}
+
+/* Sarlavha — Clash Display, zич, kuchli */
+.home-navbar .navbar-container .header-frame .detail .head-main-txt {
+  font-family: "Clash Display", sans-serif;
+  font-size: clamp(50px, 6.8vw, 94px);
+  font-weight: 600;
+  line-height: 0.9;
+  letter-spacing: -0.025em;
+  color: var(--bone);
+  text-transform: uppercase;
+}
+.home-navbar .title-accent {
+  background: linear-gradient(100deg, #12A074 0%, #0E7C5A 50%, #0A5E44 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Subtitle */
+.home-navbar .navbar-container .header-frame .detail .wel-txt {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  margin-top: 24px;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.65;
+  color: var(--muted);
+}
+
+/* Primary CTA — champagne pill + ichki strelka */
+.home-navbar .navbar-container .detail .signup .signup-button {
+  width: auto;
+  min-width: 0;
+  height: 58px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 10px 0 30px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #12A074 0%, #0E7C5A 52%, #0A5E44 100%);
+  color: #FFFFFF;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    0 16px 40px -14px rgba(14, 124, 90, 0.8);
+}
+.home-navbar .navbar-container .detail .signup .signup-button::after {
+  content: "→";
+  display: inline-grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  margin-left: 18px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.18);
+  color: #FFFFFF;
+  font-size: 16px;
+  transition: transform 420ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+.home-navbar .navbar-container .detail .signup .signup-button:hover {
+  background: linear-gradient(135deg, #1CB386 0%, #12A074 52%, #0A5E44 100%);
+  transform: translateY(-3px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.45),
+    0 24px 55px -16px rgba(14, 124, 90, 0.95);
+}
+.home-navbar .navbar-container .detail .signup .signup-button:hover::after {
+  transform: translate(3px, -1px);
+}
+
+/* Secondary CTA — ghost pill */
+.home-navbar .navbar-container .detail .signup .hero-secondary-button {
+  width: auto;
+  height: 58px;
+  padding: 0 30px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--bone);
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  backdrop-filter: none;
+}
+.home-navbar .navbar-container .detail .signup .hero-secondary-button:hover {
+  border-color: rgba(14, 124, 90, 0.55);
+  background: rgba(14, 124, 90, 0.08);
+  color: var(--gold-bright);
+  transform: translateY(-3px);
+}
+
+/* Visual panel — "forged medallion" */
+.home-navbar .hero-visual-panel:after {
+  background: radial-gradient(circle at 38% 32%, #1CB386, #0E7C5A 55%, #0A5E44);
+  box-shadow: 0 0 70px rgba(14, 124, 90, 0.45);
+}
+.home-navbar .hero-visual-pulse {
+  border-color: rgba(14, 124, 90, 0.35);
+}
+
+/* ============================================================
+   FORGED HERO v2 — toza kinematik fon (barcha shovqinli effektlar olib
+   tashlandi: orblar, spotlight, zarrachalar, aylanuvchi medallion, to'lqin).
+   Bitta nozik nur + sokin grid + editorial tipografiya.
+   ============================================================ */
+
+.home-navbar {
+  min-height: 90vh;
+}
+
+/* Fon: kuchli, silliq emerald MESH gradient (oq bo'shliqni rang bilan to'ldiradi) */
+.home-navbar:before {
+  background:
+    radial-gradient(58% 86% at 100% -4%, rgba(18, 160, 116, 0.34), transparent 60%),
+    radial-gradient(48% 72% at 88% 108%, rgba(14, 124, 90, 0.26), transparent 60%),
+    radial-gradient(
+      42% 60% at 66% 48%,
+      rgba(125, 208, 168, 0.18),
+      transparent 64%
+    ),
+    linear-gradient(118deg, #ffffff 0%, #f1faf6 50%, #e4f3ed 100%);
+  animation: none;
+}
+
+/* shovqinli effektlar/yo'l-yo'l/dot-grid yo'q */
+.home-navbar:after {
+  display: none;
+}
+
+/* Barcha o'yinchoq dekor-elementlarni o'chiramiz */
+.home-navbar .hero-gradient-layer,
+.home-navbar .hero-spotlight,
+.home-navbar .hero-orb,
+.home-navbar .hero-particles,
+.home-navbar .hero-geometry,
+.home-navbar .hero-wave,
+.home-navbar .hero-visual-panel {
+  display: none !important;
+}
+
+/* Hero matni: kinematik, chap tomonда, keng nafas */
+.home-navbar .navbar-container .header-frame {
+  margin-top: 92px;
+  min-height: auto;
+  padding-bottom: 80px;
+  display: block;
+}
+.home-navbar .navbar-container .header-frame .detail {
+  width: min(900px, 100%);
+}
+.home-navbar .navbar-container .header-frame .detail .head-main-txt {
+  font-size: clamp(54px, 8.6vw, 116px);
+  line-height: 0.88;
+}
+
+/* Sarlavha harflari: toza fade-up (aylanish/rotate olib tashlandi) */
+.home-navbar .title-letter {
+  transform: translate3d(0, 42px, 0);
+  animation: forgedLetterIn 720ms cubic-bezier(0.19, 1, 0.22, 1) forwards;
+}
+@keyframes forgedLetterIn {
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Signature: editorial mono "disciplines" qatori — hairline divider bilan */
+.home-navbar .navbar-container .header-frame::after {
+  content: "STRENGTH — MOBILITY — RECOVERY — ENDURANCE";
+  display: block;
+  width: min(900px, 100%);
+  margin-top: 56px;
+  padding-top: 22px;
+  border-top: 1px solid var(--line);
+  font-family: "Space Mono", monospace;
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  color: var(--muted);
+  text-transform: uppercase;
+  animation: heroRevealUp 760ms 1400ms ease both;
+}
+
+@media (max-width: 620px) {
+  .home-navbar .navbar-container .header-frame::after {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+  }
 }

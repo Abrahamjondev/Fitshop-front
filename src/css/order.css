@@ -3,9 +3,9 @@
   min-height: 100vh;
   display: flex;
   background:
-    radial-gradient(circle at 12% 6%, rgba(186, 117, 23, 0.18), transparent 28%),
-    linear-gradient(180deg, #0e0e10 0%, #151518 52%, #0e0e10 100%);
-  color: #faeeda;
+    radial-gradient(circle at 12% 6%, rgba(14, 124, 90, 0.18), transparent 28%),
+    linear-gradient(180deg, #FFFFFF 0%, #F4F5F7 52%, #FFFFFF 100%);
+  color: #0E1116;
 }
 
 .order-page .order-container {
@@ -40,14 +40,14 @@
 .order-page .order-kicker {
   width: fit-content;
   padding: 8px 13px;
-  border: 1px solid rgba(186, 117, 23, 0.38);
+  border: 1px solid rgba(14, 124, 90, 0.38);
   border-radius: 999px;
-  background: rgba(186, 117, 23, 0.12);
-  color: #d7b686;
-  font-family: "Poppins";
-  font-size: 12px;
-  font-weight: 900;
-  letter-spacing: 0.04em;
+  background: rgba(14, 124, 90, 0.12);
+  color: #0E7C5A;
+  font-family: "Space Mono", monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
 }
 
@@ -61,20 +61,21 @@
 
 .order-page .order-title-row h1 {
   margin: 0;
-  color: #faeeda;
-  font-family: "Poppins";
-  font-size: clamp(38px, 5vw, 62px);
-  font-weight: 900;
-  line-height: 1.02;
-  letter-spacing: 0;
+  color: #0E1116;
+  font-family: "Clash Display", sans-serif;
+  font-size: clamp(36px, 5vw, 56px);
+  font-weight: 600;
+  line-height: 1.04;
+  letter-spacing: -0.02em;
 }
 
 .order-page .order-title-row p {
   max-width: 590px;
   margin: 16px 0 0;
-  color: #c9c1b4;
-  font-family: "Poppins";
+  color: #444C58;
+  font-family: "Plus Jakarta Sans";
   font-size: 16px;
+  font-weight: 500;
   line-height: 1.65;
 }
 
@@ -87,38 +88,41 @@
   align-items: center;
   column-gap: 10px;
   border-radius: 18px;
-  border: 1px solid rgba(250, 238, 218, 0.1);
-  background: rgba(31, 31, 35, 0.86);
-  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.2);
+  border: 1px solid #E6E8EC;
+  background: #FFFFFF;
+  box-shadow: 0 1px 2px rgba(14,17,22,0.04), 0 16px 36px -22px rgba(14,17,22,0.16);
 }
 
 .order-page .order-total-chip svg {
   grid-row: span 2;
-  color: #ba7517;
+  color: #0E7C5A;
 }
 
 .order-page .order-total-chip span {
-  color: #faeeda;
-  font-family: "Poppins";
+  color: #0E1116;
+  font-family: "Clash Display", sans-serif;
   font-size: 28px;
-  font-weight: 900;
+  font-weight: 700;
   line-height: 1;
 }
 
 .order-page .order-total-chip small {
-  color: #a1a1aa;
-  font-family: "Poppins";
-  font-size: 12px;
-  font-weight: 800;
+  color: #444C58;
+  font-family: "Space Mono", monospace;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
 }
 
 .order-page .order-left .order-nav-frame {
   width: 100%;
   min-height: 64px;
   display: flex;
-  border: 1px solid rgba(250, 238, 218, 0.1);
+  border: 1px solid #E6E8EC;
   border-radius: 18px;
-  background: rgba(255, 255, 255, 0.045);
+  background: #FFFFFF;
+  box-shadow: 0 1px 2px rgba(14,17,22,0.04), 0 12px 30px -22px rgba(14,17,22,0.14);
   overflow: hidden;
 }
 
@@ -141,12 +145,19 @@
   min-height: 48px;
   flex: 1;
   border-radius: 14px;
-  color: #a1a1aa;
-  font-family: "Poppins";
+  color: #444C58;
+  font-family: "Plus Jakarta Sans";
   font-size: 13px;
-  font-weight: 900;
+  font-weight: 800;
   letter-spacing: 0;
   text-transform: none;
+  transition: background-color 320ms cubic-bezier(0.32, 0.72, 0, 1),
+    color 320ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+.order-page .table_list .MuiTab-root:hover {
+  background-color: rgba(14, 124, 90, 0.08);
+  color: #0A5E44;
 }
 
 .order-page .table_list .MuiTab-root svg {
@@ -154,9 +165,9 @@
 }
 
 .order-page .table_list .Mui-selected {
-  background: #ba7517;
-  color: #faeeda !important;
-  box-shadow: 0 12px 26px rgba(186, 117, 23, 0.28);
+  background-image: linear-gradient(135deg, #12A074 0%, #0E7C5A 52%, #0A5E44 100%);
+  color: #FFFFFF !important;
+  box-shadow: 0 12px 26px -12px rgba(14, 124, 90, 0.6);
 }
 
 .order-page .table_list .MuiTabs-indicator {
@@ -176,10 +187,16 @@
   width: 100%;
   margin-bottom: 24px;
   overflow: hidden;
-  border: 1px solid rgba(250, 238, 218, 0.1);
+  border: 1px solid #E6E8EC;
   border-radius: 20px;
-  background: rgba(31, 31, 35, 0.88);
-  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.22);
+  background: #FFFFFF;
+  box-shadow: 0 1px 2px rgba(14,17,22,0.04), 0 18px 40px -24px rgba(14,17,22,0.16);
+  transition: border-color 360ms cubic-bezier(0.32,0.72,0,1), box-shadow 360ms cubic-bezier(0.32,0.72,0,1);
+}
+
+.order-page .order-main-content .order-main-box:hover {
+  border-color: rgba(14, 124, 90, 0.32);
+  box-shadow: 0 1px 2px rgba(14,17,22,0.05), 0 26px 50px -28px rgba(14,17,22,0.2);
 }
 
 .order-page .order-card-head {
@@ -188,7 +205,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  border-bottom: 1px solid rgba(250, 238, 218, 0.08);
+  border-bottom: 1px solid #EDEFF2;
 }
 
 .order-page .order-card-head > .MuiBox-root {
@@ -198,41 +215,44 @@
 }
 
 .order-page .order-card-head strong {
-  color: #faeeda;
-  font-family: "Poppins";
+  color: #0E1116;
+  font-family: "Plus Jakarta Sans";
   font-size: 16px;
   font-weight: 900;
 }
 
 .order-page .order-card-head > span {
-  color: #a1a1aa;
-  font-family: "Poppins";
+  color: #444C58;
+  font-family: "Plus Jakarta Sans";
   font-size: 13px;
-  font-weight: 800;
+  font-weight: 700;
 }
 
 .order-page .order-status-pill {
   padding: 8px 11px;
   border-radius: 999px;
-  font-family: "Poppins";
+  font-family: "Plus Jakarta Sans";
   font-size: 12px;
   font-weight: 900;
   line-height: 1;
 }
 
 .order-page .order-status-pill.paused {
-  background: rgba(215, 182, 134, 0.14);
-  color: #d7b686;
+  background: rgba(217, 137, 43, 0.14);
+  border: 1px solid rgba(217, 137, 43, 0.28);
+  color: #B45309;
 }
 
 .order-page .order-status-pill.process {
-  background: rgba(71, 145, 219, 0.16);
-  color: #7bb8ff;
+  background: rgba(37, 99, 235, 0.12);
+  border: 1px solid rgba(37, 99, 235, 0.26);
+  color: #1D4ED8;
 }
 
 .order-page .order-status-pill.finished {
-  background: rgba(86, 183, 77, 0.16);
-  color: #7fdd78;
+  background: rgba(14, 124, 90, 0.12);
+  border: 1px solid rgba(14, 124, 90, 0.28);
+  color: #0A5E44;
 }
 
 .order-page .order-main-content .order-main-box .order-box-scroll {
@@ -251,7 +271,7 @@
 
 .order-page .order-box-scroll::-webkit-scrollbar-thumb {
   border-radius: 999px;
-  background: rgba(186, 117, 23, 0.42);
+  background: rgba(14, 124, 90, 0.42);
 }
 
 .order-page .order-box-scroll .orders-name-price {
@@ -262,8 +282,8 @@
   align-items: center;
   gap: 14px;
   border-radius: 16px;
-  background: rgba(255, 255, 255, 0.045);
-  border: 1px solid rgba(250, 238, 218, 0.08);
+  background: #F6F7F9;
+  border: 1px solid #EDEFF2;
 }
 
 .order-page .order-box-scroll .orders-name-price .order-dish-img {
@@ -271,15 +291,15 @@
   height: 56px;
   border-radius: 14px;
   object-fit: cover;
-  background: #141417;
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.22);
+  background: #FFFFFF;
+  box-shadow: 0 6px 16px -8px rgba(14, 17, 22, 0.2);
 }
 
 .order-page .order-box-scroll .orders-name-price .title-dish {
   min-width: 0;
   margin: 0;
-  color: #faeeda;
-  font-family: "Poppins";
+  color: #0E1116;
+  font-family: "Plus Jakarta Sans";
   font-size: 16px;
   font-weight: 900;
   line-height: 1.35;
@@ -290,26 +310,26 @@
   align-items: center;
   justify-content: flex-end;
   gap: 10px;
-  color: #c9c1b4;
+  color: #444C58;
 }
 
 .order-page .order-box-scroll .orders-name-price .price-box p,
 .order-page .order-box-scroll .orders-name-price .price-box span,
 .order-page .order-box-scroll .orders-name-price .price-box strong {
   margin: 0;
-  font-family: "Poppins";
+  font-family: "Plus Jakarta Sans";
   font-size: 13px;
   font-weight: 800;
   line-height: 1.2;
 }
 
 .order-page .order-box-scroll .orders-name-price .price-box span {
-  color: #ba7517;
+  color: #0E7C5A;
 }
 
 .order-page .order-box-scroll .orders-name-price .price-box strong {
   min-width: 110px;
-  color: #ba7517;
+  color: #0E7C5A;
   text-align: right;
 }
 
@@ -321,7 +341,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  border-top: 1px solid rgba(250, 238, 218, 0.08);
+  border-top: 1px solid rgba(14, 124, 90, 0.18);
 }
 
 .order-page .order-main-content .order-main-box .total-price-box .box-total {
@@ -333,22 +353,22 @@
 
 .order-page .total-price-box .box-total p {
   margin: 0;
-  font-family: "Poppins";
+  font-family: "Plus Jakarta Sans";
   font-size: 13px;
   line-height: 1.2;
 }
 
 .order-page .total-price-box .box-total .bold-txt {
-  color: #a1a1aa;
+  color: #444C58;
   font-weight: 800;
 }
 
 .order-page .total-price-box .box-total .normal-txt {
-  padding: 8px 10px;
+  padding: 8px 12px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(250, 238, 218, 0.1);
-  color: #faeeda;
+  background: #F4F5F7;
+  border: 1px solid #E6E8EC;
+  color: #0E1116;
   font-weight: 900;
 }
 
@@ -356,32 +376,52 @@
 .order-page .order-main-content .total-price-box .pay-button,
 .order-page .order-main-content .total-price-box .verify-btn {
   min-width: 112px;
-  height: 42px;
-  border-radius: 13px;
-  font-family: "Poppins";
+  height: 44px;
+  padding: 0 22px;
+  border-radius: 999px;
+  font-family: "Plus Jakarta Sans";
   font-size: 13px;
-  font-weight: 900;
+  font-weight: 800;
   text-transform: none;
   box-shadow: none;
+  transition: transform 320ms cubic-bezier(0.32,0.72,0,1), filter 320ms ease,
+    background-color 320ms ease, border-color 320ms ease, color 320ms ease;
 }
 
 .order-page .order-main-content .total-price-box .cancel-button {
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(250, 238, 218, 0.12);
-  color: #faeeda;
+  background-color: #FFFFFF;
+  border: 1px solid rgba(14, 17, 22, 0.16);
+  color: #0E1116;
+}
+
+.order-page .order-main-content .total-price-box .cancel-button:hover {
+  border-color: rgba(239, 68, 68, 0.45);
+  background-color: rgba(239, 68, 68, 0.06);
+  color: #DC2626;
+  transform: translateY(-1px);
 }
 
 .order-page .order-main-content .total-price-box .pay-button {
-  background: #ba7517;
-  color: #faeeda;
-  box-shadow: 0 12px 26px rgba(186, 117, 23, 0.24);
+  background-image: linear-gradient(135deg, #12A074 0%, #0E7C5A 52%, #0A5E44 100%);
+  color: #FFFFFF;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.35), 0 12px 26px -14px rgba(14, 124, 90, 0.8);
+}
+
+.order-page .order-main-content .total-price-box .pay-button:hover {
+  filter: brightness(1.05);
+  transform: translateY(-1px);
 }
 
 .order-page .order-main-content .total-price-box .verify-btn {
   min-width: 146px;
-  background: #3a87cb;
-  color: #f8f8ff;
-  box-shadow: 0 12px 26px rgba(58, 135, 203, 0.22);
+  background-image: linear-gradient(135deg, #3a87cb 0%, #2563EB 100%);
+  color: #FFFFFF;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.3), 0 12px 26px -14px rgba(37, 99, 235, 0.7);
+}
+
+.order-page .order-main-content .total-price-box .verify-btn:hover {
+  filter: brightness(1.05);
+  transform: translateY(-1px);
 }
 
 .order-page .order-empty-state {
@@ -391,30 +431,31 @@
   align-items: center;
   justify-content: center;
   gap: 10px;
-  border: 1px solid rgba(250, 238, 218, 0.1);
+  border: 1px solid #E6E8EC;
   border-radius: 20px;
-  background: rgba(31, 31, 35, 0.76);
+  background: #FFFFFF;
+  box-shadow: 0 1px 2px rgba(14,17,22,0.04), 0 18px 40px -26px rgba(14,17,22,0.14);
 }
 
 .order-page .order-empty-state img {
-  width: 170px;
-  height: 170px;
+  width: 150px;
+  height: 150px;
   object-fit: contain;
-  opacity: 0.72;
+  opacity: 0.5;
 }
 
 .order-page .order-empty-state strong {
-  color: #faeeda;
-  font-family: "Poppins";
+  color: #0E1116;
+  font-family: "Plus Jakarta Sans";
   font-size: 20px;
   font-weight: 900;
 }
 
 .order-page .order-empty-state span {
-  color: #a1a1aa;
-  font-family: "Poppins";
+  color: #444C58;
+  font-family: "Plus Jakarta Sans";
   font-size: 14px;
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .order-page .order-right .order-info-box,
@@ -424,10 +465,10 @@
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  border: 1px solid rgba(250, 238, 218, 0.1);
+  border: 1px solid #E6E8EC;
   border-radius: 20px;
-  background: rgba(31, 31, 35, 0.9);
-  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.22);
+  background: #FFFFFF;
+  box-shadow: 0 1px 2px rgba(14,17,22,0.04), 0 18px 40px -24px rgba(14,17,22,0.16);
 }
 
 .order-page .order-right .order-info-box .member-box {
@@ -441,7 +482,7 @@
   height: 1px;
   margin: 22px 0 16px;
   border: 0;
-  background: rgba(250, 238, 218, 0.1);
+  background: rgba(14, 124, 90, 0.18);
 }
 
 .order-page .order-info-box .order-user-img {
@@ -456,9 +497,9 @@
   height: 108px;
   object-fit: cover;
   border-radius: 28px;
-  border: 2px solid rgba(186, 117, 23, 0.48);
-  background: #141417;
-  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.28);
+  border: 2px solid rgba(14, 124, 90, 0.48);
+  background: #F7F8FA;
+  box-shadow: 0 16px 34px rgba(14, 17, 22, 0.08);
 }
 
 .order-page .order-info-box .order-user-icon-box {
@@ -472,7 +513,7 @@
   align-items: center;
   justify-content: center;
   border-radius: 12px;
-  background: #ba7517;
+  background: #0E7C5A;
 }
 
 .order-page .order-user-icon-box .order-user-prof-img {
@@ -483,8 +524,8 @@
 
 .order-page .order-info-box .order-user-name {
   margin-top: 16px;
-  color: #faeeda;
-  font-family: "Poppins";
+  color: #0E1116;
+  font-family: "Plus Jakarta Sans";
   font-size: 24px;
   font-weight: 900;
   line-height: 1.2;
@@ -492,13 +533,14 @@
 
 .order-page .order-info-box .order-user-prof {
   margin-top: 6px;
-  padding: 7px 10px;
+  padding: 7px 12px;
   border-radius: 999px;
-  background: rgba(186, 117, 23, 0.14);
-  color: #d7b686;
-  font-family: "Poppins";
+  background: rgba(14, 124, 90, 0.1);
+  border: 1px solid rgba(14, 124, 90, 0.24);
+  color: #0A5E44;
+  font-family: "Plus Jakarta Sans";
   font-size: 12px;
-  font-weight: 900;
+  font-weight: 800;
 }
 
 .order-page .order-info-box .order-user-address {
@@ -515,15 +557,15 @@
 
 .order-page .order-info-box .order-address-line svg {
   flex: 0 0 auto;
-  color: #ba7517;
+  color: #0E7C5A;
 }
 
 .order-page .order-info-box .spec-address-text {
   margin: 0;
-  color: #c9c1b4;
-  font-family: "Poppins";
+  color: #444C58;
+  font-family: "Plus Jakarta Sans";
   font-size: 14px;
-  font-weight: 700;
+  font-weight: 600;
   line-height: 1.55;
 }
 
@@ -539,27 +581,27 @@
   height: 38px;
   padding: 8px;
   border-radius: 13px;
-  background: rgba(186, 117, 23, 0.14);
-  color: #ba7517;
+  background: rgba(14, 124, 90, 0.14);
+  color: #0E7C5A;
 }
 
 .order-page .payment-head strong,
 .order-page .payment-head span {
   display: block;
-  font-family: "Poppins";
+  font-family: "Plus Jakarta Sans";
 }
 
 .order-page .payment-head strong {
-  color: #faeeda;
+  color: #0E1116;
   font-size: 16px;
   font-weight: 900;
 }
 
 .order-page .payment-head span {
   margin-top: 3px;
-  color: #a1a1aa;
+  color: #444C58;
   font-size: 12px;
-  font-weight: 800;
+  font-weight: 700;
 }
 
 .order-page .card-input input {
@@ -568,17 +610,17 @@
   margin: 0;
   padding: 0 12px;
   border-radius: 13px;
-  border: 1px solid rgba(250, 238, 218, 0.1);
+  border: 1px solid #E6E8EC;
   outline: none;
-  background: rgba(255, 255, 255, 0.05);
-  color: #faeeda;
-  font-family: "Poppins";
+  background: #F6F7F9;
+  color: #0E1116;
+  font-family: "Plus Jakarta Sans";
   font-size: 13px;
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .order-page .card-input input::placeholder {
-  color: #77777f;
+  color: #6B7280;
 }
 
 .order-page .card-input .card-num-input,
@@ -612,8 +654,8 @@
   height: 30px;
   padding: 5px;
   border-radius: 10px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(250, 238, 218, 0.08);
+  background: #F6F7F9;
+  border: 1px solid #E6E8EC;
   object-fit: contain;
 }
 

@@ -1,67 +1,41 @@
 import React from "react";
-import { Stack, Box } from "@mui/material";
+import { Stack, Box, Pagination } from "@mui/material";
 import TabPanel from "@mui/lab/TabPanel";
+import moment from "moment";
 
 import { useSelector } from "react-redux";
 import { createSelector } from "reselect";
-import { retrieveFinishedOrders } from "./selector";
-import { serverApi } from "../../../lib/config";
-// import { Order, OrderItem } from "../../../lib/types/order";
-import { Product } from "../../../lib/types/product";
+import { retrieveFinishedOrders, retrieveFinishedTotal } from "./selector";
+import {
+  formatPrice,
+  getOrderProduct,
+  getOrderSubtotal,
+  getOrderDelivery,
+  getOrderTotal,
+  getProductImage,
+} from "../../../lib/utils";
 import { Order, OrderItem } from "../../../lib/types/orders";
 
 /** REDUX SLICE & SELECTOR */
 const finishedOrdersRetriever = createSelector(
   retrieveFinishedOrders,
-  (finishedOrders) => ({ finishedOrders }),
+  retrieveFinishedTotal,
+  (finishedOrders, finishedTotal) => ({ finishedOrders, finishedTotal }),
 );
 
-const DELIVERY_FREE_THRESHOLD = 500000;
-const DELIVERY_COST = 30000;
-
-function getOrderProduct(
-  order: Order,
-  item: OrderItem,
-): Product | undefined {
-  return order.productData.find((ele: Product) => item.productId === ele._id);
+interface FinishedOrderProps {
+  page: number;
+  limit: number;
+  onPageChange: (page: number) => void;
 }
 
-function getProductImage(product?: Product) {
-  const image = product?.productImages?.[0];
-  if (!image) return "/icons/noimage-list.svg";
-  if (image.startsWith("http")) return image;
-  if (image.startsWith("/")) return `${serverApi}${image}`;
-  return `${serverApi}/${image}`;
-}
-
-function formatOrderPrice(price: number) {
-  return `${price?.toLocaleString()} UZS`;
-}
-
-function getOrderSubtotal(order: Order) {
-  return order.orderItems.reduce(
-    (total, item) => total + item.itemQuantity * item.itemPrice,
-    0,
+export default function FinishedOrders(props: FinishedOrderProps) {
+  const { page, limit, onPageChange } = props;
+  const { finishedOrders, finishedTotal } = useSelector(
+    finishedOrdersRetriever,
   );
-}
+  const totalPages = Math.max(1, Math.ceil(finishedTotal / limit));
 
-function getOrderDelivery(order: Order) {
-  if (order.orderDelivery > 0) return order.orderDelivery;
-
-  const subtotal = getOrderSubtotal(order);
-  return subtotal < DELIVERY_FREE_THRESHOLD ? DELIVERY_COST : 0;
-}
-
-function getOrderTotal(order: Order) {
-  const subtotal = getOrderSubtotal(order);
-  const delivery = getOrderDelivery(order);
-  const calculatedTotal = subtotal + delivery;
-
-  return order.orderTotal >= calculatedTotal ? order.orderTotal : calculatedTotal;
-}
-
-export default function FinishedOrders() {
-  const { finishedOrders } = useSelector(finishedOrdersRetriever);
   return (
     <TabPanel value="3">
       <Stack>
@@ -77,7 +51,9 @@ export default function FinishedOrders() {
                   <span className="order-status-pill finished">Completed</span>
                   <strong>Order #{order._id.slice(-6).toUpperCase()}</strong>
                 </Box>
-                <span>{order.orderItems.length} items</span>
+                <span>
+                  {moment(order.updatedAt).format("YYYY-MM-DD HH:mm")}
+                </span>
               </Box>
               <Box className="order-box-scroll">
                 {order?.orderItems?.map((item: OrderItem) => {
@@ -97,11 +73,11 @@ export default function FinishedOrders() {
                         {product?.productName || "Unavailable product"}
                       </p>
                       <Box className="price-box">
-                        <p>{formatOrderPrice(item.itemPrice)}</p>
+                        <p>{formatPrice(item.itemPrice)}</p>
                         <span>x</span>
                         <p>{item.itemQuantity}</p>
                         <strong>
-                          {formatOrderPrice(item.itemQuantity * item.itemPrice)}
+                          {formatPrice(item.itemQuantity * item.itemPrice)}
                         </strong>
                       </Box>
                     </Box>
@@ -112,31 +88,37 @@ export default function FinishedOrders() {
               <Box className="total-price-box">
                 <Box className="box-total">
                   <p className="bold-txt">Product price</p>
-                  <p className="normal-txt">
-                    {formatOrderPrice(orderSubtotal)}
-                  </p>
+                  <p className="normal-txt">{formatPrice(orderSubtotal)}</p>
                   <p className="bold-txt">Delivery cost</p>
                   <p className="normal-txt">
-                    {orderDelivery === 0 ? "Free" : formatOrderPrice(orderDelivery)}
+                    {orderDelivery === 0 ? "Free" : formatPrice(orderDelivery)}
                   </p>
                   <p className="bold-txt">Total</p>
-                  <p className="normal-txt">
-                    {formatOrderPrice(orderTotal)}
-                  </p>
+                  <p className="normal-txt">{formatPrice(orderTotal)}</p>
                 </Box>
               </Box>
             </Box>
           );
         })}
 
-        {!finishedOrders ||
-          (finishedOrders.length === 0 && (
-            <Box className="order-empty-state">
-              <img src="/icons/noimage-list.svg" alt="" />
-              <strong>No finished orders</strong>
-              <span>Completed FitShop purchases will appear here.</span>
-            </Box>
-          ))}
+        {(!finishedOrders || finishedOrders.length === 0) && (
+          <Box className="order-empty-state">
+            <img src="/icons/noimage-list.svg" alt="" />
+            <strong>No finished orders</strong>
+            <span>Completed FitShop purchases will appear here.</span>
+          </Box>
+        )}
+
+        {finishedTotal > limit && (
+          <Stack alignItems="center" sx={{ mt: 2 }}>
+            <Pagination
+              count={totalPages}
+              page={page}
+              onChange={(e, value) => onPageChange(value)}
+              color="secondary"
+            />
+          </Stack>
+        )}
       </Stack>
     </TabPanel>
   );

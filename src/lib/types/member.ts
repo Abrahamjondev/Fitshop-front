@@ -36,5 +36,6 @@ export interface MemberUpdateInput {
   memberPassword?: string;
   memberAddress?: string;
   memberDesc?: string;
-  memberImage?: string;
+  /** Yangi rasm tanlansa File, aks holda mavjud path (string) */
+  memberImage?: string | File;
 }

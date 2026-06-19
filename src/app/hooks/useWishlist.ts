@@ -21,7 +21,7 @@ function readStoredWishlist(): string[] {
  * - Login bo'lgan member uchun: backend'da saqlanadi (qurilmalar aro sinxron).
  */
 const useWishlist = () => {
-  const { authMember } = useGlobals();
+  const { authMember, setLoginOpen } = useGlobals();
   const [wishlist, setWishlist] = useState<string[]>(readStoredWishlist);
 
   // Login holatiga qarab manbani almashtiramiz
@@ -69,16 +69,18 @@ const useWishlist = () => {
   const isInWishlist = (productId: string) => wishlist.includes(productId);
 
   const toggleWishlist = (productId: string) => {
+    // Mehmon (login bo'lmagan) sevimlilarga qo'sha olmaydi —
+    // avval login oynasini ochamiz
+    if (!authMember) {
+      setLoginOpen(true);
+      return;
+    }
+
     // Optimistik yangilash — UI darhol javob beradi
     const next = wishlist.includes(productId)
       ? wishlist.filter((id) => id !== productId)
       : [...wishlist, productId];
     setWishlist(next);
-
-    if (!authMember) {
-      localStorage.setItem(WISHLIST_KEY, JSON.stringify(next));
-      return;
-    }
 
     // Login bo'lsa backend bilan sinxronlaymiz; xato bo'lsa orqaga qaytaramiz
     const service = new WishlistService();

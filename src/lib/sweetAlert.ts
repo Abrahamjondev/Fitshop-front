@@ -17,13 +17,17 @@ const popupTheme = {
   },
 } as const;
 
-/** Toast (kichik yuqori-o'ng bildirishnomalar) uchun tema */
+/** Toast (kichik yuqori-o'ng bildirishnomalar) uchun tema.
+ *  showClass/hideClass — swal2'ning default animatsiyasini TO'LIQ almashtiradi
+ *  (CSS specificity bilan kurashmasdan; default o'ngdan sirg'alish klip qilardi). */
 const toastTheme = {
   customClass: {
     popup: "fs-swal-toast",
     title: "fs-swal-toast-title",
     icon: "fs-swal-toast-icon",
   },
+  showClass: { popup: "fs-toast-show", backdrop: "", icon: "" },
+  hideClass: { popup: "fs-toast-hide", backdrop: "", icon: "" },
 } as const;
 
 /** Tasdiqlash dialogi — window.confirm o'rniga */

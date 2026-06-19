@@ -19,6 +19,9 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     readStoredMember,
   );
   const [orderBuilder, setOrderBuilder] = useState<Date>(new Date());
+  // Login modal holati global — istalgan joydan (masalan, sevimlilarga
+  // qo'shishda mehmon bo'lsa) login oynasini ochish uchun
+  const [loginOpen, setLoginOpen] = useState<boolean>(false);
 
   useEffect(() => {
     // Sahifa yangilanganda token hali amal qilishini serverdan tasdiqlaymiz.
@@ -44,7 +47,14 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
   return (
     <GlobalContext.Provider
-      value={{ authMember, setAuthMember, orderBuilder, setOrderBuilder }}
+      value={{
+        authMember,
+        setAuthMember,
+        orderBuilder,
+        setOrderBuilder,
+        loginOpen,
+        setLoginOpen,
+      }}
     >
       {children}
     </GlobalContext.Provider>

@@ -30,10 +30,9 @@ function App() {
     window.scrollTo(0, 0);
   }, [location.pathname]);
 
-  const { setAuthMember } = useGlobals();
+  const { setAuthMember, loginOpen, setLoginOpen } = useGlobals();
   const { cartItems, onAdd, onRemove, onDelete, onDeleteAll } = useBasket();
   const [signupOpen, setSignupOpen] = useState<boolean>(false);
-  const [loginOpen, setLoginOpen] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   /** HANDLERS **/

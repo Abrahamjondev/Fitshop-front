@@ -39,6 +39,7 @@
   "scripts": {
     "start": "PORT=3000 DISABLE_ESLINT_PLUGIN=true TSC_COMPILE_ON_ERROR=true NODE_OPTIONS=--max-old-space-size=8192 craco start",
     "build": "NODE_OPTIONS=--max-old-space-size=8192 craco build",
+    "start:prod": "serve -s build -l 80",
     "test": "craco test",
     "eject": "react-scripts eject",
     "typecheck": "tsc --noEmit"
